@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,11 +20,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "participant")
-@Builder
-@Getter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Getter
+@FieldNameConstants
+@EqualsAndHashCode
+@ToString
 public class ParticipantEntity {
 
     @Id

@@ -35,8 +35,8 @@ public class ProcessJsonUserCase {
 
             final JsonObject participantJsonObject = (JsonObject) jsonAsArray.get(i);
             final String statusParticipant = openOrgDomainClaims(participantJsonObject);
-            final String organisationName = String.valueOf(participantJsonObject.get("OrganisationName"));
-            final String organisationId = String.valueOf(participantJsonObject.get("OrganisationId"));
+            final String organisationName = String.valueOf(participantJsonObject.get("OrganisationName").getAsString());
+            final String organisationId = String.valueOf(participantJsonObject.get("OrganisationId").getAsString());
             final Map<String, List<ApiResource>> customerAndApi = openCustomerFriendlyName(participantJsonObject);
             final Participant participant = Participant.builder()
                     .organisationId(organisationId)

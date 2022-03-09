@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -21,11 +23,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "api_resource")
-@Builder
-@Getter
-@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Getter
+@FieldNameConstants
+@EqualsAndHashCode
+@ToString
 public class ApiResourceEntity {
 
     @Id
@@ -37,5 +41,7 @@ public class ApiResourceEntity {
     @Setter
     private List<ApiEndPointEntity> apiEndpoint = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private ParticipantEntity participant;
 }

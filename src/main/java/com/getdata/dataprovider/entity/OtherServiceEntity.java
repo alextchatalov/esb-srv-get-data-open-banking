@@ -1,5 +1,4 @@
-package com.getdata.core.model;
-
+package com.getdata.dataprovider.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +10,6 @@ import lombok.experimental.FieldNameConstants;
 
 import java.util.List;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -19,9 +17,11 @@ import java.util.List;
 @FieldNameConstants
 @EqualsAndHashCode
 @ToString
-public class ApiResource {
-
-    private String apiFamilyType;
-    private String apiVersion;
-    private List<String> apiEndpoint;
+public class OtherServiceEntity {
+    private String name;
+    private String code;
+    private String chargingTriggerInfo;
+    private List<PriceEntity> prices;
+    private MinimumEntity minimum;
+    private MaximumEntity maximum;
 }

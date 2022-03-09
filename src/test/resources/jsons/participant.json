@@ -1,0 +1,147 @@
+[
+  {
+    Status: "Active",
+    OrgDomainRoleClaims: [
+      {
+        Status: "Active",
+        AuthorisationDomain: "Open Banking",
+        Role: "CCORR",
+        RegistrationId: "60746948-OBB-CCORR",
+        Authorisations: []
+      },
+      {
+        Status: "Active",
+        AuthorisationDomain: "Open Banking",
+        Role: "CONTA",
+        RegistrationId: "60746948-OBB-CONTA",
+        Authorisations: []
+      },
+      {
+        Status: "Active",
+        AuthorisationDomain: "Open Banking",
+        Role: "DADOS",
+        RegistrationId: "60746948-OBB-DADOS",
+        Authorisations: []
+      }
+    ],
+    AuthorisationServers: [
+      {
+        PayloadSigningCertLocationUri: "https://www.bradesco.com.br/naoseaplica",
+        ParentAuthorisationServerId: null,
+        OpenIDDiscoveryDocument: "https://www.bradesco.com.br/naoseaplica",
+        CustomerFriendlyName: "Banco Digital next",
+        CustomerFriendlyDescription: "",
+        TermsOfServiceUri: "https://www.bradesco.com.br/naoseaplica",
+        ApiResources: [
+          {
+            ApiFamilyType: 'test',
+            ApiVersion: 1,
+            ApiResourceId: "29e41b5f-d499-4a7c-acf5-b8c145174da1",
+            ApiDiscoveryEndpoints: [
+              {
+                ApiDiscoveryId: "0131eb1a-3672-4fe0-b453-15a0cbdd098b",
+                ApiEndpoint: "https://api.bradesco.com/Next/open-banking/products-services/v1"
+              }
+            ]
+          },
+          {
+            ApiFamilyType: 'test',
+            ApiVersion: 1,
+            ApiResourceId: "09efb865-5666-4cd9-b4b2-94d957a340b6",
+            ApiDiscoveryEndpoints: [
+              {
+                ApiDiscoveryId: "7ccae8c4-83ef-44ee-9a7c-818e3e5e7f65",
+                ApiEndpoint: "https://api.bradesco.com/open-banking/discovery/v1"
+              }
+            ]
+          },
+          {
+            ApiFamilyType: 'test',
+            ApiVersion: 1,
+            ApiResourceId: "faa92dba-d4a6-49ab-bf9e-e0c86b0e4c66",
+            ApiDiscoveryEndpoints: [
+              {
+                ApiDiscoveryId: "a6eff369-efe8-4459-ba1b-97c1f82d09a7",
+                ApiEndpoint: "https://api.bradesco.com/Next/open-banking/channels/v1"
+              }
+            ]
+          }
+        ],
+        AutoRegistrationSupported: false,
+        CustomerFriendlyLogoUri: "https://www.bradesco.com.br/naoseaplica",
+        DeveloperPortalUri: "https://www.bradesco.com.br/naoseaplica",
+        AuthorisationServerId: "ba185564-2e26-420e-b6bb-af5bc7102480"
+      },
+      {
+        PayloadSigningCertLocationUri: "https://www.bradesco.com.br/naoseaplica",
+        ParentAuthorisationServerId: null,
+        OpenIDDiscoveryDocument: "https://www.bradesco.com.br/naoseaplica",
+        CustomerFriendlyName: 'test',
+        CustomerFriendlyDescription: "",
+        TermsOfServiceUri: "https://www.bradesco.com.br/naoseaplica",
+        ApiResources: [
+          {
+            ApiFamilyType: "test",
+            ApiVersion: 1,
+            ApiResourceId: "861ff674-7394-42d3-a850-5d49e10ec446",
+            ApiDiscoveryEndpoints: [
+              {
+                ApiDiscoveryId: "06796ae3-7c93-464d-8cb9-f0b77cf320aa",
+                ApiEndpoint: "123"
+              }
+            ]
+          },
+          {
+            ApiFamilyType: "channels",
+            ApiVersion: 1,
+            ApiResourceId: "138c3dcc-22e5-4977-ac92-5e4cdaa388bc",
+            ApiDiscoveryEndpoints: [
+              {
+                ApiDiscoveryId: "c6da771e-affe-4aeb-967d-a6f931ecf637",
+                ApiEndpoint: "https://api.bradesco.com/bradesco/open-banking/channels/v1"
+              }
+            ]
+          },
+          {
+            ApiFamilyType: "products-services",
+            ApiVersion: 1,
+            ApiResourceId: "7958704c-1c97-4145-8083-fa27380f00a7",
+            ApiDiscoveryEndpoints: [
+              {
+                ApiDiscoveryId: "4d0cab30-1106-424f-8635-4c35657a878c",
+                ApiEndpoint: "https://api.bradesco.com/bradesco/open-banking/products-services/v1"
+              }
+            ]
+          }
+        ],
+        AutoRegistrationSupported: false,
+        CustomerFriendlyLogoUri: "https://www.bradesco.com.br/naoseaplica",
+        DeveloperPortalUri: "https://developers.bradesco.com.br/",
+        AuthorisationServerId: "c6b15844-e748-4408-abb6-e71fd59d71c5"
+      }
+    ],
+    OrgDomainClaims: [
+      {
+        Status: "Active",
+        AuthorityName: "Banco Central do Brasil",
+        RegistrationId: "",
+        AuthorisationDomainName: "Open Banking"
+      }
+    ],
+    RegistrationId: "60746948",
+    OrganisationId: 123,
+    City: "Osasco, SP",
+    Postcode: "06029-900",
+    AddressLine2: "Vila Yara",
+    RegisteredName: "BANCO BRADESCO S.A.",
+    AddressLine1: "Cidade de Deus s/n, ",
+    LegalEntityName: "BANCO BRADESCO S.A.",
+    OrganisationName: "test",
+    Country: "BR",
+    RegistrationNumber: "60746948",
+    CreatedOn: "2021-01-07 16:19:21.513",
+    ParentOrganisationReference: "",
+    CompanyRegister: "Cadastro Nacional da Pessoa Jurídica",
+    CountryOfRegistration: "BR"
+  }
+]
