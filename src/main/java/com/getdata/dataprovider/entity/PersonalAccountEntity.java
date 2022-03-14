@@ -5,11 +5,21 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.List;
 
+@Entity
+@Table(name = "personal_account")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -18,12 +28,37 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class PersonalAccountEntity {
+
     private String type;
+
+    @OneToOne(mappedBy = "personalAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter
     private FeesPersonalAccountsEntity fees;
+
+    @OneToMany(mappedBy = "personalAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter
     private List<ServiceBundleEntity> serviceBundles;
-    private List<String> openingClosingChannels;
+
+    @OneToMany(mappedBy = "personalAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter
+    private List<OpeningClosingChannelsEntity> openingClosingChannels;
+
     private String additionalInfo;
-    private List<String> transactionMethods;
+
+    @OneToMany(mappedBy = "personalAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter
+    private List<TransactionMethodsEntity> transactionMethods;
+
+    @OneToOne(mappedBy = "personalAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter
     private TermsConditionsEntity termsConditions;
+
+    @OneToMany(mappedBy = "personalAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter
     private List<IncomeRateEntity> incomeRate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private CompanyEntity company;
 }

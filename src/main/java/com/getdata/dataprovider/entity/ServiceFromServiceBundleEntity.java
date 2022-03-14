@@ -8,6 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "service_from_service_bundle")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -21,4 +28,9 @@ public class ServiceFromServiceBundleEntity {
     private String chargingTriggerInfo;
     private String eventLimitQuantity;
     private String freeEventQuantity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private ServiceBundleEntity serviceBundle;
 }

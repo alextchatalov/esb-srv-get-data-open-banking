@@ -8,6 +8,14 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "terms_conditions")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -16,7 +24,18 @@ import lombok.experimental.FieldNameConstants;
 @EqualsAndHashCode
 @ToString
 public class TermsConditionsEntity {
+
     private MinimumBalanceEntity minimumBalance;
     private String elegibilityCriteriaInfo;
     private String closingProcessInfo;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private PersonalAccountEntity personalAccount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private BusinessAccountEntity businessAccount;
 }

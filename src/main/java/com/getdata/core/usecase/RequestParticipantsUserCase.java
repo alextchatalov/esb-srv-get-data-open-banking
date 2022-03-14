@@ -24,7 +24,7 @@ public class RequestParticipantsUserCase {
                 new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))
                 .lines()
                 .collect(Collectors.joining("\n"));
-        log.info("Consulting finish");
+        log.info("Consult finish");
         return participantsJson;
     }
 }

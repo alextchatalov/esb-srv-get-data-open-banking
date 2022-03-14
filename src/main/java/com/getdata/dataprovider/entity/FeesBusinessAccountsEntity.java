@@ -8,8 +8,14 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.List;
 
+@Entity
+@Table(name = "fees_business_accounts")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -18,5 +24,11 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class FeesBusinessAccountsEntity {
+
     public List<ServiceBusinessAccountsEntity> services;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private BusinessAccountEntity businessAccount;
 }

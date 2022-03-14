@@ -8,15 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "price")
+@Table(name = "opening_closing_channels")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -24,27 +22,17 @@ import javax.persistence.Table;
 @FieldNameConstants
 @EqualsAndHashCode
 @ToString
-public class PriceEntity {
+public class OpeningClosingChannelsEntity {
 
-    private String interval;
-    private String value;
-    private String currency;
-    @OneToOne(mappedBy = "price", cascade = CascadeType.ALL, orphanRemoval = true)
-    private CustomersEntity customers;
-    private String monthlyFee;
+    private String channel;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private PriorityServiceEntity priorityService;
+    private PersonalAccountEntity personalAccount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private OtherServiceEntity otherService;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private ServiceBundleEntity serviceBundle;
+    private BusinessAccountEntity businessAccount;
 }

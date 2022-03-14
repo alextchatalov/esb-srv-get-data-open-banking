@@ -11,8 +11,14 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "data")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -28,5 +34,6 @@ public class DataEntity {
     private LocalDateTime createDateTime;
     @LastModifiedDate
     private LocalDateTime lastModifiedDateTime;
+    @OneToOne(mappedBy = "data", cascade = CascadeType.ALL, orphanRemoval = true)
     private BrandEntity brand;
 }
