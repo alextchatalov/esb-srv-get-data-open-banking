@@ -1,9 +1,9 @@
 package com.getdata.dataprovider.mapper;
 
-import com.getdata.dataprovider.entity.PriceEntity;
-import com.getdata.dataprovider.entity.PriorityServiceEntity;
 import com.getdata.core.model.Price;
 import com.getdata.core.model.PriorityService;
+import com.getdata.dataprovider.entity.PriceEntity;
+import com.getdata.dataprovider.entity.PriorityServiceEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -27,10 +27,15 @@ public class PriorityServiceToPriorityServiceEntityMapper implements Converter<P
     @Override
     @NonNull
     public PriorityServiceEntity convert(final PriorityService priorityService) {
+
+        String chargingTriggerInfo = priorityService.getChargingTriggerInfo() != null && priorityService.getChargingTriggerInfo().length() >= 255 ?
+                priorityService.getChargingTriggerInfo().substring(0, 254) :
+                priorityService.getChargingTriggerInfo();
+
         return PriorityServiceEntity.builder()
                 .name(priorityService.getName())
                 .code(priorityService.getCode())
-                .chargingTriggerInfo(priorityService.getChargingTriggerInfo())
+                .chargingTriggerInfo(chargingTriggerInfo)
                 .prices(convertListOfPricesToListOfPricesEntity(priorityService.getPrices()))
                 .minimum(minimumToMinimumEntityMapper.convert(priorityService.getMinimum()))
                 .maximum(maximumToMaximumEntityMapper.convert(priorityService.getMaximum()))

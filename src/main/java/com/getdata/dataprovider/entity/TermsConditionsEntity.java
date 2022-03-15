@@ -5,11 +5,16 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,7 +30,14 @@ import javax.persistence.Table;
 @ToString
 public class TermsConditionsEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @OneToOne(mappedBy = "termsConditions", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter
     private MinimumBalanceEntity minimumBalance;
+
     private String elegibilityCriteriaInfo;
     private String closingProcessInfo;
 

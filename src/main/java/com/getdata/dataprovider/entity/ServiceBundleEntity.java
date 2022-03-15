@@ -12,8 +12,12 @@ import lombok.experimental.FieldNameConstants;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.List;
 
@@ -28,6 +32,10 @@ import java.util.List;
 @ToString
 public class ServiceBundleEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private String name;
     @OneToMany(mappedBy = "serviceBundle", cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter
@@ -37,7 +45,12 @@ public class ServiceBundleEntity {
     @Setter
     private List<PriceEntity> prices;
 
+    @OneToOne(mappedBy = "serviceBundle", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter
     private MinimumEntity minimum;
+
+    @OneToOne(mappedBy = "serviceBundle", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter
     private MaximumEntity maximum;
 
     @ManyToOne(fetch = FetchType.LAZY)

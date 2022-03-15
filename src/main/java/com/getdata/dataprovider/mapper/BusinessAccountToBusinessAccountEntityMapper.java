@@ -1,9 +1,11 @@
 package com.getdata.dataprovider.mapper;
 
-import com.getdata.dataprovider.entity.BusinessAccountEntity;
-import com.getdata.dataprovider.entity.ServiceBundleEntity;
 import com.getdata.core.model.BusinessAccount;
 import com.getdata.core.model.ServiceBundle;
+import com.getdata.dataprovider.entity.BusinessAccountEntity;
+import com.getdata.dataprovider.entity.OpeningClosingChannelsEntity;
+import com.getdata.dataprovider.entity.ServiceBundleEntity;
+import com.getdata.dataprovider.entity.TransactionMethodsEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -28,16 +30,21 @@ public class BusinessAccountToBusinessAccountEntityMapper implements Converter<B
     @Override
     @NonNull
     public BusinessAccountEntity convert(final BusinessAccount businessAccount) {
-        return BusinessAccountEntity.builder()
+        BusinessAccountEntity businessAccountEntity = BusinessAccountEntity.builder()
                 .type(businessAccount.getType())
-                .fees(feesBusinessAccountsToFeesBusinessAccountsEntityMapper.convert(businessAccount.getFees())) //TODO criar um novo mapper para o busniess
+                .fees(feesBusinessAccountsToFeesBusinessAccountsEntityMapper.convert(businessAccount.getFees()))
                 .serviceBundles(convertListOfServiceBundleToListOfServiceBundleEntity(businessAccount.getServiceBundles()))
-                .openingClosingChannels(businessAccount.getOpeningClosingChannels())
                 .additionalInfo(businessAccount.getAdditionalInfo())
-                .transactionMethods(businessAccount.getTransactionMethods())
                 .termsConditions(termsConditionsToTermsConditionsEntityMapper.convert(businessAccount.getTermsConditions()))
                 .incomeRate(incomeRateToIncomeRateEntityMapper.convert(businessAccount.getIncomeRate()))
                 .build();
+
+        List<OpeningClosingChannelsEntity> openingClosingChannelsEntities = OpeningClosingChannelsToOpeningClosingChannelsEntity.convert(businessAccount.getOpeningClosingChannels(), null, businessAccountEntity);
+        List<TransactionMethodsEntity> transactionMethodsEntities = TransactionMethodsToTransactionMethodsEntity.convert(businessAccount.getTransactionMethods(), null, businessAccountEntity);
+        businessAccountEntity.setOpeningClosingChannels(openingClosingChannelsEntities);
+        businessAccountEntity.setTransactionMethods(transactionMethodsEntities);
+
+        return businessAccountEntity;
     }
 
     private List<ServiceBundleEntity> convertListOfServiceBundleToListOfServiceBundleEntity(final List<ServiceBundle> serviceBundles) {

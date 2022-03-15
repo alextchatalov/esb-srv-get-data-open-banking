@@ -1,11 +1,13 @@
 package com.getdata.dataprovider.mapper;
 
-import com.getdata.dataprovider.entity.IncomeRateEntity;
-import com.getdata.dataprovider.entity.PersonalAccountEntity;
-import com.getdata.dataprovider.entity.ServiceBundleEntity;
 import com.getdata.core.model.IncomeRate;
 import com.getdata.core.model.PersonalAccount;
 import com.getdata.core.model.ServiceBundle;
+import com.getdata.dataprovider.entity.IncomeRateEntity;
+import com.getdata.dataprovider.entity.OpeningClosingChannelsEntity;
+import com.getdata.dataprovider.entity.PersonalAccountEntity;
+import com.getdata.dataprovider.entity.ServiceBundleEntity;
+import com.getdata.dataprovider.entity.TransactionMethodsEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -30,16 +32,22 @@ public class PersonalAccountsToPersonalAccountEntityMapper implements Converter<
     @Override
     @NonNull
     public PersonalAccountEntity convert(final PersonalAccount personalAccount) {
-        return PersonalAccountEntity.builder()
+
+        PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
                 .type(personalAccount.getType())
                 .fees(feesPersonalAccountsToFeesPersonalAccountsEntityMapper.convert(personalAccount.getFees()))
                 .serviceBundles(convertListOfServiceBundleToListOfServiceBundleEntity(personalAccount.getServiceBundles()))
-                .openingClosingChannels(personalAccount.getOpeningClosingChannels())
                 .additionalInfo(personalAccount.getAdditionalInfo())
-                .transactionMethods(personalAccount.getTransactionMethods())
                 .termsConditions(termsConditionsToTermsConditionsEntityMapper.convert(personalAccount.getTermsConditions()))
                 .incomeRate(convertListOfIncomeRateToListOfIncomeRateEntity(personalAccount.getIncomeRate()))
                 .build();
+        
+        List<OpeningClosingChannelsEntity> openingClosingChannelsEntities = OpeningClosingChannelsToOpeningClosingChannelsEntity.convert(personalAccount.getOpeningClosingChannels(), personalAccountEntity, null);
+        List<TransactionMethodsEntity> transactionMethodsEntities = TransactionMethodsToTransactionMethodsEntity.convert(personalAccount.getTransactionMethods(), personalAccountEntity, null);
+        personalAccountEntity.setOpeningClosingChannels(openingClosingChannelsEntities);
+        personalAccountEntity.setTransactionMethods(transactionMethodsEntities);
+
+        return personalAccountEntity;
     }
 
     private List<ServiceBundleEntity> convertListOfServiceBundleToListOfServiceBundleEntity(final List<ServiceBundle> serviceBundles) {

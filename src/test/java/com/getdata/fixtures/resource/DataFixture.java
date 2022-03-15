@@ -1,5 +1,8 @@
 package com.getdata.fixtures.resource;
 
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.Rule;
+import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.getdata.core.model.Brand;
 import com.getdata.core.model.BusinessAccount;
 import com.getdata.core.model.Company;
@@ -19,11 +22,7 @@ import com.getdata.core.model.ServiceBundle;
 import com.getdata.core.model.ServiceBusinessAccounts;
 import com.getdata.core.model.ServiceFromServiceBundle;
 import com.getdata.core.model.TermsConditions;
-import br.com.six2six.fixturefactory.Fixture;
-import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
 
 public class DataFixture implements TemplateLoader {
@@ -37,9 +36,6 @@ public class DataFixture implements TemplateLoader {
 
     private void loadData() {
         Fixture.of(Data.class).addTemplate(VALID, new Rule() {{
-            add(Data.Fields.id, "123");
-            add(Data.Fields.createDateTime, LocalDateTime.parse("2022-02-05T09:30:00.000"));
-            add(Data.Fields.lastModifiedDateTime, LocalDateTime.parse("2022-02-05T09:30:00.000"));
             add(Data.Fields.brand, createBrand());
 
         }});

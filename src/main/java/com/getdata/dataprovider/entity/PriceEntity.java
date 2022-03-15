@@ -11,6 +11,9 @@ import lombok.experimental.FieldNameConstants;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,6 +28,10 @@ import javax.persistence.Table;
 @EqualsAndHashCode
 @ToString
 public class PriceEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String interval;
     private String value;
@@ -47,4 +54,9 @@ public class PriceEntity {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private ServiceBundleEntity serviceBundle;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private ServiceBusinessAccountsEntity serviceBusinessAccounts;
 }

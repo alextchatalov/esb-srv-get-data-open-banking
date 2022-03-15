@@ -1,7 +1,7 @@
 package com.getdata.dataprovider.mapper;
 
-import com.getdata.dataprovider.entity.TermsConditionsEntity;
 import com.getdata.core.model.TermsConditions;
+import com.getdata.dataprovider.entity.TermsConditionsEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -15,16 +15,26 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class TermsConditionsToTermsConditionsEntityMapper implements Converter<TermsConditions, TermsConditionsEntity> {
 
-    private final MinimumBalanceToMinimumBalanceEntityMapper minimumBalanceToMinimumBalanceEntityMapper;
-
     @Override
     @NonNull
     public TermsConditionsEntity convert(final TermsConditions termsConditions) {
-        return TermsConditionsEntity.builder()
-                .minimumBalance(minimumBalanceToMinimumBalanceEntityMapper.convert(termsConditions.getMinimumBalance()))
-                .elegibilityCriteriaInfo(termsConditions.getElegibilityCriteriaInfo())
-                .closingProcessInfo(termsConditions.getClosingProcessInfo())
+
+        String elegibilityCriteriaInfo = termsConditions.getElegibilityCriteriaInfo() != null && termsConditions.getElegibilityCriteriaInfo().length() >= 255 ?
+                termsConditions.getElegibilityCriteriaInfo().substring(0, 254) :
+                termsConditions.getElegibilityCriteriaInfo();
+
+        String closingProcessInfo = termsConditions.getClosingProcessInfo() != null && termsConditions.getClosingProcessInfo().length() >= 255 ?
+                termsConditions.getClosingProcessInfo().substring(0, 254) :
+                termsConditions.getClosingProcessInfo();
+
+        TermsConditionsEntity termsConditionsEntity = TermsConditionsEntity.builder()
+                .elegibilityCriteriaInfo(elegibilityCriteriaInfo)
+                .closingProcessInfo(closingProcessInfo)
                 .build();
+
+        termsConditionsEntity.setMinimumBalance(MinimumBalanceToMinimumBalanceEntityMapper.convert(termsConditions.getMinimumBalance(), termsConditionsEntity));
+
+        return termsConditionsEntity;
     }
 
 }

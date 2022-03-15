@@ -37,10 +37,10 @@ public class ApiResourceEntity {
     private Long id;
     private String apiFamilyType;
     private String apiVersion;
-    @OneToMany(mappedBy = "apiResource", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "apiResource", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @Setter
     private List<ApiEndPointEntity> apiEndpoint = new ArrayList<>();
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private ParticipantEntity participant;

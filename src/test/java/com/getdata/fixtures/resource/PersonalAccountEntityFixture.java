@@ -1,11 +1,15 @@
 package com.getdata.fixtures.resource;
 
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.Rule;
+import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.getdata.dataprovider.entity.CustomersEntity;
 import com.getdata.dataprovider.entity.FeesPersonalAccountsEntity;
 import com.getdata.dataprovider.entity.IncomeRateEntity;
 import com.getdata.dataprovider.entity.MaximumEntity;
 import com.getdata.dataprovider.entity.MinimumBalanceEntity;
 import com.getdata.dataprovider.entity.MinimumEntity;
+import com.getdata.dataprovider.entity.OpeningClosingChannelsEntity;
 import com.getdata.dataprovider.entity.OtherServiceEntity;
 import com.getdata.dataprovider.entity.PersonalAccountEntity;
 import com.getdata.dataprovider.entity.PriceEntity;
@@ -13,12 +17,11 @@ import com.getdata.dataprovider.entity.PriorityServiceEntity;
 import com.getdata.dataprovider.entity.ServiceBundleEntity;
 import com.getdata.dataprovider.entity.ServiceFromServiceBundleEntity;
 import com.getdata.dataprovider.entity.TermsConditionsEntity;
-import br.com.six2six.fixturefactory.Fixture;
-import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
+import com.getdata.dataprovider.entity.TransactionMethodsEntity;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class PersonalAccountEntityFixture implements TemplateLoader {
 
@@ -30,17 +33,53 @@ public class PersonalAccountEntityFixture implements TemplateLoader {
     }
 
     private void loadData() {
+
         Fixture.of(PersonalAccountEntity.class).addTemplate(VALID, new Rule() {{
-            add(PersonalAccountEntity.Fields.type, "test");
-            add("fees", createFees());
-            add(PersonalAccountEntity.Fields.serviceBundles, Arrays.asList(createServiceBundles()));
-            add(PersonalAccountEntity.Fields.openingClosingChannels, Arrays.asList("test"));
-            add(PersonalAccountEntity.Fields.additionalInfo, "test");
-            add(PersonalAccountEntity.Fields.transactionMethods, Arrays.asList("test"));
-            add("termsConditions", createTermsConditions());
-            add(PersonalAccountEntity.Fields.incomeRate, Arrays.asList(createIncomeRate()));
+            PersonalAccountEntity personalAccountEntity = personalAccountEntityBuilder().build();
+            add(PersonalAccountEntity.Fields.type, personalAccountEntity.getType());
+            add("fees", personalAccountEntity.getFees());
+            add(PersonalAccountEntity.Fields.serviceBundles, personalAccountEntity.getServiceBundles());
+            add(PersonalAccountEntity.Fields.openingClosingChannels, personalAccountEntity.getOpeningClosingChannels());
+            add(PersonalAccountEntity.Fields.additionalInfo, personalAccountEntity.getAdditionalInfo());
+            add(PersonalAccountEntity.Fields.transactionMethods, personalAccountEntity.getTransactionMethods());
+            add("termsConditions", personalAccountEntity.getTermsConditions());
+            add(PersonalAccountEntity.Fields.incomeRate, personalAccountEntity.getIncomeRate());
 
         }});
+    }
+
+    private PersonalAccountEntity.PersonalAccountEntityBuilder personalAccountEntityBuilder() {
+
+        PersonalAccountEntity.PersonalAccountEntityBuilder personalAccountEntityBuilder = PersonalAccountEntity.builder()
+                .type("test")
+                .fees(createFees())
+                .serviceBundles(Arrays.asList(createServiceBundles()))
+                .additionalInfo("test")
+                .termsConditions(createTermsConditions())
+                .incomeRate(Arrays.asList(createIncomeRate()));
+
+        personalAccountEntityBuilder.openingClosingChannels(createOpeningClosingChannels(personalAccountEntityBuilder.build()));
+        personalAccountEntityBuilder.transactionMethods(createTransactionMethods(personalAccountEntityBuilder.build()));
+
+        return personalAccountEntityBuilder;
+    }
+
+    private List<OpeningClosingChannelsEntity> createOpeningClosingChannels(final PersonalAccountEntity personalAccount) {
+
+        return Arrays.asList(OpeningClosingChannelsEntity.builder()
+                .channel("test")
+                .personalAccount(personalAccount)
+                .businessAccount(null)
+                .build());
+    }
+
+    private List<TransactionMethodsEntity> createTransactionMethods(final PersonalAccountEntity personalAccount) {
+
+        return Arrays.asList(TransactionMethodsEntity.builder()
+                .method("test")
+                .personalAccount(personalAccount)
+                .businessAccount(null)
+                .build());
     }
 
     private IncomeRateEntity createIncomeRate() {

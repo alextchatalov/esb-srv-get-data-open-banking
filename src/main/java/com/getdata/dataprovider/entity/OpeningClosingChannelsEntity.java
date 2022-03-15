@@ -10,6 +10,9 @@ import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -23,6 +26,10 @@ import javax.persistence.Table;
 @EqualsAndHashCode
 @ToString
 public class OpeningClosingChannelsEntity {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String channel;
 

@@ -12,6 +12,9 @@ import lombok.experimental.FieldNameConstants;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -27,6 +30,10 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class FeesPersonalAccountsEntity {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @OneToMany(mappedBy = "feesPersonalAccounts", cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter

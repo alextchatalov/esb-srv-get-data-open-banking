@@ -1,11 +1,11 @@
 package com.getdata.dataprovider.mapper;
 
-import com.getdata.dataprovider.entity.BrandEntity;
-import com.getdata.dataprovider.entity.CompanyEntity;
-import com.getdata.dataprovider.entity.DataEntity;
 import com.getdata.core.model.Brand;
 import com.getdata.core.model.Company;
 import com.getdata.core.model.Data;
+import com.getdata.dataprovider.entity.BrandEntity;
+import com.getdata.dataprovider.entity.CompanyEntity;
+import com.getdata.dataprovider.entity.DataEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -28,9 +28,6 @@ public class DataToDataEntityMapper implements Converter<Data, DataEntity> {
     @NonNull
     public DataEntity convert(final Data data) {
         return DataEntity.builder()
-                .id(data.getId())
-                .createDateTime(data.getCreateDateTime())
-                .lastModifiedDateTime(data.getLastModifiedDateTime())
                 .brand(convertBrandToBrandEntity(data.getBrand()))
                 .build();
     }

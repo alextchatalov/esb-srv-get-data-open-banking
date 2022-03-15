@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
-import java.time.LocalDateTime;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -20,8 +18,6 @@ import java.time.LocalDateTime;
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Data {
-    private String id;
-    private LocalDateTime createDateTime;
-    private LocalDateTime lastModifiedDateTime;
+    
     private Brand brand;
 }

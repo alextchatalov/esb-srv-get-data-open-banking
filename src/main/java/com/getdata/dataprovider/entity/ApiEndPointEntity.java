@@ -9,7 +9,6 @@ import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +29,7 @@ public class ApiEndPointEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String endpoint;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private ApiResourceEntity apiResource;

@@ -1,9 +1,9 @@
 package com.getdata.dataprovider.mapper;
 
-import com.getdata.dataprovider.entity.PriceEntity;
-import com.getdata.dataprovider.entity.ServiceBusinessAccountsEntity;
 import com.getdata.core.model.Price;
 import com.getdata.core.model.ServiceBusinessAccounts;
+import com.getdata.dataprovider.entity.PriceEntity;
+import com.getdata.dataprovider.entity.ServiceBusinessAccountsEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -27,10 +27,15 @@ public class ServiceBusinessAccountsToServiceBusinessAccountsEntityMapper implem
     @Override
     @NonNull
     public ServiceBusinessAccountsEntity convert(final ServiceBusinessAccounts serviceBusinessAccounts) {
+
+        String chargingTriggerInfo = serviceBusinessAccounts.getChargingTriggerInfo() != null && serviceBusinessAccounts.getChargingTriggerInfo().length() >= 255 ?
+                serviceBusinessAccounts.getChargingTriggerInfo().substring(0, 254) :
+                serviceBusinessAccounts.getChargingTriggerInfo();
+
         return ServiceBusinessAccountsEntity.builder()
                 .name(serviceBusinessAccounts.getName())
                 .code(serviceBusinessAccounts.getCode())
-                .chargingTriggerInfo(serviceBusinessAccounts.getChargingTriggerInfo())
+                .chargingTriggerInfo(chargingTriggerInfo)
                 .prices(convertListOfPricesToListOfPricesEntity(serviceBusinessAccounts.getPrices()))
                 .minimum(minimumToMinimumEntityMapper.convert(serviceBusinessAccounts.getMinimum()))
                 .maximum(maximumToMaximumEntityMapper.convert(serviceBusinessAccounts.getMaximum()))
