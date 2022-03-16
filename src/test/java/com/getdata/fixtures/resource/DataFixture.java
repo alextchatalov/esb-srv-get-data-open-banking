@@ -139,7 +139,7 @@ public class DataFixture implements TemplateLoader {
     private ServiceFromServiceBundle createService() {
 
         return ServiceFromServiceBundle.builder()
-                .code("test")
+                .code("123")
                 .chargingTriggerInfo("test")
                 .eventLimitQuantity("1")
                 .freeEventQuantity("1")

@@ -4,29 +4,19 @@ import com.getdata.core.model.Price;
 import com.getdata.core.model.ServiceBusinessAccounts;
 import com.getdata.dataprovider.entity.PriceEntity;
 import com.getdata.dataprovider.entity.ServiceBusinessAccountsEntity;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Lazy
-@Component
-@AllArgsConstructor
-public class ServiceBusinessAccountsToServiceBusinessAccountsEntityMapper implements Converter<ServiceBusinessAccounts, ServiceBusinessAccountsEntity> {
+public class ServiceBusinessAccountsToServiceBusinessAccountsEntityMapper {
 
-    private final PriceToPriceEntityMapper priceToPriceEntityMapper;
-    private final MinimumToMinimumEntityMapper minimumToMinimumEntityMapper;
-    private final MaximumToMaximumEntityMapper maximumToMaximumEntityMapper;
-
-    @Override
     @NonNull
-    public ServiceBusinessAccountsEntity convert(final ServiceBusinessAccounts serviceBusinessAccounts) {
+    public static ServiceBusinessAccountsEntity convert(final ServiceBusinessAccounts serviceBusinessAccounts) {
 
         String chargingTriggerInfo = serviceBusinessAccounts.getChargingTriggerInfo() != null && serviceBusinessAccounts.getChargingTriggerInfo().length() >= 255 ?
                 serviceBusinessAccounts.getChargingTriggerInfo().substring(0, 254) :
@@ -37,15 +27,15 @@ public class ServiceBusinessAccountsToServiceBusinessAccountsEntityMapper implem
                 .code(serviceBusinessAccounts.getCode())
                 .chargingTriggerInfo(chargingTriggerInfo)
                 .prices(convertListOfPricesToListOfPricesEntity(serviceBusinessAccounts.getPrices()))
-                .minimum(minimumToMinimumEntityMapper.convert(serviceBusinessAccounts.getMinimum()))
-                .maximum(maximumToMaximumEntityMapper.convert(serviceBusinessAccounts.getMaximum()))
+                .minimum(MinimumToMinimumEntityMapper.convert(serviceBusinessAccounts.getMinimum()))
+                .maximum(MaximumToMaximumEntityMapper.convert(serviceBusinessAccounts.getMaximum()))
                 .eventLimitQuantity(serviceBusinessAccounts.getEventLimitQuantity())
                 .freeEventQuantity(serviceBusinessAccounts.getFreeEventQuantity())
                 .build();
     }
 
-    private List<PriceEntity> convertListOfPricesToListOfPricesEntity(final List<Price> prices) {
-        return prices.stream().map(priceToPriceEntityMapper::convert).collect(Collectors.toList());
+    private static List<PriceEntity> convertListOfPricesToListOfPricesEntity(final List<Price> prices) {
+        return prices.stream().map(PriceToPriceEntityMapper::convert).collect(Collectors.toList());
 
     }
 

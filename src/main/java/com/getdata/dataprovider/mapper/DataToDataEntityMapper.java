@@ -22,24 +22,28 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class DataToDataEntityMapper implements Converter<Data, DataEntity> {
 
-    private final CompanyToCompanyEntityMapper companyToCompanyEntityMapper;
-
     @Override
     @NonNull
     public DataEntity convert(final Data data) {
-        return DataEntity.builder()
-                .brand(convertBrandToBrandEntity(data.getBrand()))
-                .build();
+
+        DataEntity dataEntity = DataEntity.builder().build();
+        BrandEntity brandEntity = convertBrandToBrandEntity(data.getBrand(), dataEntity);
+        dataEntity.setBrand(brandEntity);
+        return dataEntity;
     }
 
-    private BrandEntity convertBrandToBrandEntity(final Brand brand) {
-        return BrandEntity.builder()
+    private BrandEntity convertBrandToBrandEntity(final Brand brand, DataEntity dataEntity) {
+        BrandEntity brandEntity = BrandEntity.builder()
+                .data(dataEntity)
                 .name(brand.getName())
-                .companies(convertListOfCompaniesToListOfCompaniesEntity(brand.getCompanies()))
                 .build();
+
+        List<CompanyEntity> companyEntities = convertListOfCompaniesToListOfCompaniesEntity(brand.getCompanies(), brandEntity);
+        brandEntity.setCompanies(companyEntities);
+        return brandEntity;
     }
 
-    private List<CompanyEntity> convertListOfCompaniesToListOfCompaniesEntity(final List<Company> companies) {
-        return companies.stream().map(companyToCompanyEntityMapper::convert).collect(Collectors.toList());
+    private List<CompanyEntity> convertListOfCompaniesToListOfCompaniesEntity(final List<Company> companies, final BrandEntity brandEntity) {
+        return companies.stream().map(company -> CompanyToCompanyEntityMapper.convert(company, brandEntity)).collect(Collectors.toList());
     }
 }

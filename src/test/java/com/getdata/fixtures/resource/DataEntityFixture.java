@@ -25,7 +25,6 @@ import com.getdata.dataprovider.entity.ServiceFromServiceBundleEntity;
 import com.getdata.dataprovider.entity.TermsConditionsEntity;
 import com.getdata.dataprovider.entity.TransactionMethodsEntity;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -42,8 +41,6 @@ public class DataEntityFixture implements TemplateLoader {
     private void loadData() {
         Fixture.of(DataEntity.class).addTemplate(VALID, new Rule() {{
             add(DataEntity.Fields.id, "123");
-            add(DataEntity.Fields.createDateTime, LocalDateTime.parse("2022-02-05T09:30:00.000"));
-            add(DataEntity.Fields.lastModifiedDateTime, LocalDateTime.parse("2022-02-05T09:30:00.000"));
             add(DataEntity.Fields.brand, createBrand());
 
         }});
@@ -61,7 +58,7 @@ public class DataEntityFixture implements TemplateLoader {
 
         return CompanyEntity.builder()
                 .name("test")
-                .cnpjNumber("1244441")
+                .cnpjNumber("1234444456")
                 .urlComplementaryList("test")
                 .personalAccounts(Collections.singletonList(createPersonalAccount()))
                 .businessAccounts(Collections.singletonList(createBusinessAccount()))

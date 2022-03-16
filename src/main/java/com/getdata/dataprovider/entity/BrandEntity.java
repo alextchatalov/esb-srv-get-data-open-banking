@@ -11,7 +11,6 @@ import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,7 +39,7 @@ public class BrandEntity {
     @Setter
     private List<CompanyEntity> companies;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private DataEntity data;
