@@ -3,9 +3,11 @@ package com.getdata.dataprovider.mapper;
 import br.com.six2six.fixturefactory.Fixture;
 import com.getdata.core.model.FeesPersonalAccounts;
 import com.getdata.dataprovider.entity.FeesPersonalAccountsEntity;
+import com.getdata.dataprovider.entity.PersonalAccountEntity;
 import com.getdata.fixtures.FixtureLoader;
 import com.getdata.fixtures.resource.FeesPersonalAccountsEntityFixture;
 import com.getdata.fixtures.resource.FeesPersonalAccountsFixture;
+import com.getdata.fixtures.resource.PersonalAccountEntityFixture;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,10 +30,11 @@ class FeesPersonalAccountsToFeesPersonalAccountsEntityMapperTest {
     @Test
     void given_a_fees_mapper_When_call_convert_to_fees_entity_Then_return_fees_entity() {
 
+        final PersonalAccountEntity personalAccountEntityMock = Fixture.from(PersonalAccountEntity.class).gimme(PersonalAccountEntityFixture.VALID);
         final FeesPersonalAccounts feesPersonalAccountsMock = Fixture.from(FeesPersonalAccounts.class).gimme(FeesPersonalAccountsFixture.VALID);
         final FeesPersonalAccountsEntity feesPersonalAccountsEntityMock = Fixture.from(FeesPersonalAccountsEntity.class).gimme(FeesPersonalAccountsEntityFixture.VALID);
 
-        final FeesPersonalAccountsEntity feesPersonalAccountsEntity = mapper.convert(feesPersonalAccountsMock);
+        final FeesPersonalAccountsEntity feesPersonalAccountsEntity = mapper.convert(feesPersonalAccountsMock, personalAccountEntityMock);
 
         assertThat(feesPersonalAccountsEntity).isEqualTo(feesPersonalAccountsEntityMock);
     }

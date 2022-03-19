@@ -19,25 +19,25 @@ public class BusinessAccountToBusinessAccountEntityMapper {
 
     @NonNull
     public static BusinessAccountEntity convert(final BusinessAccount businessAccount) {
-        BusinessAccountEntity businessAccountEntity = BusinessAccountEntity.builder()
+        final BusinessAccountEntity businessAccountEntity = BusinessAccountEntity.builder()
                 .type(businessAccount.getType())
-                .fees(FeesBusinessAccountsToFeesBusinessAccountsEntityMapper.convert(businessAccount.getFees()))
-                .serviceBundles(convertListOfServiceBundleToListOfServiceBundleEntity(businessAccount.getServiceBundles()))
                 .additionalInfo(businessAccount.getAdditionalInfo())
-                .termsConditions(TermsConditionsToTermsConditionsEntityMapper.convert(businessAccount.getTermsConditions()))
-                .incomeRate(IncomeRateToIncomeRateEntityMapper.convert(businessAccount.getIncomeRate()))
                 .build();
 
-        List<OpeningClosingChannelsEntity> openingClosingChannelsEntities = OpeningClosingChannelsToOpeningClosingChannelsEntity.convert(businessAccount.getOpeningClosingChannels(), null, businessAccountEntity);
-        List<TransactionMethodsEntity> transactionMethodsEntities = TransactionMethodsToTransactionMethodsEntity.convert(businessAccount.getTransactionMethods(), null, businessAccountEntity);
+        final List<OpeningClosingChannelsEntity> openingClosingChannelsEntities = OpeningClosingChannelsToOpeningClosingChannelsEntity.convertWithBusinessAccounts(businessAccount.getOpeningClosingChannels(), businessAccountEntity);
+        final List<TransactionMethodsEntity> transactionMethodsEntities = TransactionMethodsToTransactionMethodsEntity.convertWithBusinessAccounts(businessAccount.getTransactionMethods(), businessAccountEntity);
         businessAccountEntity.setOpeningClosingChannels(openingClosingChannelsEntities);
         businessAccountEntity.setTransactionMethods(transactionMethodsEntities);
+        businessAccountEntity.setFees(FeesBusinessAccountsToFeesBusinessAccountsEntityMapper.convert(businessAccount.getFees(), businessAccountEntity));
+        businessAccountEntity.setServiceBundles(convertListOfServiceBundleToListOfServiceBundleEntity(businessAccount.getServiceBundles(), businessAccountEntity));
+        businessAccountEntity.setTermsConditions(TermsConditionsToTermsConditionsEntityMapper.convertWithBusinessAccounts(businessAccount.getTermsConditions(), businessAccountEntity));
+        businessAccountEntity.setIncomeRate(IncomeRateToIncomeRateEntityMapper.convertWithBusinessAccounts(businessAccount.getIncomeRate(), businessAccountEntity));
 
         return businessAccountEntity;
     }
 
-    private static List<ServiceBundleEntity> convertListOfServiceBundleToListOfServiceBundleEntity(final List<ServiceBundle> serviceBundles) {
-        return serviceBundles.stream().map(ServiceBundleToServiceBundleEntityMapper::convert).collect(Collectors.toList());
+    private static List<ServiceBundleEntity> convertListOfServiceBundleToListOfServiceBundleEntity(final List<ServiceBundle> serviceBundles, final BusinessAccountEntity businessAccountEntity) {
+        return serviceBundles.stream().map(service -> ServiceBundleToServiceBundleEntityMapper.convertWithBusinessAccounts(service, businessAccountEntity)).collect(Collectors.toList());
     }
 
 }

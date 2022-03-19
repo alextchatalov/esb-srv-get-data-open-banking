@@ -3,9 +3,11 @@ package com.getdata.dataprovider.mapper;
 import br.com.six2six.fixturefactory.Fixture;
 import com.getdata.core.model.IncomeRate;
 import com.getdata.dataprovider.entity.IncomeRateEntity;
+import com.getdata.dataprovider.entity.PersonalAccountEntity;
 import com.getdata.fixtures.FixtureLoader;
 import com.getdata.fixtures.resource.IncomeRateEntityFixture;
 import com.getdata.fixtures.resource.IncomeRateFixture;
+import com.getdata.fixtures.resource.PersonalAccountEntityFixture;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,10 +30,11 @@ class IncomeRateToIncomeRateEntityMapperTest {
     @Test
     void given_a_incomeRate_mapper_When_call_convert_to_incomeRate_entity_Then_return_incomeRate_entity() {
 
+        final PersonalAccountEntity personalAccountEntityMock = Fixture.from(PersonalAccountEntity.class).gimme(PersonalAccountEntityFixture.VALID);
         final IncomeRate incomeRateMock = Fixture.from(IncomeRate.class).gimme(IncomeRateFixture.VALID);
         final IncomeRateEntity incomeRateEntityMock = Fixture.from(IncomeRateEntity.class).gimme(IncomeRateEntityFixture.VALID);
 
-        final IncomeRateEntity incomeRateEntity = mapper.convert(incomeRateMock);
+        final IncomeRateEntity incomeRateEntity = mapper.convertWithPersonalAccounts(incomeRateMock, personalAccountEntityMock);
 
         assertThat(incomeRateEntity).isEqualTo(incomeRateEntityMock);
     }

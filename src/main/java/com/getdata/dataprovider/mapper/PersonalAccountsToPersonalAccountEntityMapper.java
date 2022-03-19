@@ -3,6 +3,7 @@ package com.getdata.dataprovider.mapper;
 import com.getdata.core.model.IncomeRate;
 import com.getdata.core.model.PersonalAccount;
 import com.getdata.core.model.ServiceBundle;
+import com.getdata.dataprovider.entity.CompanyEntity;
 import com.getdata.dataprovider.entity.IncomeRateEntity;
 import com.getdata.dataprovider.entity.OpeningClosingChannelsEntity;
 import com.getdata.dataprovider.entity.PersonalAccountEntity;
@@ -20,31 +21,33 @@ import java.util.stream.Collectors;
 public class PersonalAccountsToPersonalAccountEntityMapper {
 
     @NonNull
-    public static PersonalAccountEntity convert(final PersonalAccount personalAccount) {
+    public static PersonalAccountEntity convert(final PersonalAccount personalAccount, final CompanyEntity company) {
 
-        PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
+        final PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
                 .type(personalAccount.getType())
-                .fees(FeesPersonalAccountsToFeesPersonalAccountsEntityMapper.convert(personalAccount.getFees()))
-                .serviceBundles(convertListOfServiceBundleToListOfServiceBundleEntity(personalAccount.getServiceBundles()))
                 .additionalInfo(personalAccount.getAdditionalInfo())
-                .termsConditions(TermsConditionsToTermsConditionsEntityMapper.convert(personalAccount.getTermsConditions()))
-                .incomeRate(convertListOfIncomeRateToListOfIncomeRateEntity(personalAccount.getIncomeRate()))
+                .company(company)
                 .build();
 
-        List<OpeningClosingChannelsEntity> openingClosingChannelsEntities = OpeningClosingChannelsToOpeningClosingChannelsEntity.convert(personalAccount.getOpeningClosingChannels(), personalAccountEntity, null);
-        List<TransactionMethodsEntity> transactionMethodsEntities = TransactionMethodsToTransactionMethodsEntity.convert(personalAccount.getTransactionMethods(), personalAccountEntity, null);
+        final List<OpeningClosingChannelsEntity> openingClosingChannelsEntities = OpeningClosingChannelsToOpeningClosingChannelsEntity.convertWithPersonalAccounts(personalAccount.getOpeningClosingChannels(), personalAccountEntity);
+        final List<TransactionMethodsEntity> transactionMethodsEntities = TransactionMethodsToTransactionMethodsEntity.convertWithPersonalAccounts(personalAccount.getTransactionMethods(), personalAccountEntity);
+        personalAccountEntity.setFees(FeesPersonalAccountsToFeesPersonalAccountsEntityMapper.convert(personalAccount.getFees(), personalAccountEntity));
+        personalAccountEntity.setServiceBundles(convertListOfServiceBundleToListOfServiceBundleEntity(personalAccount.getServiceBundles(), personalAccountEntity));
+        personalAccountEntity.setTermsConditions(TermsConditionsToTermsConditionsEntityMapper.convertWithPersonalAccounts(personalAccount.getTermsConditions(), personalAccountEntity));
+        personalAccountEntity.setIncomeRate(convertListOfIncomeRateToListOfIncomeRateEntity(personalAccount.getIncomeRate(), personalAccountEntity));
         personalAccountEntity.setOpeningClosingChannels(openingClosingChannelsEntities);
         personalAccountEntity.setTransactionMethods(transactionMethodsEntities);
+
 
         return personalAccountEntity;
     }
 
-    private static List<ServiceBundleEntity> convertListOfServiceBundleToListOfServiceBundleEntity(final List<ServiceBundle> serviceBundles) {
-        return serviceBundles.stream().map(ServiceBundleToServiceBundleEntityMapper::convert).collect(Collectors.toList());
+    private static List<ServiceBundleEntity> convertListOfServiceBundleToListOfServiceBundleEntity(final List<ServiceBundle> serviceBundles, final PersonalAccountEntity personalAccountEntity) {
+        return serviceBundles.stream().map(service -> ServiceBundleToServiceBundleEntityMapper.convertWithPersonalAccounts(service, personalAccountEntity)).collect(Collectors.toList());
     }
 
-    private static List<IncomeRateEntity> convertListOfIncomeRateToListOfIncomeRateEntity(final List<IncomeRate> incomeRates) {
-        return incomeRates.stream().map(IncomeRateToIncomeRateEntityMapper::convert).collect(Collectors.toList());
+    private static List<IncomeRateEntity> convertListOfIncomeRateToListOfIncomeRateEntity(final List<IncomeRate> incomeRates, final PersonalAccountEntity personalAccountEntity) {
+        return incomeRates.stream().map(income -> IncomeRateToIncomeRateEntityMapper.convertWithPersonalAccounts(income, personalAccountEntity)).collect(Collectors.toList());
     }
 
 }

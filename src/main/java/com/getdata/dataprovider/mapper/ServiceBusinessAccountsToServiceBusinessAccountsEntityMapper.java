@@ -18,24 +18,27 @@ public class ServiceBusinessAccountsToServiceBusinessAccountsEntityMapper {
     @NonNull
     public static ServiceBusinessAccountsEntity convert(final ServiceBusinessAccounts serviceBusinessAccounts) {
 
-        String chargingTriggerInfo = serviceBusinessAccounts.getChargingTriggerInfo() != null && serviceBusinessAccounts.getChargingTriggerInfo().length() >= 255 ?
+        final String chargingTriggerInfo = serviceBusinessAccounts.getChargingTriggerInfo() != null && serviceBusinessAccounts.getChargingTriggerInfo().length() >= 255 ?
                 serviceBusinessAccounts.getChargingTriggerInfo().substring(0, 254) :
                 serviceBusinessAccounts.getChargingTriggerInfo();
 
-        return ServiceBusinessAccountsEntity.builder()
+        final ServiceBusinessAccountsEntity serviceBusinessAccountsEntity = ServiceBusinessAccountsEntity.builder()
                 .name(serviceBusinessAccounts.getName())
                 .code(serviceBusinessAccounts.getCode())
                 .chargingTriggerInfo(chargingTriggerInfo)
-                .prices(convertListOfPricesToListOfPricesEntity(serviceBusinessAccounts.getPrices()))
-                .minimum(MinimumToMinimumEntityMapper.convert(serviceBusinessAccounts.getMinimum()))
-                .maximum(MaximumToMaximumEntityMapper.convert(serviceBusinessAccounts.getMaximum()))
                 .eventLimitQuantity(serviceBusinessAccounts.getEventLimitQuantity())
                 .freeEventQuantity(serviceBusinessAccounts.getFreeEventQuantity())
                 .build();
+
+        serviceBusinessAccountsEntity.setPrices(convertListOfPricesToListOfPricesEntity(serviceBusinessAccounts.getPrices(), serviceBusinessAccountsEntity));
+        serviceBusinessAccountsEntity.setMinimum(MinimumToMinimumEntityMapper.convertWithServiceBusinessAccounts(serviceBusinessAccounts.getMinimum(), serviceBusinessAccountsEntity));
+        serviceBusinessAccountsEntity.setMaximum(MaximumToMaximumEntityMapper.convertWithServiceBusinessAccounts(serviceBusinessAccounts.getMaximum(), serviceBusinessAccountsEntity));
+
+        return serviceBusinessAccountsEntity;
     }
 
-    private static List<PriceEntity> convertListOfPricesToListOfPricesEntity(final List<Price> prices) {
-        return prices.stream().map(PriceToPriceEntityMapper::convert).collect(Collectors.toList());
+    private static List<PriceEntity> convertListOfPricesToListOfPricesEntity(final List<Price> prices, final ServiceBusinessAccountsEntity serviceBusinessAccountsEntity) {
+        return prices.stream().map(price -> PriceToPriceEntityMapper.convertWithServiceBusinessAccounts(price, serviceBusinessAccountsEntity)).collect(Collectors.toList());
 
     }
 

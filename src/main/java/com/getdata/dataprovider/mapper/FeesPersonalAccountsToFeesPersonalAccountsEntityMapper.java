@@ -5,6 +5,7 @@ import com.getdata.core.model.OtherService;
 import com.getdata.core.model.PriorityService;
 import com.getdata.dataprovider.entity.FeesPersonalAccountsEntity;
 import com.getdata.dataprovider.entity.OtherServiceEntity;
+import com.getdata.dataprovider.entity.PersonalAccountEntity;
 import com.getdata.dataprovider.entity.PriorityServiceEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -18,10 +19,11 @@ import java.util.stream.Collectors;
 public class FeesPersonalAccountsToFeesPersonalAccountsEntityMapper {
 
     @NonNull
-    public static FeesPersonalAccountsEntity convert(final FeesPersonalAccounts feesPersonalAccounts) {
+    public static FeesPersonalAccountsEntity convert(final FeesPersonalAccounts feesPersonalAccounts, final PersonalAccountEntity personalAccountEntity) {
         return FeesPersonalAccountsEntity.builder()
-                .priorityServices(convertListOfPriorityServicesToListOfPriorityServicesEntity(feesPersonalAccounts.getPriorityServices()))
-                .otherServices(convertListOfOtherServicesToListOfOtherServicesEntity(feesPersonalAccounts.getOtherServices()))
+                .personalAccount(personalAccountEntity)
+                .priorityServices(convertListOfPriorityServicesToListOfPriorityServicesEntity(feesPersonalAccounts.getPriorityServices())) //todo ajustar
+                .otherServices(convertListOfOtherServicesToListOfOtherServicesEntity(feesPersonalAccounts.getOtherServices())) //todo ajustar
                 .build();
     }
 

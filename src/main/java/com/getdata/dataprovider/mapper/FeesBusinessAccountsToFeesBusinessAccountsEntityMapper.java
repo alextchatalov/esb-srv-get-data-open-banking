@@ -2,6 +2,7 @@ package com.getdata.dataprovider.mapper;
 
 import com.getdata.core.model.FeesBusinessAccounts;
 import com.getdata.core.model.ServiceBusinessAccounts;
+import com.getdata.dataprovider.entity.BusinessAccountEntity;
 import com.getdata.dataprovider.entity.FeesBusinessAccountsEntity;
 import com.getdata.dataprovider.entity.ServiceBusinessAccountsEntity;
 import lombok.extern.slf4j.Slf4j;
@@ -16,10 +17,15 @@ import java.util.stream.Collectors;
 public class FeesBusinessAccountsToFeesBusinessAccountsEntityMapper {
 
     @NonNull
-    public static FeesBusinessAccountsEntity convert(final FeesBusinessAccounts feesBusinessAccounts) {
-        return FeesBusinessAccountsEntity.builder()
-                .services(convertListOfServiceBusinessAccountsToListOfServiceBusinessAccountsEntity(feesBusinessAccounts.getServices()))
+    public static FeesBusinessAccountsEntity convert(final FeesBusinessAccounts feesBusinessAccounts, final BusinessAccountEntity businessAccountEntity) {
+
+        final FeesBusinessAccountsEntity feesBusinessAccountsEntity = FeesBusinessAccountsEntity.builder()
+                .businessAccount(businessAccountEntity)
                 .build();
+
+        feesBusinessAccountsEntity.setServices(convertListOfServiceBusinessAccountsToListOfServiceBusinessAccountsEntity(feesBusinessAccounts.getServices()));
+
+        return feesBusinessAccountsEntity;
     }
 
     private static List<ServiceBusinessAccountsEntity> convertListOfServiceBusinessAccountsToListOfServiceBusinessAccountsEntity(final List<ServiceBusinessAccounts> serviceBusinessAccounts) {

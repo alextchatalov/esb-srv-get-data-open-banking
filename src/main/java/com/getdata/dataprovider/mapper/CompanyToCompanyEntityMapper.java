@@ -26,7 +26,7 @@ public class CompanyToCompanyEntityMapper {
                 .urlComplementaryList(company.getUrlComplementaryList())
                 .build();
 
-        List<PersonalAccountEntity> personalAccountEntities = convertPersonalAccountsListToPersonalAccountEntityList(company.getPersonalAccounts());
+        List<PersonalAccountEntity> personalAccountEntities = convertPersonalAccountsListToPersonalAccountEntityList(company.getPersonalAccounts(), companyEntity);
         List<BusinessAccountEntity> businessAccountEntities = convertBusinessAccountListToBusinessAccountEntityList(company.getBusinessAccounts());
         companyEntity.setPersonalAccounts(personalAccountEntities);
         companyEntity.setBusinessAccounts(businessAccountEntities);
@@ -34,9 +34,9 @@ public class CompanyToCompanyEntityMapper {
         return companyEntity;
     }
 
-    private static List<PersonalAccountEntity> convertPersonalAccountsListToPersonalAccountEntityList(final List<PersonalAccount> personalAccounts) {
+    private static List<PersonalAccountEntity> convertPersonalAccountsListToPersonalAccountEntityList(final List<PersonalAccount> personalAccounts, final CompanyEntity companyEntity) {
         if (personalAccounts != null && !personalAccounts.isEmpty()) {
-            return personalAccounts.stream().map(PersonalAccountsToPersonalAccountEntityMapper::convert).collect(Collectors.toList());
+            return personalAccounts.stream().map(personalAccount -> PersonalAccountsToPersonalAccountEntityMapper.convert(personalAccount, companyEntity)).collect(Collectors.toList());
         }
         return null;
     }

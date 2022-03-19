@@ -1,6 +1,7 @@
 package com.getdata.dataprovider.mapper;
 
 import com.getdata.core.model.ServiceFromServiceBundle;
+import com.getdata.dataprovider.entity.ServiceBundleEntity;
 import com.getdata.dataprovider.entity.ServiceFromServiceBundleEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -11,14 +12,15 @@ import org.springframework.lang.NonNull;
 public class ServiceFromServiceBundleToServiceFromServiceBundleEntityMapper {
 
     @NonNull
-    public static ServiceFromServiceBundleEntity convert(final ServiceFromServiceBundle services) {
+    public static ServiceFromServiceBundleEntity convert(final ServiceFromServiceBundle services, final ServiceBundleEntity serviceBundleEntity) {
 
-        String chargingTriggerInfo = services.getChargingTriggerInfo() != null && services.getChargingTriggerInfo().length() >= 255 ?
+        final String chargingTriggerInfo = services.getChargingTriggerInfo() != null && services.getChargingTriggerInfo().length() >= 255 ?
                 services.getChargingTriggerInfo().substring(0, 254) :
                 services.getChargingTriggerInfo();
 
         return ServiceFromServiceBundleEntity.builder()
                 .code(services.getCode())
+                .serviceBundle(serviceBundleEntity)
                 .chargingTriggerInfo(chargingTriggerInfo)
                 .eventLimitQuantity(services.getEventLimitQuantity())
                 .freeEventQuantity(services.getFreeEventQuantity())

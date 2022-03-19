@@ -18,22 +18,25 @@ public class PriorityServiceToPriorityServiceEntityMapper {
     @NonNull
     public static PriorityServiceEntity convert(final PriorityService priorityService) {
 
-        String chargingTriggerInfo = priorityService.getChargingTriggerInfo() != null && priorityService.getChargingTriggerInfo().length() >= 255 ?
+        final String chargingTriggerInfo = priorityService.getChargingTriggerInfo() != null && priorityService.getChargingTriggerInfo().length() >= 255 ?
                 priorityService.getChargingTriggerInfo().substring(0, 254) :
                 priorityService.getChargingTriggerInfo();
 
-        return PriorityServiceEntity.builder()
+        final PriorityServiceEntity priorityServiceEntity = PriorityServiceEntity.builder()
                 .name(priorityService.getName())
                 .code(priorityService.getCode())
                 .chargingTriggerInfo(chargingTriggerInfo)
-                .prices(convertListOfPricesToListOfPricesEntity(priorityService.getPrices()))
-                .minimum(MinimumToMinimumEntityMapper.convert(priorityService.getMinimum()))
-                .maximum(MaximumToMaximumEntityMapper.convert(priorityService.getMaximum()))
                 .build();
+
+        priorityServiceEntity.setPrices(convertListOfPricesToListOfPricesEntity(priorityService.getPrices(), priorityServiceEntity));
+        priorityServiceEntity.setMinimum(MinimumToMinimumEntityMapper.convertWithPriorityService(priorityService.getMinimum(), priorityServiceEntity));
+        priorityServiceEntity.setMaximum(MaximumToMaximumEntityMapper.convertWithPriorityService(priorityService.getMaximum(), priorityServiceEntity));
+
+        return priorityServiceEntity;
     }
 
-    private static List<PriceEntity> convertListOfPricesToListOfPricesEntity(final List<Price> prices) {
-        return prices.stream().map(PriceToPriceEntityMapper::convert).collect(Collectors.toList());
+    private static List<PriceEntity> convertListOfPricesToListOfPricesEntity(final List<Price> prices, final PriorityServiceEntity priorityServiceEntity) {
+        return prices.stream().map(price -> PriceToPriceEntityMapper.convertWithPriorityService(price, priorityServiceEntity)).collect(Collectors.toList());
     }
 
 }

@@ -18,22 +18,25 @@ public class OtherServiceToOtherServiceEntityMapper {
     @NonNull
     public static OtherServiceEntity convert(final OtherService otherService) {
 
-        String chargingTriggerInfo = otherService.getChargingTriggerInfo() != null && otherService.getChargingTriggerInfo().length() >= 255 ?
+        final String chargingTriggerInfo = otherService.getChargingTriggerInfo() != null && otherService.getChargingTriggerInfo().length() >= 255 ?
                 otherService.getChargingTriggerInfo().substring(0, 254) :
                 otherService.getChargingTriggerInfo();
 
-        return OtherServiceEntity.builder()
+        final OtherServiceEntity otherServiceEntity = OtherServiceEntity.builder()
                 .name(otherService.getName())
                 .code(otherService.getCode())
                 .chargingTriggerInfo(chargingTriggerInfo)
-                .prices(convertListOfPricesToListOfPricesEntity(otherService.getPrices()))
-                .minimum(MinimumToMinimumEntityMapper.convert(otherService.getMinimum()))
-                .maximum(MaximumToMaximumEntityMapper.convert(otherService.getMaximum()))
                 .build();
+
+        otherServiceEntity.setPrices(convertListOfPricesToListOfPricesEntity(otherService.getPrices(), otherServiceEntity));
+        otherServiceEntity.setMinimum(MinimumToMinimumEntityMapper.convertWithOtherService(otherService.getMinimum(), otherServiceEntity));
+        otherServiceEntity.setMaximum(MaximumToMaximumEntityMapper.convertWithOtherService(otherService.getMaximum(), otherServiceEntity));
+
+        return otherServiceEntity;
     }
 
-    private static List<PriceEntity> convertListOfPricesToListOfPricesEntity(final List<Price> prices) {
-        return prices.stream().map(PriceToPriceEntityMapper::convert).collect(Collectors.toList());
+    private static List<PriceEntity> convertListOfPricesToListOfPricesEntity(final List<Price> prices, final OtherServiceEntity otherServiceEntity) {
+        return prices.stream().map(price -> PriceToPriceEntityMapper.convertWithOtherService(price, otherServiceEntity)).collect(Collectors.toList());
 
     }
 }
