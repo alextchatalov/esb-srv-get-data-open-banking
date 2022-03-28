@@ -23,13 +23,13 @@ public class FeesBusinessAccountsToFeesBusinessAccountsEntityMapper {
                 .businessAccount(businessAccountEntity)
                 .build();
 
-        feesBusinessAccountsEntity.setServices(convertListOfServiceBusinessAccountsToListOfServiceBusinessAccountsEntity(feesBusinessAccounts.getServices()));
+        feesBusinessAccountsEntity.setServices(convertListOfServiceBusinessAccountsToListOfServiceBusinessAccountsEntity(feesBusinessAccounts.getServices(), feesBusinessAccountsEntity));
 
         return feesBusinessAccountsEntity;
     }
 
-    private static List<ServiceBusinessAccountsEntity> convertListOfServiceBusinessAccountsToListOfServiceBusinessAccountsEntity(final List<ServiceBusinessAccounts> serviceBusinessAccounts) {
-        return serviceBusinessAccounts.stream().map(ServiceBusinessAccountsToServiceBusinessAccountsEntityMapper::convert).collect(Collectors.toList());
+    private static List<ServiceBusinessAccountsEntity> convertListOfServiceBusinessAccountsToListOfServiceBusinessAccountsEntity(final List<ServiceBusinessAccounts> serviceBusinessAccounts, final FeesBusinessAccountsEntity feesBusinessAccountsEntity) {
+        return serviceBusinessAccounts.stream().map(service -> ServiceBusinessAccountsToServiceBusinessAccountsEntityMapper.convert(service, feesBusinessAccountsEntity)).collect(Collectors.toList());
     }
 
 }
