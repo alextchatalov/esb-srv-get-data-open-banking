@@ -2,6 +2,7 @@ package com.getdata.dataprovider.mapper;
 
 import com.getdata.core.model.Price;
 import com.getdata.core.model.PriorityService;
+import com.getdata.dataprovider.entity.FeesPersonalAccountsEntity;
 import com.getdata.dataprovider.entity.PriceEntity;
 import com.getdata.dataprovider.entity.PriorityServiceEntity;
 import lombok.extern.slf4j.Slf4j;
@@ -16,13 +17,14 @@ import java.util.stream.Collectors;
 public class PriorityServiceToPriorityServiceEntityMapper {
 
     @NonNull
-    public static PriorityServiceEntity convert(final PriorityService priorityService) {
+    public static PriorityServiceEntity convert(final PriorityService priorityService, final FeesPersonalAccountsEntity feesPersonalAccountsEntity) {
 
         final String chargingTriggerInfo = priorityService.getChargingTriggerInfo() != null && priorityService.getChargingTriggerInfo().length() >= 255 ?
                 priorityService.getChargingTriggerInfo().substring(0, 254) :
                 priorityService.getChargingTriggerInfo();
 
         final PriorityServiceEntity priorityServiceEntity = PriorityServiceEntity.builder()
+                .feesPersonalAccounts(feesPersonalAccountsEntity)
                 .name(priorityService.getName())
                 .code(priorityService.getCode())
                 .chargingTriggerInfo(chargingTriggerInfo)

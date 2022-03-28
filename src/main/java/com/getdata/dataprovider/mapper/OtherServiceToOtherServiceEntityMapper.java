@@ -2,6 +2,7 @@ package com.getdata.dataprovider.mapper;
 
 import com.getdata.core.model.OtherService;
 import com.getdata.core.model.Price;
+import com.getdata.dataprovider.entity.FeesPersonalAccountsEntity;
 import com.getdata.dataprovider.entity.OtherServiceEntity;
 import com.getdata.dataprovider.entity.PriceEntity;
 import lombok.extern.slf4j.Slf4j;
@@ -16,13 +17,14 @@ import java.util.stream.Collectors;
 public class OtherServiceToOtherServiceEntityMapper {
 
     @NonNull
-    public static OtherServiceEntity convert(final OtherService otherService) {
+    public static OtherServiceEntity convert(final OtherService otherService, final FeesPersonalAccountsEntity feesPersonalAccountsEntity) {
 
         final String chargingTriggerInfo = otherService.getChargingTriggerInfo() != null && otherService.getChargingTriggerInfo().length() >= 255 ?
                 otherService.getChargingTriggerInfo().substring(0, 254) :
                 otherService.getChargingTriggerInfo();
 
         final OtherServiceEntity otherServiceEntity = OtherServiceEntity.builder()
+                .feesPersonalAccounts(feesPersonalAccountsEntity)
                 .name(otherService.getName())
                 .code(otherService.getCode())
                 .chargingTriggerInfo(chargingTriggerInfo)

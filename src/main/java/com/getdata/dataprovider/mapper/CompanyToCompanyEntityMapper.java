@@ -18,16 +18,16 @@ import java.util.stream.Collectors;
 public class CompanyToCompanyEntityMapper {
 
 
-    public static CompanyEntity convert(final Company company, BrandEntity brandEntity) {
-        CompanyEntity companyEntity = CompanyEntity.builder()
+    public static CompanyEntity convert(final Company company, final BrandEntity brandEntity) {
+        final CompanyEntity companyEntity = CompanyEntity.builder()
                 .cnpjNumber(company.getCnpjNumber())
                 .brand(brandEntity)
                 .name(company.getName())
                 .urlComplementaryList(company.getUrlComplementaryList())
                 .build();
 
-        List<PersonalAccountEntity> personalAccountEntities = convertPersonalAccountsListToPersonalAccountEntityList(company.getPersonalAccounts(), companyEntity);
-        List<BusinessAccountEntity> businessAccountEntities = convertBusinessAccountListToBusinessAccountEntityList(company.getBusinessAccounts());
+        final List<PersonalAccountEntity> personalAccountEntities = convertPersonalAccountsListToPersonalAccountEntityList(company.getPersonalAccounts(), companyEntity);
+        final List<BusinessAccountEntity> businessAccountEntities = convertBusinessAccountListToBusinessAccountEntityList(company.getBusinessAccounts(), companyEntity);
         companyEntity.setPersonalAccounts(personalAccountEntities);
         companyEntity.setBusinessAccounts(businessAccountEntities);
 
@@ -41,9 +41,9 @@ public class CompanyToCompanyEntityMapper {
         return null;
     }
 
-    private static List<BusinessAccountEntity> convertBusinessAccountListToBusinessAccountEntityList(final List<BusinessAccount> businessAccounts) {
+    private static List<BusinessAccountEntity> convertBusinessAccountListToBusinessAccountEntityList(final List<BusinessAccount> businessAccounts, final CompanyEntity companyEntity) {
         if (businessAccounts != null && !businessAccounts.isEmpty()) {
-            return businessAccounts.stream().map(BusinessAccountToBusinessAccountEntityMapper::convert).collect(Collectors.toList());
+            return businessAccounts.stream().map(business -> BusinessAccountToBusinessAccountEntityMapper.convert(business, companyEntity)).collect(Collectors.toList());
         }
         return null;
     }

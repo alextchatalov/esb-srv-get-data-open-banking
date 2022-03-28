@@ -3,6 +3,7 @@ package com.getdata.dataprovider.mapper;
 import com.getdata.core.model.BusinessAccount;
 import com.getdata.core.model.ServiceBundle;
 import com.getdata.dataprovider.entity.BusinessAccountEntity;
+import com.getdata.dataprovider.entity.CompanyEntity;
 import com.getdata.dataprovider.entity.OpeningClosingChannelsEntity;
 import com.getdata.dataprovider.entity.ServiceBundleEntity;
 import com.getdata.dataprovider.entity.TransactionMethodsEntity;
@@ -18,8 +19,10 @@ import java.util.stream.Collectors;
 public class BusinessAccountToBusinessAccountEntityMapper {
 
     @NonNull
-    public static BusinessAccountEntity convert(final BusinessAccount businessAccount) {
+    public static BusinessAccountEntity convert(final BusinessAccount businessAccount, final CompanyEntity companyEntity) {
+
         final BusinessAccountEntity businessAccountEntity = BusinessAccountEntity.builder()
+                .company(companyEntity)
                 .type(businessAccount.getType())
                 .additionalInfo(businessAccount.getAdditionalInfo())
                 .build();

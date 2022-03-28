@@ -20,19 +20,23 @@ public class FeesPersonalAccountsToFeesPersonalAccountsEntityMapper {
 
     @NonNull
     public static FeesPersonalAccountsEntity convert(final FeesPersonalAccounts feesPersonalAccounts, final PersonalAccountEntity personalAccountEntity) {
-        return FeesPersonalAccountsEntity.builder()
+
+        final FeesPersonalAccountsEntity feesPersonalAccountsEntity = FeesPersonalAccountsEntity.builder()
                 .personalAccount(personalAccountEntity)
-                .priorityServices(convertListOfPriorityServicesToListOfPriorityServicesEntity(feesPersonalAccounts.getPriorityServices())) //todo ajustar
-                .otherServices(convertListOfOtherServicesToListOfOtherServicesEntity(feesPersonalAccounts.getOtherServices())) //todo ajustar
                 .build();
+
+        feesPersonalAccountsEntity.setPriorityServices((convertListOfPriorityServicesToListOfPriorityServicesEntity(feesPersonalAccounts.getPriorityServices(), feesPersonalAccountsEntity)));
+        feesPersonalAccountsEntity.setOtherServices(convertListOfOtherServicesToListOfOtherServicesEntity(feesPersonalAccounts.getOtherServices(), feesPersonalAccountsEntity));
+
+        return feesPersonalAccountsEntity;
     }
 
-    private static List<PriorityServiceEntity> convertListOfPriorityServicesToListOfPriorityServicesEntity(final List<PriorityService> priorityServices) {
-        return priorityServices.stream().map(PriorityServiceToPriorityServiceEntityMapper::convert).collect(Collectors.toList());
+    private static List<PriorityServiceEntity> convertListOfPriorityServicesToListOfPriorityServicesEntity(final List<PriorityService> priorityServices, final FeesPersonalAccountsEntity feesPersonalAccountsEntity) {
+        return priorityServices.stream().map(priorityService -> PriorityServiceToPriorityServiceEntityMapper.convert(priorityService, feesPersonalAccountsEntity)).collect(Collectors.toList());
     }
 
-    private static List<OtherServiceEntity> convertListOfOtherServicesToListOfOtherServicesEntity(final List<OtherService> otherServices) {
-        return otherServices.stream().map(OtherServiceToOtherServiceEntityMapper::convert).collect(Collectors.toList());
+    private static List<OtherServiceEntity> convertListOfOtherServicesToListOfOtherServicesEntity(final List<OtherService> otherServices, final FeesPersonalAccountsEntity feesPersonalAccountsEntity) {
+        return otherServices.stream().map(others -> OtherServiceToOtherServiceEntityMapper.convert(others, feesPersonalAccountsEntity)).collect(Collectors.toList());
     }
 
 }
