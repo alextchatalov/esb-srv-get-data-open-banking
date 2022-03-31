@@ -1,6 +1,5 @@
 package com.getdata.core.model;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,14 +19,10 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Company {
-    private String name;
-    private String cnpjNumber;
-    private String urlComplementaryList;
-    @JsonAlias("personalAccounts")
-    private List<PersonalAccount> personalAccounts;
-    @JsonAlias("businessAccounts")
-    private List<BusinessAccount> businessAccounts;
-    @JsonAlias("personalLoans")
-    public List<PersonalLoan> personalLoans;
+public class PersonalLoan {
+    private String type;
+    private FeesPersonalLoan fees;
+    private List<InterestRate> interestRates;
+    private List<String> requiredWarranties;
+    private String termsConditions;
 }

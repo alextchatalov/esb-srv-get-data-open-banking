@@ -15,13 +15,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "company")
+@Table(name = "fees_personal_loans")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -29,30 +29,18 @@ import java.util.List;
 @FieldNameConstants
 @EqualsAndHashCode
 @ToString
-public class CompanyEntity {
-    
+public class FeesPersonalLoanEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
-    private String cnpjNumber;
-    private String urlComplementaryList;
-
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "feesPersonalLoan", cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter
-    private List<PersonalAccountEntity> personalAccounts;
+    private List<PriorityServiceEntity> services;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Setter
-    private List<BusinessAccountEntity> businessAccounts;
-
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Setter
-    private List<PersonalLoanEntity> personalLoans;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private BrandEntity brand;
+    private PersonalLoanEntity personalLoan;
 }

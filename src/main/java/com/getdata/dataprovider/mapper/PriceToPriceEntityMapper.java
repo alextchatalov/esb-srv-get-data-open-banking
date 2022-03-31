@@ -47,7 +47,7 @@ public class PriceToPriceEntityMapper {
                 .serviceBusinessAccounts(serviceBusinessAccountsEntity)
                 .build();
 
-        priceEntity.setCustomers(CustomersToCustomersEntityMapper.convert(price.getCustomers(), priceEntity));
+        priceEntity.setCustomers(CustomersToCustomersEntityMapper.convertWithPrice(price.getCustomers(), priceEntity));
 
         return priceEntity;
     }

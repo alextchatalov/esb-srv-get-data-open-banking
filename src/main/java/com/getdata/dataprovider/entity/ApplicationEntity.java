@@ -16,12 +16,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.List;
 
 @Entity
-@Table(name = "company")
+@Table(name = "interest_rate")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -29,30 +28,22 @@ import java.util.List;
 @FieldNameConstants
 @EqualsAndHashCode
 @ToString
-public class CompanyEntity {
-    
+public class ApplicationEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
-    private String cnpjNumber;
-    private String urlComplementaryList;
-
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    private String interval;
+    @OneToOne(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter
-    private List<PersonalAccountEntity> personalAccounts;
-
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    private IndexerEntity indexer;
+    @OneToOne(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter
-    private List<BusinessAccountEntity> businessAccounts;
-
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Setter
-    private List<PersonalLoanEntity> personalLoans;
+    private CustomersEntity customers;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private BrandEntity brand;
+    private InterestRateEntity interestRate;
 }

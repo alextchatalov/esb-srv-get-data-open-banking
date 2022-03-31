@@ -3,20 +3,26 @@ package com.getdata.fixtures.resource;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
+import com.getdata.dataprovider.entity.ApplicationEntity;
 import com.getdata.dataprovider.entity.BusinessAccountEntity;
 import com.getdata.dataprovider.entity.CompanyEntity;
 import com.getdata.dataprovider.entity.CustomersEntity;
 import com.getdata.dataprovider.entity.FeesBusinessAccountsEntity;
 import com.getdata.dataprovider.entity.FeesPersonalAccountsEntity;
+import com.getdata.dataprovider.entity.FeesPersonalLoanEntity;
 import com.getdata.dataprovider.entity.IncomeRateEntity;
+import com.getdata.dataprovider.entity.IndexerEntity;
+import com.getdata.dataprovider.entity.InterestRateEntity;
 import com.getdata.dataprovider.entity.MaximumEntity;
 import com.getdata.dataprovider.entity.MinimumBalanceEntity;
 import com.getdata.dataprovider.entity.MinimumEntity;
 import com.getdata.dataprovider.entity.OpeningClosingChannelsEntity;
 import com.getdata.dataprovider.entity.OtherServiceEntity;
 import com.getdata.dataprovider.entity.PersonalAccountEntity;
+import com.getdata.dataprovider.entity.PersonalLoanEntity;
 import com.getdata.dataprovider.entity.PriceEntity;
 import com.getdata.dataprovider.entity.PriorityServiceEntity;
+import com.getdata.dataprovider.entity.RequiredWarrantiesEntity;
 import com.getdata.dataprovider.entity.ServiceBundleEntity;
 import com.getdata.dataprovider.entity.ServiceBusinessAccountsEntity;
 import com.getdata.dataprovider.entity.ServiceFromServiceBundleEntity;
@@ -43,12 +49,69 @@ public class CompanyEntityFixture implements TemplateLoader {
             add(CompanyEntity.Fields.urlComplementaryList, "test");
             add(CompanyEntity.Fields.personalAccounts, Arrays.asList(createPersonalAccount()));
             add(CompanyEntity.Fields.businessAccounts, Arrays.asList(createBusinessAccount()));
-
+            add(CompanyEntity.Fields.personalLoans, Arrays.asList(createPersonalLoan()));
         }});
     }
 
+    private PersonalLoanEntity createPersonalLoan() {
+        return PersonalLoanEntity.builder()
+                .type("test")
+                .fees(createFeesPersonalLoan())
+                .interestRates(Arrays.asList(createInterestRate()))
+                .requiredWarranties(Arrays.asList(createWarranties()))
+                .termsConditions("test")
+                .build();
+    }
+
+    private RequiredWarrantiesEntity createWarranties() {
+        return RequiredWarrantiesEntity.builder()
+                .warranties("test")
+                .build();
+    }
+
+    private InterestRateEntity createInterestRate() {
+        return InterestRateEntity.builder()
+                .referentialRateIndexer("test")
+                .rate("1")
+                .applications(Arrays.asList(createApplication()))
+                .minimumRate("1")
+                .maximumRate("1")
+                .build();
+    }
+
+    private ApplicationEntity createApplication() {
+        return ApplicationEntity.builder()
+                .interval("1")
+                .indexer(createIndexer())
+                .customers(createCustomers())
+                .build();
+    }
+
+    private IndexerEntity createIndexer() {
+        return IndexerEntity.builder()
+                .rate("1")
+                .build();
+    }
+
+    private FeesPersonalLoanEntity createFeesPersonalLoan() {
+        return FeesPersonalLoanEntity.builder()
+                .services(Arrays.asList(createServicePersonalLoans()))
+                .build();
+    }
+
+    private PriorityServiceEntity createServicePersonalLoans() {
+        return PriorityServiceEntity.builder()
+                .name("test")
+                .code("test")
+                .chargingTriggerInfo("test")
+                .prices(Arrays.asList(createPrice()))
+                .minimum(createMinimum())
+                .maximum(createMaximum())
+                .build();
+    }
+
     private BusinessAccountEntity createBusinessAccount() {
-        BusinessAccountEntity businessAccountEntity = BusinessAccountEntity.builder()
+        final BusinessAccountEntity businessAccountEntity = BusinessAccountEntity.builder()
                 .type("test")
                 .fees(createFeesBusiness())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
@@ -66,7 +129,7 @@ public class CompanyEntityFixture implements TemplateLoader {
 
     private PersonalAccountEntity createPersonalAccount() {
 
-        PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
+        final PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
                 .type("test")
                 .fees(createFees())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))

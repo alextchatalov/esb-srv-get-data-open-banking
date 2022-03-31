@@ -17,7 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "customers")
+@Table(name = "interest_rate")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -25,18 +25,13 @@ import javax.persistence.Table;
 @FieldNameConstants
 @EqualsAndHashCode
 @ToString
-public class CustomersEntity {
+public class IndexerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String rate;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private PriceEntity price;
 
     @OneToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude

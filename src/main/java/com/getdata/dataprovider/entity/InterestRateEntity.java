@@ -21,7 +21,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "company")
+@Table(name = "interest_rate")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -29,30 +29,23 @@ import java.util.List;
 @FieldNameConstants
 @EqualsAndHashCode
 @ToString
-public class CompanyEntity {
-    
+public class InterestRateEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
-    private String cnpjNumber;
-    private String urlComplementaryList;
-
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "interestRate", cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter
-    private List<PersonalAccountEntity> personalAccounts;
+    private List<ApplicationEntity> applications;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Setter
-    private List<BusinessAccountEntity> businessAccounts;
-
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Setter
-    private List<PersonalLoanEntity> personalLoans;
+    public String referentialRateIndexer;
+    public String rate;
+    public String minimumRate;
+    public String maximumRate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    private BrandEntity brand;
+    private PersonalLoanEntity personalLoan;
 }

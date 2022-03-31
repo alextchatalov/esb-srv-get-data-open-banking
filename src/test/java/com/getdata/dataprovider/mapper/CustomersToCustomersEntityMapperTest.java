@@ -34,7 +34,7 @@ class CustomersToCustomersEntityMapperTest {
         final Customers customersMock = Fixture.from(Customers.class).gimme(CustomersFixture.VALID);
         final CustomersEntity customersEntityMock = Fixture.from(CustomersEntity.class).gimme(CustomersEntityFixture.VALID);
 
-        final CustomersEntity customersEntity = mapper.convert(customersMock, priceEntityMock);
+        final CustomersEntity customersEntity = mapper.convertWithPrice(customersMock, priceEntityMock);
 
         assertThat(customersEntity).isEqualTo(customersEntityMock);
     }

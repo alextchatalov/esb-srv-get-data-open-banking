@@ -1,25 +1,31 @@
 package com.getdata.fixtures.resource;
 
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.Rule;
+import br.com.six2six.fixturefactory.loader.TemplateLoader;
+import com.getdata.core.model.Application;
 import com.getdata.core.model.BusinessAccount;
 import com.getdata.core.model.Company;
 import com.getdata.core.model.Customers;
 import com.getdata.core.model.FeesBusinessAccounts;
 import com.getdata.core.model.FeesPersonalAccounts;
+import com.getdata.core.model.FeesPersonalLoan;
 import com.getdata.core.model.IncomeRate;
+import com.getdata.core.model.Indexer;
+import com.getdata.core.model.InterestRate;
 import com.getdata.core.model.Maximum;
 import com.getdata.core.model.Minimum;
 import com.getdata.core.model.MinimumBalance;
 import com.getdata.core.model.OtherService;
 import com.getdata.core.model.PersonalAccount;
+import com.getdata.core.model.PersonalLoan;
 import com.getdata.core.model.Price;
 import com.getdata.core.model.PriorityService;
 import com.getdata.core.model.ServiceBundle;
 import com.getdata.core.model.ServiceBusinessAccounts;
 import com.getdata.core.model.ServiceFromServiceBundle;
+import com.getdata.core.model.ServicePersonalLoans;
 import com.getdata.core.model.TermsConditions;
-import br.com.six2six.fixturefactory.Fixture;
-import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -40,8 +46,60 @@ public class CompanyFixture implements TemplateLoader {
             add(Company.Fields.urlComplementaryList, "test");
             add(Company.Fields.personalAccounts, Arrays.asList(createPersonalAccount()));
             add(Company.Fields.businessAccounts, Arrays.asList(createBusinessAccount()));
+            add(Company.Fields.personalLoans, Arrays.asList(createPersonalLoan()));
 
         }});
+    }
+
+    private PersonalLoan createPersonalLoan() {
+        return PersonalLoan.builder()
+                .type("test")
+                .fees(createFeesPersonalLoan())
+                .interestRates(Arrays.asList(createInterestRate()))
+                .requiredWarranties(Arrays.asList("test"))
+                .termsConditions("test")
+                .build();
+    }
+
+    private InterestRate createInterestRate() {
+        return InterestRate.builder()
+                .referentialRateIndexer("test")
+                .rate("1")
+                .applications(Arrays.asList(createApplication()))
+                .minimumRate("1")
+                .maximumRate("1")
+                .build();
+    }
+
+    private Application createApplication() {
+        return Application.builder()
+                .interval("1")
+                .indexer(createIndexer())
+                .customers(createCustomers())
+                .build();
+    }
+
+    private Indexer createIndexer() {
+        return Indexer.builder()
+                .rate("1")
+                .build();
+    }
+
+    private FeesPersonalLoan createFeesPersonalLoan() {
+        return FeesPersonalLoan.builder()
+                .services(Arrays.asList(createServicePersonalLoans()))
+                .build();
+    }
+
+    private ServicePersonalLoans createServicePersonalLoans() {
+        return ServicePersonalLoans.builder()
+                .name("test")
+                .code("test")
+                .chargingTriggerInfo("test")
+                .prices(Arrays.asList(createPrice()))
+                .minimum(createMinimum())
+                .maximum(createMaximum())
+                .build();
     }
 
     private BusinessAccount createBusinessAccount() {
