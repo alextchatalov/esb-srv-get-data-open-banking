@@ -13,6 +13,7 @@ import com.getdata.dataprovider.entity.MinimumEntity;
 import com.getdata.dataprovider.entity.PersonalLoanEntity;
 import com.getdata.dataprovider.entity.PriceEntity;
 import com.getdata.dataprovider.entity.PriorityServiceEntity;
+import com.getdata.dataprovider.entity.RequiredWarrantiesEntity;
 
 import java.util.Arrays;
 
@@ -29,11 +30,17 @@ public class PersonalLoanEntityFixture implements TemplateLoader {
         Fixture.of(PersonalLoanEntity.class).addTemplate(VALID, new Rule() {{
             add(PersonalLoanEntity.Fields.type, "test");
             add(PersonalLoanEntity.Fields.fees, createFeesPersonalLoan());
-            add(PersonalLoanEntity.Fields.interestRates, createInterestRate());
-            add(PersonalLoanEntity.Fields.requiredWarranties, Arrays.asList("test"));
+            add(PersonalLoanEntity.Fields.interestRates, Arrays.asList(createInterestRate()));
+            add(PersonalLoanEntity.Fields.requiredWarranties, Arrays.asList(createRequiredWarranties()));
             add(PersonalLoanEntity.Fields.termsConditions, "test");
 
         }});
+    }
+
+    private RequiredWarrantiesEntity createRequiredWarranties() {
+        return RequiredWarrantiesEntity.builder()
+                .warranties("test")
+                .build();
     }
 
     private InterestRateEntity createInterestRate() {

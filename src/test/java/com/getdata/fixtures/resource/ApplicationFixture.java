@@ -5,8 +5,7 @@ import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.getdata.core.model.Application;
 import com.getdata.core.model.Customers;
-
-import java.util.Collections;
+import com.getdata.core.model.Indexer;
 
 public class ApplicationFixture implements TemplateLoader {
 
@@ -20,8 +19,8 @@ public class ApplicationFixture implements TemplateLoader {
     private void loadData() {
         Fixture.of(Application.class).addTemplate(VALID, new Rule() {{
             add(Application.Fields.interval, "1");
-            add(Application.Fields.indexer, "1");
-            add(Application.Fields.customers, Collections.singletonList(createCustomers()));
+            add(Application.Fields.indexer, createIndexer());
+            add(Application.Fields.customers, createCustomers());
 
         }});
     }
@@ -29,6 +28,12 @@ public class ApplicationFixture implements TemplateLoader {
     private Customers createCustomers() {
         return Customers.builder()
                 .rate("123")
+                .build();
+    }
+
+    private Indexer createIndexer() {
+        return Indexer.builder()
+                .rate("1")
                 .build();
     }
 

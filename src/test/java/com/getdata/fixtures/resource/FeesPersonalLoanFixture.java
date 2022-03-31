@@ -23,7 +23,7 @@ public class FeesPersonalLoanFixture implements TemplateLoader {
 
     private void loadData() {
         Fixture.of(FeesPersonalLoan.class).addTemplate(VALID, new Rule() {{
-            add(FeesPersonalLoan.Fields.services, createServicePersonalLoans());
+            add(FeesPersonalLoan.Fields.services, Arrays.asList(createServicePersonalLoans()));
 
         }});
     }

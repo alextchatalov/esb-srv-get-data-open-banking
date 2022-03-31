@@ -29,7 +29,7 @@ public class PersonalLoanFixture implements TemplateLoader {
         Fixture.of(PersonalLoan.class).addTemplate(VALID, new Rule() {{
             add(PersonalLoan.Fields.type, "test");
             add(PersonalLoan.Fields.fees, createFeesPersonalLoan());
-            add(PersonalLoan.Fields.interestRates, createInterestRate());
+            add(PersonalLoan.Fields.interestRates, Arrays.asList(createInterestRate()));
             add(PersonalLoan.Fields.requiredWarranties, Arrays.asList("test"));
             add(PersonalLoan.Fields.termsConditions, "test");
 

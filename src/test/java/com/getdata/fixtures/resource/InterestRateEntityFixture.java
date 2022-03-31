@@ -8,6 +8,8 @@ import com.getdata.dataprovider.entity.CustomersEntity;
 import com.getdata.dataprovider.entity.IndexerEntity;
 import com.getdata.dataprovider.entity.InterestRateEntity;
 
+import java.util.Arrays;
+
 public class InterestRateEntityFixture implements TemplateLoader {
 
     public static final String VALID = "valid";
@@ -21,7 +23,7 @@ public class InterestRateEntityFixture implements TemplateLoader {
         Fixture.of(InterestRateEntity.class).addTemplate(VALID, new Rule() {{
             add(InterestRateEntity.Fields.referentialRateIndexer, "1");
             add(InterestRateEntity.Fields.rate, "1");
-            add(InterestRateEntity.Fields.applications, createApplication());
+            add(InterestRateEntity.Fields.applications, Arrays.asList(createApplication()));
             add(InterestRateEntity.Fields.minimumRate, "1");
             add(InterestRateEntity.Fields.maximumRate, "1");
 
