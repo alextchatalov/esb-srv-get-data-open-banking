@@ -20,16 +20,20 @@ public class PersonalLoanToPersonalLoanEntityMapper {
     @NonNull
     public static PersonalLoanEntity convert(final PersonalLoan personalLoan, final CompanyEntity companyEntity) {
 
+        final String termsConditions = personalLoan.getTermsConditions() != null && personalLoan.getTermsConditions().length() >= 255 ?
+                personalLoan.getTermsConditions().substring(0, 254) :
+                personalLoan.getTermsConditions();
+
         final PersonalLoanEntity personalLoanEntity = PersonalLoanEntity.builder()
                 .company(companyEntity)
                 .type(personalLoan.getType())
-                .termsConditions(personalLoan.getTermsConditions())
+                .termsConditions(termsConditions)
                 .build();
 
         personalLoanEntity.setFees(FeesPersonalLoanToFeesPersonalLoanEntityMapper.convert(personalLoan.getFees(), personalLoanEntity));
         personalLoanEntity.setInterestRates(convertInterestRateListToInterestRateEntityList(personalLoan.getInterestRates(), personalLoanEntity));
         personalLoanEntity.setRequiredWarranties(convertRequiredWarrantiesListToRequiredWarrantiesEntityList(personalLoan.getRequiredWarranties(), personalLoanEntity));
-        
+
         return personalLoanEntity;
     }
 

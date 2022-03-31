@@ -23,6 +23,9 @@ public class CustomersToCustomersEntityMapper {
     }
 
     private static CustomersEntity convert(final Customers customers, final PriceEntity priceEntity, final ApplicationEntity applicationEntity) {
+        if (customers == null) {
+            return null;
+        }
         return CustomersEntity.builder()
                 .rate(customers.getRate())
                 .price(priceEntity)

@@ -25,53 +25,53 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RequestProductsAndServicesUserCase {
 
-    public List<Response> execute(List<Request> apis) {
+    public List<Response> execute(final List<Request> apis) {
         log.info("Requesting Products and Services...");
-        List<Response> responseProductsAndServices = new ArrayList<>();
-        ExecutorService executor = Executors.newFixedThreadPool(4);
+        final List<Response> responseProductsAndServices = new ArrayList<>();
+        final ExecutorService executor = Executors.newFixedThreadPool(4);
 
-        int maxPerList = (apis.size() - 1) / 4;
-        List<List<Request>> partition = Lists.partition(apis, maxPerList);
-        List<Request> excessList = partition.get(0);
+        final int maxPerList = (apis.size() - 1) / 4;
+        final List<List<Request>> partition = Lists.partition(apis, maxPerList);
+        final List<Request> excessList = partition.get(0);
         if (partition.size() > 4) {
             for (int excess = 5; partition.size() >= excess; excess++) {
                 excessList.addAll(partition.get(excess - 1));
             }
         }
-        Callable<List<Response>> firstTask = createTask(excessList);
-        Callable<List<Response>> secondTask = createTask(partition.get(1));
-        Callable<List<Response>> thirdTask = createTask(partition.get(2));
-        Callable<List<Response>> fourthTask = createTask(partition.get(3));
-        List<Future<List<Response>>> listOfFutureTasks = new ArrayList<>();
+        final Callable<List<Response>> firstTask = createTask(excessList);
+        final Callable<List<Response>> secondTask = createTask(partition.get(1));
+        final Callable<List<Response>> thirdTask = createTask(partition.get(2));
+        final Callable<List<Response>> fourthTask = createTask(partition.get(3));
+        final List<Future<List<Response>>> listOfFutureTasks = new ArrayList<>();
         listOfFutureTasks.add(executor.submit(firstTask));
         listOfFutureTasks.add(executor.submit(secondTask));
         listOfFutureTasks.add(executor.submit(thirdTask));
         listOfFutureTasks.add(executor.submit(fourthTask));
 
-        List<Response> processedApis = waitAllTaskToFinished(listOfFutureTasks);
+        final List<Response> processedApis = waitAllTaskToFinished(listOfFutureTasks);
         responseProductsAndServices.addAll(processedApis);
 
         log.info("Process Request Products and Services finish");
         return responseProductsAndServices;
     }
 
-    private List<Response> waitAllTaskToFinished(List<Future<List<Response>>> futures) {
-        List<Response> processedApis = new ArrayList<>();
+    private List<Response> waitAllTaskToFinished(final List<Future<List<Response>>> futures) {
+        final List<Response> processedApis = new ArrayList<>();
 
         while (!isAllFutureDone(futures)) {
 
             try {
                 Thread.sleep(5000);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 log.error("Thread not sleep: " + e);
             }
 
         }
 
-        for (Future<List<Response>> future : futures) {
+        for (final Future<List<Response>> future : futures) {
             try {
                 processedApis.addAll(future.get());
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 log.error("Can not process: " + e);
             }
         }
@@ -79,28 +79,28 @@ public class RequestProductsAndServicesUserCase {
         return processedApis;
     }
 
-    private boolean isAllFutureDone(List<Future<List<Response>>> futures) {
-        List<Boolean> futureStates = futures.stream().map(Future::isDone).collect(Collectors.toList());
+    private boolean isAllFutureDone(final List<Future<List<Response>>> futures) {
+        final List<Boolean> futureStates = futures.stream().map(Future::isDone).collect(Collectors.toList());
         return futureStates.stream().allMatch(done -> done == true);
     }
 
-    private Callable<List<Response>> createTask(List<Request> listOfApi) {
+    private Callable<List<Response>> createTask(final List<Request> listOfApi) {
 
         return () -> {
-            List<Response> listProcessed = new ArrayList<>();
+            final List<Response> listProcessed = new ArrayList<>();
             int amountProcessed = 0;
-            for (Request request : listOfApi) {
+            for (final Request request : listOfApi) {
                 try {
                     calculatePercentage(amountProcessed, listOfApi.size());
-                    URL url = new URL(request.getUrl());
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    final URL url = new URL(request.getUrl());
+                    final HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     con.setRequestMethod("GET");
-                    String productsAndServicesResponse = new BufferedReader(
+                    final String productsAndServicesResponse = new BufferedReader(
                             new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))
                             .lines()
                             .collect(Collectors.joining("\n"));
 
-                    Response response = Response.builder()
+                    final Response response = Response.builder()
                             .participant(request.getParticipant())
                             .lastRequest(request.getLastRequest())
                             .category(request.getCategory())
@@ -110,7 +110,7 @@ public class RequestProductsAndServicesUserCase {
                             .build();
 
                     listProcessed.add(response);
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     log.error("Can not request apis: {}", e.getMessage());
                 }
                 amountProcessed++;
@@ -119,16 +119,16 @@ public class RequestProductsAndServicesUserCase {
         };
     }
 
-    public void calculatePercentage(double obtained, double total) {
+    public void calculatePercentage(final double obtained, final double total) {
         final DecimalFormat df2 = new DecimalFormat("#.##");
-        double percent = obtained * 100 / total;
+        final double percent = obtained * 100 / total;
         log.info("Processing: " + "Thread: " + Thread.currentThread().getName() + " Percent: " + df2.format(percent) + "%");
     }
 
-    public static <T> List[] splitTheListOfApisInFour(List<T> list) {
-        int midIndex = (list.size() - 1) / 4;
+    public static <T> List[] splitTheListOfApisInFour(final List<T> list) {
+        final int midIndex = (list.size() - 1) / 4;
 
-        List<List<T>> lists = new ArrayList<>(
+        final List<List<T>> lists = new ArrayList<>(
                 list.stream()
                         .collect(Collectors.partitioningBy(s -> list.indexOf(s) > midIndex))
                         .values()

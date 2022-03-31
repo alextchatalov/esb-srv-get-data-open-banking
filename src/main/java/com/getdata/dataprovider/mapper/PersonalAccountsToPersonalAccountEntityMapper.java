@@ -23,9 +23,13 @@ public class PersonalAccountsToPersonalAccountEntityMapper {
     @NonNull
     public static PersonalAccountEntity convert(final PersonalAccount personalAccount, final CompanyEntity company) {
 
+        final String additionalInfo = personalAccount.getAdditionalInfo() != null && personalAccount.getAdditionalInfo().length() >= 255 ?
+                personalAccount.getAdditionalInfo().substring(0, 254) :
+                personalAccount.getAdditionalInfo();
+
         final PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
                 .type(personalAccount.getType())
-                .additionalInfo(personalAccount.getAdditionalInfo())
+                .additionalInfo(additionalInfo)
                 .company(company)
                 .build();
 

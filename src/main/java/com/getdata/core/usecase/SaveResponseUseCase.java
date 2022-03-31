@@ -16,7 +16,11 @@ public class SaveResponseUseCase {
 
     public void execute(final List<Root> responses) {
         for (final Root response : responses) {
-            saveResponseBoundary.execute(response.getData());
+            if (response != null) {
+                saveResponseBoundary.execute(response.getData());
+            } else {
+                log.info("Response is null");
+            }
         }
     }
 }

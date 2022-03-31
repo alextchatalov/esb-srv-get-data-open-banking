@@ -32,10 +32,16 @@ public class FeesPersonalAccountsToFeesPersonalAccountsEntityMapper {
     }
 
     private static List<PriorityServiceEntity> convertListOfPriorityServicesToListOfPriorityServicesEntity(final List<PriorityService> priorityServices, final FeesPersonalAccountsEntity feesPersonalAccountsEntity) {
+        if (priorityServices == null || priorityServices.isEmpty()) {
+            return null;
+        }
         return priorityServices.stream().map(priorityService -> PriorityServiceToPriorityServiceEntityMapper.convert(priorityService, feesPersonalAccountsEntity)).collect(Collectors.toList());
     }
 
     private static List<OtherServiceEntity> convertListOfOtherServicesToListOfOtherServicesEntity(final List<OtherService> otherServices, final FeesPersonalAccountsEntity feesPersonalAccountsEntity) {
+        if (otherServices == null || otherServices.isEmpty()) {
+            return null;
+        }
         return otherServices.stream().map(others -> OtherServiceToOtherServiceEntityMapper.convert(others, feesPersonalAccountsEntity)).collect(Collectors.toList());
     }
 

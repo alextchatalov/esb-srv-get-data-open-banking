@@ -32,29 +32,22 @@ public class ProductsAndServicesJob {
 
     @Scheduled(fixedDelay = 50000000)
     void run() {
-
+        final long start = System.currentTimeMillis();
+        log.info("ProductsAndServicesJob started - " + start);
         final List<Request> apis = findUrlsProductsAndServicesUserCase.execute();
         final List<Response> response = requestProductsAndServicesUserCase.execute(apis);
         final List<Root> rootDataObjectFromJsonResponse = response.stream().filter(r -> filterByBankAndCategory(r)).map(Response::getObjectFromJsonResponse).collect(Collectors.toList());
-//        for (final Response r : response) {
-//            if (filterByBankAndCategory(r)) {
-//                try {
-//                    final Root requestMapped = r.getObjectFromJsonResponse();
-//                } catch (final MapperException m) {
-//                    log.debug(r.getResponse());
-//                }
-//            }
-//
-//        }
         System.out.println("Saving: " + rootDataObjectFromJsonResponse.size());
         saveResponseUseCase.execute(rootDataObjectFromJsonResponse);
-        log.info("Job finished!");
+
+        final long end = System.currentTimeMillis();
+        log.info("ProductsAndServicesJob ended - " + end + " - " + (end - start) / 1000 + " seconds");
     }
 
     private boolean filterByBankAndCategory(final Response r) {
-        final boolean filterCategory = Category.PERSONAL_ACCOUNTS.equals(r.getCategory()) || Category.BUSINESS_ACCOUNTS.equals(r.getCategory());
+        final boolean filterCategory = Category.PERSONAL_ACCOUNTS.equals(r.getCategory()) || Category.BUSINESS_ACCOUNTS.equals(r.getCategory()) || Category.PERSONAL_LOANS.equals(r.getCategory());
         final boolean filterBank = banksFilters.contains(r.getParticipant().getCustomerFriendlyName());
-        System.out.println("Banking Name: " + r.getParticipant().getCustomerFriendlyName() + " filterBank: " + filterBank + " filterCategory " + filterCategory + "");
-        return filterBank && filterCategory;
+        //System.out.println("Banking Name: " + r.getParticipant().getCustomerFriendlyName() + " filterBank: " + filterBank + " filterCategory " + filterCategory + "");
+        return filterCategory;
     }
 }

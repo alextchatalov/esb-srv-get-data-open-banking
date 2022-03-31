@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "personal_loans")
+@Table(name = "personal_loan")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

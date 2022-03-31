@@ -33,6 +33,10 @@ public class FeesPersonalLoanToFeesPersonalLoanEntityMapper {
 
     private static List<PriorityServiceEntity> createPriorityServiceFromServicePersonalLoan(final List<ServicePersonalLoans> services) {
 
+        if (services == null) {
+            return null;
+        }
+
         final List<PriorityServiceEntity> priorityServiceEntities = new ArrayList<>();
 
         for (final ServicePersonalLoans service : services) {

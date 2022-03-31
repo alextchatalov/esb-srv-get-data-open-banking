@@ -3,7 +3,6 @@ package com.getdata.core.model;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.getdata.exception.MapperException;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -35,7 +34,7 @@ public class Response {
         } catch (final JsonProcessingException e) {
             System.out.println(this.response);
             log.error("Error to map json response to object: ", e);
-            throw new MapperException("Cannot get object from json response: " + e.getMessage());
+            return null;
         }
     }
 
