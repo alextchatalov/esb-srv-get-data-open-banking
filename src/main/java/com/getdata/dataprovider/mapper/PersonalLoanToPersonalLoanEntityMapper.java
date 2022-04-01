@@ -29,7 +29,7 @@ public class PersonalLoanToPersonalLoanEntityMapper {
                 .type(personalLoan.getType())
                 .termsConditions(termsConditions)
                 .build();
-
+        log.warn("Services: {}", personalLoan.getFees().getServices());
         personalLoanEntity.setFees(FeesPersonalLoanToFeesPersonalLoanEntityMapper.convert(personalLoan.getFees(), personalLoanEntity));
         personalLoanEntity.setInterestRates(convertInterestRateListToInterestRateEntityList(personalLoan.getInterestRates(), personalLoanEntity));
         personalLoanEntity.setRequiredWarranties(convertRequiredWarrantiesListToRequiredWarrantiesEntityList(personalLoan.getRequiredWarranties(), personalLoanEntity));

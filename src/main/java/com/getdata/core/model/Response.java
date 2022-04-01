@@ -33,7 +33,7 @@ public class Response {
             return objectMapper.readValue(this.response, Root.class);
         } catch (final JsonProcessingException e) {
             System.out.println(this.response);
-            log.error("Error to map json response to object: ", e);
+            log.error("Error to map json response to object: " + e.getMessage());
             return null;
         }
     }

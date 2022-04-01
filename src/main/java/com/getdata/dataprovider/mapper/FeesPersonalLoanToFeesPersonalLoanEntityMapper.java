@@ -25,13 +25,13 @@ public class FeesPersonalLoanToFeesPersonalLoanEntityMapper {
         final FeesPersonalLoanEntity feesEntity = FeesPersonalLoanEntity.builder()
                 .personalLoan(personalLoanEntity)
                 .build();
-        final List<PriorityServiceEntity> priorityServiceEntities = createPriorityServiceFromServicePersonalLoan(fees.getServices());
+        final List<PriorityServiceEntity> priorityServiceEntities = createPriorityServiceFromServicePersonalLoan(fees.getServices(), feesEntity);
         feesEntity.setServices(priorityServiceEntities);
 
         return feesEntity;
     }
 
-    private static List<PriorityServiceEntity> createPriorityServiceFromServicePersonalLoan(final List<ServicePersonalLoans> services) {
+    private static List<PriorityServiceEntity> createPriorityServiceFromServicePersonalLoan(final List<ServicePersonalLoans> services, final FeesPersonalLoanEntity feesPersonalLoanEntity) {
 
         if (services == null) {
             return null;
@@ -42,6 +42,7 @@ public class FeesPersonalLoanToFeesPersonalLoanEntityMapper {
         for (final ServicePersonalLoans service : services) {
 
             final PriorityServiceEntity priorityServiceEntity = PriorityServiceEntity.builder()
+                    .feesPersonalLoan(feesPersonalLoanEntity)
                     .name(service.getName())
                     .code(service.getCode())
                     .chargingTriggerInfo(service.getChargingTriggerInfo())

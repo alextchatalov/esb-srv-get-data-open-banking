@@ -37,7 +37,7 @@ public class ProductsAndServicesJob {
         final List<Request> apis = findUrlsProductsAndServicesUserCase.execute();
         final List<Response> response = requestProductsAndServicesUserCase.execute(apis);
         final List<Root> rootDataObjectFromJsonResponse = response.stream().filter(r -> filterByBankAndCategory(r)).map(Response::getObjectFromJsonResponse).collect(Collectors.toList());
-        System.out.println("Saving: " + rootDataObjectFromJsonResponse.size());
+        log.info("Saving: " + rootDataObjectFromJsonResponse.size());
         saveResponseUseCase.execute(rootDataObjectFromJsonResponse);
 
         final long end = System.currentTimeMillis();
@@ -46,8 +46,6 @@ public class ProductsAndServicesJob {
 
     private boolean filterByBankAndCategory(final Response r) {
         final boolean filterCategory = Category.PERSONAL_ACCOUNTS.equals(r.getCategory()) || Category.BUSINESS_ACCOUNTS.equals(r.getCategory()) || Category.PERSONAL_LOANS.equals(r.getCategory());
-        final boolean filterBank = banksFilters.contains(r.getParticipant().getCustomerFriendlyName());
-        //System.out.println("Banking Name: " + r.getParticipant().getCustomerFriendlyName() + " filterBank: " + filterBank + " filterCategory " + filterCategory + "");
         return filterCategory;
     }
 }
