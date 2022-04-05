@@ -24,6 +24,10 @@ public class TransactionMethodsToTransactionMethodsEntity {
 
     private static List<TransactionMethodsEntity> convert(final List<String> methods, final PersonalAccountEntity personalAccount, final BusinessAccountEntity businessAccount) {
 
+        if (methods == null || methods.isEmpty()) {
+            return null;
+        }
+
         final List<TransactionMethodsEntity> transactionMethodsEntities = new ArrayList<>();
 
         methods.stream().forEach(method -> {

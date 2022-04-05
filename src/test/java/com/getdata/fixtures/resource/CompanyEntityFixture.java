@@ -5,11 +5,12 @@ import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.getdata.dataprovider.entity.ApplicationEntity;
 import com.getdata.dataprovider.entity.BusinessAccountEntity;
+import com.getdata.dataprovider.entity.BusinessLoanEntity;
 import com.getdata.dataprovider.entity.CompanyEntity;
 import com.getdata.dataprovider.entity.CustomersEntity;
 import com.getdata.dataprovider.entity.FeesBusinessAccountsEntity;
+import com.getdata.dataprovider.entity.FeesLoanEntity;
 import com.getdata.dataprovider.entity.FeesPersonalAccountsEntity;
-import com.getdata.dataprovider.entity.FeesPersonalLoanEntity;
 import com.getdata.dataprovider.entity.IncomeRateEntity;
 import com.getdata.dataprovider.entity.IndexerEntity;
 import com.getdata.dataprovider.entity.InterestRateEntity;
@@ -50,13 +51,24 @@ public class CompanyEntityFixture implements TemplateLoader {
             add(CompanyEntity.Fields.personalAccounts, Arrays.asList(createPersonalAccount()));
             add(CompanyEntity.Fields.businessAccounts, Arrays.asList(createBusinessAccount()));
             add(CompanyEntity.Fields.personalLoans, Arrays.asList(createPersonalLoan()));
+            add(CompanyEntity.Fields.businessLoans, Arrays.asList(createBusinessLoans()));
         }});
+    }
+
+    private BusinessLoanEntity createBusinessLoans() {
+        return BusinessLoanEntity.builder()
+                .type("test")
+                .fees(createFeesLoan())
+                .interestRates(Arrays.asList(createInterestRate()))
+                .requiredWarranties(Arrays.asList(createWarranties()))
+                .termsConditions("test")
+                .build();
     }
 
     private PersonalLoanEntity createPersonalLoan() {
         return PersonalLoanEntity.builder()
                 .type("test")
-                .fees(createFeesPersonalLoan())
+                .fees(createFeesLoan())
                 .interestRates(Arrays.asList(createInterestRate()))
                 .requiredWarranties(Arrays.asList(createWarranties()))
                 .termsConditions("test")
@@ -93,8 +105,8 @@ public class CompanyEntityFixture implements TemplateLoader {
                 .build();
     }
 
-    private FeesPersonalLoanEntity createFeesPersonalLoan() {
-        return FeesPersonalLoanEntity.builder()
+    private FeesLoanEntity createFeesLoan() {
+        return FeesLoanEntity.builder()
                 .services(Arrays.asList(createServicePersonalLoans()))
                 .build();
     }

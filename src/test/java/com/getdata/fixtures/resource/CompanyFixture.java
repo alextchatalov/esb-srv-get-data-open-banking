@@ -5,11 +5,12 @@ import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.getdata.core.model.Application;
 import com.getdata.core.model.BusinessAccount;
+import com.getdata.core.model.BusinessLoan;
 import com.getdata.core.model.Company;
 import com.getdata.core.model.Customers;
 import com.getdata.core.model.FeesBusinessAccounts;
+import com.getdata.core.model.FeesLoan;
 import com.getdata.core.model.FeesPersonalAccounts;
-import com.getdata.core.model.FeesPersonalLoan;
 import com.getdata.core.model.IncomeRate;
 import com.getdata.core.model.Indexer;
 import com.getdata.core.model.InterestRate;
@@ -24,7 +25,7 @@ import com.getdata.core.model.PriorityService;
 import com.getdata.core.model.ServiceBundle;
 import com.getdata.core.model.ServiceBusinessAccounts;
 import com.getdata.core.model.ServiceFromServiceBundle;
-import com.getdata.core.model.ServicePersonalLoans;
+import com.getdata.core.model.ServiceLoans;
 import com.getdata.core.model.TermsConditions;
 
 import java.util.Arrays;
@@ -47,14 +48,24 @@ public class CompanyFixture implements TemplateLoader {
             add(Company.Fields.personalAccounts, Arrays.asList(createPersonalAccount()));
             add(Company.Fields.businessAccounts, Arrays.asList(createBusinessAccount()));
             add(Company.Fields.personalLoans, Arrays.asList(createPersonalLoan()));
-
+            add(Company.Fields.businessLoans, Arrays.asList(createBusinessLoans()));
         }});
+    }
+
+    private BusinessLoan createBusinessLoans() {
+        return BusinessLoan.builder()
+                .type("test")
+                .fees(createFeesLoan())
+                .interestRates(Arrays.asList(createInterestRate()))
+                .requiredWarranties(Arrays.asList("test"))
+                .termsConditions("test")
+                .build();
     }
 
     private PersonalLoan createPersonalLoan() {
         return PersonalLoan.builder()
                 .type("test")
-                .fees(createFeesPersonalLoan())
+                .fees(createFeesLoan())
                 .interestRates(Arrays.asList(createInterestRate()))
                 .requiredWarranties(Arrays.asList("test"))
                 .termsConditions("test")
@@ -85,14 +96,14 @@ public class CompanyFixture implements TemplateLoader {
                 .build();
     }
 
-    private FeesPersonalLoan createFeesPersonalLoan() {
-        return FeesPersonalLoan.builder()
+    private FeesLoan createFeesLoan() {
+        return FeesLoan.builder()
                 .services(Arrays.asList(createServicePersonalLoans()))
                 .build();
     }
 
-    private ServicePersonalLoans createServicePersonalLoans() {
-        return ServicePersonalLoans.builder()
+    private ServiceLoans createServicePersonalLoans() {
+        return ServiceLoans.builder()
                 .name("test")
                 .code("test")
                 .chargingTriggerInfo("test")

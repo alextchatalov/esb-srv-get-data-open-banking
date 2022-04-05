@@ -48,4 +48,9 @@ public class InterestRateEntity {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private PersonalLoanEntity personalLoan;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private BusinessLoanEntity businessLoan;
 }

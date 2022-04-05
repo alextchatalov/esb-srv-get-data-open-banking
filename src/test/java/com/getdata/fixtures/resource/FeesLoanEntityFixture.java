@@ -3,16 +3,16 @@ package com.getdata.fixtures.resource;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
-import com.getdata.core.model.Customers;
-import com.getdata.core.model.FeesPersonalLoan;
-import com.getdata.core.model.Maximum;
-import com.getdata.core.model.Minimum;
-import com.getdata.core.model.Price;
-import com.getdata.core.model.ServicePersonalLoans;
+import com.getdata.dataprovider.entity.CustomersEntity;
+import com.getdata.dataprovider.entity.FeesLoanEntity;
+import com.getdata.dataprovider.entity.MaximumEntity;
+import com.getdata.dataprovider.entity.MinimumEntity;
+import com.getdata.dataprovider.entity.PriceEntity;
+import com.getdata.dataprovider.entity.PriorityServiceEntity;
 
 import java.util.Arrays;
 
-public class FeesPersonalLoanFixture implements TemplateLoader {
+public class FeesLoanEntityFixture implements TemplateLoader {
 
     public static final String VALID = "valid";
 
@@ -22,14 +22,14 @@ public class FeesPersonalLoanFixture implements TemplateLoader {
     }
 
     private void loadData() {
-        Fixture.of(FeesPersonalLoan.class).addTemplate(VALID, new Rule() {{
-            add(FeesPersonalLoan.Fields.services, Arrays.asList(createServicePersonalLoans()));
+        Fixture.of(FeesLoanEntity.class).addTemplate(VALID, new Rule() {{
+            add(FeesLoanEntity.Fields.services, Arrays.asList(createServicePersonalLoans()));
 
         }});
     }
 
-    private ServicePersonalLoans createServicePersonalLoans() {
-        return ServicePersonalLoans.builder()
+    private PriorityServiceEntity createServicePersonalLoans() {
+        return PriorityServiceEntity.builder()
                 .name("test")
                 .code("test")
                 .chargingTriggerInfo("test")
@@ -39,8 +39,8 @@ public class FeesPersonalLoanFixture implements TemplateLoader {
                 .build();
     }
 
-    private Price createPrice() {
-        return Price.builder()
+    private PriceEntity createPrice() {
+        return PriceEntity.builder()
                 .interval("123")
                 .value("123")
                 .currency("123")
@@ -49,24 +49,24 @@ public class FeesPersonalLoanFixture implements TemplateLoader {
                 .build();
     }
 
-    private Customers createCustomers() {
+    private CustomersEntity createCustomers() {
 
-        return Customers.builder()
+        return CustomersEntity.builder()
                 .rate("123")
                 .build();
     }
 
-    private Maximum createMaximum() {
+    private MaximumEntity createMaximum() {
 
-        return Maximum.builder()
+        return MaximumEntity.builder()
                 .currency("123")
                 .value("123")
                 .build();
     }
 
-    private Minimum createMinimum() {
+    private MinimumEntity createMinimum() {
 
-        return Minimum.builder()
+        return MinimumEntity.builder()
                 .currency("123")
                 .value("123")
                 .build();

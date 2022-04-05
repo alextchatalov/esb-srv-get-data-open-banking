@@ -21,7 +21,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "fees_personal_loans")
+@Table(name = "fees_loans")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -29,7 +29,7 @@ import java.util.List;
 @FieldNameConstants
 @EqualsAndHashCode
 @ToString
-public class FeesPersonalLoanEntity {
+public class FeesLoanEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -43,4 +43,9 @@ public class FeesPersonalLoanEntity {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private PersonalLoanEntity personalLoan;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private BusinessLoanEntity businessLoan;
 }

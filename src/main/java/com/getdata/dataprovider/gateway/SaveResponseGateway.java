@@ -21,6 +21,13 @@ public class SaveResponseGateway implements SaveResponseBoundary {
     @Override
     public void execute(final Data data) {
         final DataEntity dataEntity = dataToDataEntityMapper.convert(data);
-        repository.save(dataEntity);
+        try {
+            repository.save(dataEntity);
+        } catch (final Exception e) {
+            log.error("Error while saving data", e);
+            log.error("Data: {}", data);
+
+        }
+
     }
 }

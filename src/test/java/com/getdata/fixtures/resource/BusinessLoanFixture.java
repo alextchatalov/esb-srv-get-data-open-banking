@@ -4,19 +4,19 @@ import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.getdata.core.model.Application;
+import com.getdata.core.model.BusinessLoan;
 import com.getdata.core.model.Customers;
 import com.getdata.core.model.FeesLoan;
 import com.getdata.core.model.Indexer;
 import com.getdata.core.model.InterestRate;
 import com.getdata.core.model.Maximum;
 import com.getdata.core.model.Minimum;
-import com.getdata.core.model.PersonalLoan;
 import com.getdata.core.model.Price;
 import com.getdata.core.model.ServiceLoans;
 
 import java.util.Arrays;
 
-public class PersonalLoanFixture implements TemplateLoader {
+public class BusinessLoanFixture implements TemplateLoader {
 
     public static final String VALID = "valid";
 
@@ -26,12 +26,12 @@ public class PersonalLoanFixture implements TemplateLoader {
     }
 
     private void loadData() {
-        Fixture.of(PersonalLoan.class).addTemplate(VALID, new Rule() {{
-            add(PersonalLoan.Fields.type, "test");
-            add(PersonalLoan.Fields.fees, createFeesLoan());
-            add(PersonalLoan.Fields.interestRates, Arrays.asList(createInterestRate()));
-            add(PersonalLoan.Fields.requiredWarranties, Arrays.asList("test"));
-            add(PersonalLoan.Fields.termsConditions, "test");
+        Fixture.of(BusinessLoan.class).addTemplate(VALID, new Rule() {{
+            add(BusinessLoan.Fields.type, "test");
+            add(BusinessLoan.Fields.fees, createFeesLoan());
+            add(BusinessLoan.Fields.interestRates, Arrays.asList(createInterestRate()));
+            add(BusinessLoan.Fields.requiredWarranties, Arrays.asList("test"));
+            add(BusinessLoan.Fields.termsConditions, "test");
 
         }});
     }

@@ -51,6 +51,10 @@ public class CompanyEntity {
     @Setter
     private List<PersonalLoanEntity> personalLoans;
 
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Setter
+    private List<BusinessLoanEntity> businessLoans;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

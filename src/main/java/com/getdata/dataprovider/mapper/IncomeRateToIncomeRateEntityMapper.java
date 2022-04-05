@@ -24,10 +24,14 @@ public class IncomeRateToIncomeRateEntityMapper {
 
     private static IncomeRateEntity convert(final IncomeRate incomeRate, final PersonalAccountEntity personalAccountEntity, final BusinessAccountEntity businessAccountEntity) {
 
+        final String savingsAccount = incomeRate.getSavingAccount() != null && incomeRate.getSavingAccount().length() >= 255 ?
+                incomeRate.getSavingAccount().substring(0, 254) :
+                incomeRate.getSavingAccount();
+
         return IncomeRateEntity.builder()
                 .personalAccount(personalAccountEntity)
                 .businessAccount(businessAccountEntity)
-                .savingAccount(incomeRate.getSavingAccount())
+                .savingAccount(savingsAccount)
                 .prepaidPaymentAccount(incomeRate.getPrepaidPaymentAccount())
                 .build();
     }

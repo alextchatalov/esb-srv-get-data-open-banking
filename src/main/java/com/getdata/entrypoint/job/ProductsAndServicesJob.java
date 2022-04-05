@@ -28,7 +28,7 @@ public class ProductsAndServicesJob {
     private final RequestProductsAndServicesUserCase requestProductsAndServicesUserCase;
     private final SaveResponseUseCase saveResponseUseCase;
 
-    private final List<String> banksFilters = Arrays.asList("Itaú", "Itaucard", "Itaú BBA");
+    private final List<Category> acceptedCategories = Arrays.asList(Category.PERSONAL_ACCOUNTS, Category.BUSINESS_ACCOUNTS, Category.PERSONAL_LOANS, Category.BUSINESS_LOANS);
 
     @Scheduled(fixedDelay = 50000000)
     void run() {
@@ -45,7 +45,7 @@ public class ProductsAndServicesJob {
     }
 
     private boolean filterByBankAndCategory(final Response r) {
-        final boolean filterCategory = Category.PERSONAL_ACCOUNTS.equals(r.getCategory()) || Category.BUSINESS_ACCOUNTS.equals(r.getCategory()) || Category.PERSONAL_LOANS.equals(r.getCategory());
+        final boolean filterCategory = acceptedCategories.contains(r.getCategory());
         return filterCategory;
     }
 }

@@ -47,10 +47,16 @@ public class PersonalAccountsToPersonalAccountEntityMapper {
     }
 
     private static List<ServiceBundleEntity> convertListOfServiceBundleToListOfServiceBundleEntity(final List<ServiceBundle> serviceBundles, final PersonalAccountEntity personalAccountEntity) {
+        if (serviceBundles == null || serviceBundles.isEmpty()) {
+            return null;
+        }
         return serviceBundles.stream().map(service -> ServiceBundleToServiceBundleEntityMapper.convertWithPersonalAccounts(service, personalAccountEntity)).collect(Collectors.toList());
     }
 
     private static List<IncomeRateEntity> convertListOfIncomeRateToListOfIncomeRateEntity(final List<IncomeRate> incomeRates, final PersonalAccountEntity personalAccountEntity) {
+        if (incomeRates == null || incomeRates.isEmpty()) {
+            return null;
+        }
         return incomeRates.stream().map(income -> IncomeRateToIncomeRateEntityMapper.convertWithPersonalAccounts(income, personalAccountEntity)).collect(Collectors.toList());
     }
 

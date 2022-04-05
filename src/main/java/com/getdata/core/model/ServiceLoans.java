@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
 import java.util.List;
@@ -16,7 +17,14 @@ import java.util.List;
 @Getter
 @FieldNameConstants
 @EqualsAndHashCode
+@ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class FeesPersonalLoan {
-    private List<ServicePersonalLoans> services;
+public class ServiceLoans {
+
+    public String name;
+    public String code;
+    public String chargingTriggerInfo;
+    public List<Price> prices;
+    public Minimum minimum;
+    public Maximum maximum;
 }

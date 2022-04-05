@@ -1,11 +1,13 @@
 package com.getdata.dataprovider.mapper;
 
 import com.getdata.core.model.BusinessAccount;
+import com.getdata.core.model.BusinessLoan;
 import com.getdata.core.model.Company;
 import com.getdata.core.model.PersonalAccount;
 import com.getdata.core.model.PersonalLoan;
 import com.getdata.dataprovider.entity.BrandEntity;
 import com.getdata.dataprovider.entity.BusinessAccountEntity;
+import com.getdata.dataprovider.entity.BusinessLoanEntity;
 import com.getdata.dataprovider.entity.CompanyEntity;
 import com.getdata.dataprovider.entity.PersonalAccountEntity;
 import com.getdata.dataprovider.entity.PersonalLoanEntity;
@@ -31,9 +33,11 @@ public class CompanyToCompanyEntityMapper {
         final List<PersonalAccountEntity> personalAccountEntities = convertPersonalAccountsListToPersonalAccountEntityList(company.getPersonalAccounts(), companyEntity);
         final List<BusinessAccountEntity> businessAccountEntities = convertBusinessAccountListToBusinessAccountEntityList(company.getBusinessAccounts(), companyEntity);
         final List<PersonalLoanEntity> personalLoanEntities = convertPersonalLoansListToPersonalLoansEntityList(company.getPersonalLoans(), companyEntity);
+        final List<BusinessLoanEntity> businessLoanEntities = convertBusinessLoansListToBusinessLoansEntityList(company.getBusinessLoans(), companyEntity);
         companyEntity.setPersonalAccounts(personalAccountEntities);
         companyEntity.setBusinessAccounts(businessAccountEntities);
         companyEntity.setPersonalLoans(personalLoanEntities);
+        companyEntity.setBusinessLoans(businessLoanEntities);
 
         return companyEntity;
     }
@@ -55,6 +59,13 @@ public class CompanyToCompanyEntityMapper {
     private static List<PersonalLoanEntity> convertPersonalLoansListToPersonalLoansEntityList(final List<PersonalLoan> personalLoans, final CompanyEntity companyEntity) {
         if (personalLoans != null && !personalLoans.isEmpty()) {
             return personalLoans.stream().map(personalLoan -> PersonalLoanToPersonalLoanEntityMapper.convert(personalLoan, companyEntity)).collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    private static List<BusinessLoanEntity> convertBusinessLoansListToBusinessLoansEntityList(final List<BusinessLoan> businessLoans, final CompanyEntity companyEntity) {
+        if (businessLoans != null && !businessLoans.isEmpty()) {
+            return businessLoans.stream().map(businessLoan -> BusinessLoanToBusinessLoanEntityMapper.convert(businessLoan, companyEntity)).collect(Collectors.toList());
         }
         return null;
     }

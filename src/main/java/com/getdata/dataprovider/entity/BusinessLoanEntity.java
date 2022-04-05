@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "personal_loan")
+@Table(name = "business_loan")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -30,7 +30,7 @@ import java.util.List;
 @FieldNameConstants
 @EqualsAndHashCode
 @ToString
-public class PersonalLoanEntity {
+public class BusinessLoanEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,15 +38,15 @@ public class PersonalLoanEntity {
 
     private String type;
 
-    @OneToOne(mappedBy = "personalLoan", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "businessLoan", cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter
     private FeesLoanEntity fees;
 
-    @OneToMany(mappedBy = "personalLoan", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "businessLoan", cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter
     private List<InterestRateEntity> interestRates;
 
-    @OneToMany(mappedBy = "personalLoan", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "businessLoan", cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter
     private List<RequiredWarrantiesEntity> requiredWarranties;
 

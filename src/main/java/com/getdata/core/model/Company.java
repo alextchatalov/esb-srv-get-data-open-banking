@@ -29,5 +29,7 @@ public class Company {
     @JsonAlias("businessAccounts")
     private List<BusinessAccount> businessAccounts;
     @JsonAlias("personalLoans")
-    public List<PersonalLoan> personalLoans;
+    private List<PersonalLoan> personalLoans;
+    @JsonAlias("businessLoans")
+    private List<BusinessLoan> businessLoans;
 }

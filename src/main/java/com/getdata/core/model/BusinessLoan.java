@@ -19,7 +19,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PersonalLoan {
+public class BusinessLoan {
     private String type;
     private FeesLoan fees;
     private List<InterestRate> interestRates;
