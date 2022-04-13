@@ -3,6 +3,7 @@ package com.getdata.fixtures.resource;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
+import com.getdata.core.model.Brand;
 import com.getdata.dataprovider.entity.BrandEntity;
 import com.getdata.dataprovider.entity.CompanyEntity;
 import com.getdata.dataprovider.entity.CustomersEntity;
@@ -54,7 +55,7 @@ public class BrandEntityFixture implements TemplateLoader {
 
     private PersonalAccountEntity createPersonalAccount() {
 
-        PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
+        final PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
                 .type("test")
                 .fees(createFees())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))

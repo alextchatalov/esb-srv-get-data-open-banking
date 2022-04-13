@@ -40,7 +40,10 @@ public class BusinessAccountToBusinessAccountEntityMapper {
     }
 
     private static List<ServiceBundleEntity> convertListOfServiceBundleToListOfServiceBundleEntity(final List<ServiceBundle> serviceBundles, final BusinessAccountEntity businessAccountEntity) {
-        return serviceBundles.stream().map(service -> ServiceBundleToServiceBundleEntityMapper.convertWithBusinessAccounts(service, businessAccountEntity)).collect(Collectors.toList());
+        if (serviceBundles != null && !serviceBundles.isEmpty()) {
+            return serviceBundles.stream().map(service -> ServiceBundleToServiceBundleEntityMapper.convertWithBusinessAccounts(service, businessAccountEntity)).collect(Collectors.toList());
+        }
+        return null;
     }
 
 }

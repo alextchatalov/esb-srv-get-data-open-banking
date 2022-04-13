@@ -5,10 +5,8 @@ import com.getdata.core.model.Participant;
 import com.getdata.dataprovider.entity.ApiEndPointEntity;
 import com.getdata.dataprovider.entity.ApiResourceEntity;
 import com.getdata.dataprovider.entity.ParticipantEntity;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
@@ -18,30 +16,29 @@ import java.util.List;
 @Slf4j
 @Lazy
 @Component
-@AllArgsConstructor
-public class ParticipantToParticipantEntityMapper implements Converter<Participant, ParticipantEntity> {
+public class ParticipantToParticipantEntityMapper {
 
-    @Override
     @NonNull
-    public ParticipantEntity convert(final Participant participant) {
+    public static ParticipantEntity convert(final Participant participant) {
         final ParticipantEntity participantEntity = ParticipantEntity.builder()
                 .organisationId(participant.getOrganisationId())
                 .status(participant.getStatus())
                 .organisationName(participant.getOrganisationName())
                 .customerFriendlyName(participant.getCustomerFriendlyName())
+                .customerFriendlyLogoUri(participant.getCustomerFriendlyLogoUri())
                 .build();
 
         participantEntity.setApiResources(createListOfApiResource(participant.getApiResources(), participantEntity));
         return participantEntity;
     }
 
-    private List<ApiResourceEntity> createListOfApiResource(final List<ApiResource> apiResources, final ParticipantEntity participantEntity) {
+    private static List<ApiResourceEntity> createListOfApiResource(final List<ApiResource> apiResources, final ParticipantEntity participantEntity) {
         if (apiResources == null || apiResources.isEmpty()) {
             return new ArrayList<>();
         }
         final List<ApiResourceEntity> apiResourceEntityList = new ArrayList<>();
         apiResources.forEach(api -> {
-            ApiResourceEntity apiResourceEntity = ApiResourceEntity.builder()
+            final ApiResourceEntity apiResourceEntity = ApiResourceEntity.builder()
                     .participant(participantEntity)
                     .apiFamilyType(api.getApiFamilyType())
                     .apiVersion(api.getApiVersion())
@@ -53,7 +50,7 @@ public class ParticipantToParticipantEntityMapper implements Converter<Participa
         return apiResourceEntityList;
     }
 
-    private List<ApiEndPointEntity> createListOfApiEndpoint(List<String> apiEndpoint, ApiResourceEntity apiResourceEntity) {
+    private static List<ApiEndPointEntity> createListOfApiEndpoint(final List<String> apiEndpoint, final ApiResourceEntity apiResourceEntity) {
 
         final List<ApiEndPointEntity> apiEndPointEntityList = new ArrayList<>();
 

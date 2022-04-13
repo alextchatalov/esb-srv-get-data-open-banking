@@ -5,7 +5,6 @@ import com.getdata.core.usecase.RequestParticipantsUserCase;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -20,7 +19,7 @@ public class ParticipantsJob {
     private final RequestParticipantsUserCase requestParticipantsUserCase;
     private final CreateParticipantsUserCase createParticipantsUserCase;
 
-    @Scheduled(fixedDelay = 500000)
+    //@Scheduled(fixedDelay = 500000)
     private void run() {
 
         try {

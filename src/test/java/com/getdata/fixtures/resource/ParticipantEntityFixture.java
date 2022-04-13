@@ -21,7 +21,7 @@ public class ParticipantEntityFixture implements TemplateLoader {
     }
 
     private void loadData() {
-        ParticipantEntity participantMock = ParticipantEntity.builder()
+        final ParticipantEntity participantMock = ParticipantEntity.builder()
                 .organisationId("123")
                 .status(ParticipantStatus.ACTIVE)
                 .organisationName("test")
@@ -38,20 +38,20 @@ public class ParticipantEntityFixture implements TemplateLoader {
         }});
     }
 
-    private ApiResourceEntity createApiResources(ParticipantEntity participantMock) {
+    private ApiResourceEntity createApiResources(final ParticipantEntity participantMock) {
 
-        ApiResourceEntity apiResourceEntityMock = ApiResourceEntity.builder()
+        final ApiResourceEntity apiResourceEntityMock = ApiResourceEntity.builder()
                 .apiFamilyType("test")
                 .apiVersion("1")
                 .participant(participantMock)
                 .build();
 
-        List<ApiEndPointEntity> apiEndPointEntity = createApiEndPointEntity(apiResourceEntityMock);
+        final List<ApiEndPointEntity> apiEndPointEntity = createApiEndPointEntity(apiResourceEntityMock);
         apiResourceEntityMock.setApiEndpoint(apiEndPointEntity);
         return apiResourceEntityMock;
     }
 
-    private List<ApiEndPointEntity> createApiEndPointEntity(ApiResourceEntity apiResourceEntityMock) {
+    private List<ApiEndPointEntity> createApiEndPointEntity(final ApiResourceEntity apiResourceEntityMock) {
 
         return Arrays.asList(ApiEndPointEntity.builder()
                 .id(1L)

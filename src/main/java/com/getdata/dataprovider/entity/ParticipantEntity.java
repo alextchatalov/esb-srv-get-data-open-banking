@@ -35,7 +35,14 @@ public class ParticipantEntity {
     private ParticipantStatus status;
     private String organisationName;
     private String customerFriendlyName;
-    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private String customerFriendlyLogoUri;
+
+    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Setter
     private List<ApiResourceEntity> apiResources = new ArrayList<>();
+
+    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<BrandEntity> brand;
 }

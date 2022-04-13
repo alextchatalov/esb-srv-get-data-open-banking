@@ -11,6 +11,7 @@ import lombok.experimental.FieldNameConstants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @AllArgsConstructor
@@ -26,7 +27,20 @@ public class Participant {
     private ParticipantStatus status;
     private String organisationName;
     private String customerFriendlyName;
+    private String customerFriendlyLogoUri;
+
     @Builder.Default
     @Setter
     private List<ApiResource> apiResources = new ArrayList<>();
+
+    public boolean isActive() {
+        return ParticipantStatus.ACTIVE.equals(this.status);
+    }
+
+    public List<ApiResource> getApiProductsServices() {
+
+        return this.getApiResources().stream()
+                .filter(apiResource -> "products-services".equals(apiResource.getApiFamilyType()) && this.isActive())
+                .collect(Collectors.toList());
+    }
 }

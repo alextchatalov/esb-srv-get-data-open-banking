@@ -20,8 +20,9 @@ public enum Category {
     PERSONAL_UNARRANGED_ACCOUNT_OVERDRAFT("/personal-unarranged-account-overdraft"),
     BUSINESS_UNARRANGED_ACCOUNT_OVERDRAFT("/business-unarranged-account-overdraft");
 
-    private String entryPoint;
-    Category(String entryPoint) {
+    private final String entryPoint;
+
+    Category(final String entryPoint) {
         this.entryPoint = entryPoint;
     }
 
@@ -29,13 +30,10 @@ public enum Category {
         return entryPoint;
     }
 
-    public static Category getCategoryFromUrl(String url) throws Exception {
+    public static Category getCategoryFromUrl(final String url) throws Exception {
 
         if (url != null) {
-            String urlReplace = url.replace("https://", "");
-            String[] urlSplited = urlReplace.split("/");
-            String categoryFromUrl = urlSplited[4];
-            return Arrays.stream(Category.values()).filter(category -> category.getEntryPoint().equals("/" + categoryFromUrl)).findFirst().orElseThrow(() -> new Exception("Can't find enum from url"));
+            return Arrays.stream(Category.values()).filter(category -> url.contains(category.getEntryPoint())).findFirst().orElseThrow(() -> new Exception("Can't find enum from Original url: " + url));
         } else {
             throw new Exception("Error to get category from url: " + url);
         }

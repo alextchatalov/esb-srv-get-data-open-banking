@@ -18,7 +18,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-class ProcessjsonUserCaseTest {
+class ProcessJsonUserCaseTest {
 
     @InjectMocks
     ProcessJsonUserCase processJsonUserCase;
@@ -30,10 +30,10 @@ class ProcessjsonUserCaseTest {
 
     @Test
     void given_valid_participant_json_When_process_json_to_list_of_participants_then_return_list_of_participants() throws IOException {
-        String participantJsonMock = new String(Files.readAllBytes(Paths.get("src/test/resources/jsons/participant.json")));
+        final String participantJsonMock = new String(Files.readAllBytes(Paths.get("src/test/resources/jsons/participant.json")));
         final Participant participantMock = Fixture.from(Participant.class).gimme(ParticipantFixture.VALID);
 
-        List<Participant> participants = processJsonUserCase.execute(participantJsonMock);
+        final List<Participant> participants = processJsonUserCase.execute(participantJsonMock);
         assertThat(participants.get(0).getOrganisationId()).isEqualTo(participantMock.getOrganisationId());
         assertThat(participants.get(0).getStatus()).isEqualTo(participantMock.getStatus());
         assertThat(participants.get(0).getOrganisationName()).isEqualTo(participantMock.getOrganisationName());
@@ -45,10 +45,10 @@ class ProcessjsonUserCaseTest {
 
     @Test
     void given_participant_json_with_out_OrgDomainClaims_When_process_json_to_list_of_participants_then_return_list_of_participants_with_out_OrgDomainClaims() throws IOException {
-        String participantJsonMock = new String(Files.readAllBytes(Paths.get("src/test/resources/jsons/participantWithOutOrgDomainClaims.json")));
+        final String participantJsonMock = new String(Files.readAllBytes(Paths.get("src/test/resources/jsons/participantWithOutOrgDomainClaims.json")));
         final Participant participantMock = Fixture.from(Participant.class).gimme(ParticipantFixture.VALID_WITHOUT_ORGANISATION_CLAIMS);
 
-        List<Participant> participants = processJsonUserCase.execute(participantJsonMock);
+        final List<Participant> participants = processJsonUserCase.execute(participantJsonMock);
         assertThat(participants.get(0).getOrganisationId()).isEqualTo(participantMock.getOrganisationId());
         assertThat(participants.get(0).getStatus()).isEqualTo(participantMock.getStatus());
         assertThat(participants.get(0).getOrganisationName()).isEqualTo(participantMock.getOrganisationName());

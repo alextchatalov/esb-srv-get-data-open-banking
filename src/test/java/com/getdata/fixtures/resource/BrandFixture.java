@@ -1,5 +1,8 @@
 package com.getdata.fixtures.resource;
 
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.Rule;
+import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.getdata.core.model.Brand;
 import com.getdata.core.model.Company;
 import com.getdata.core.model.Customers;
@@ -15,9 +18,6 @@ import com.getdata.core.model.PriorityService;
 import com.getdata.core.model.ServiceBundle;
 import com.getdata.core.model.ServiceFromServiceBundle;
 import com.getdata.core.model.TermsConditions;
-import br.com.six2six.fixturefactory.Fixture;
-import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
 
 import java.util.Collections;
 

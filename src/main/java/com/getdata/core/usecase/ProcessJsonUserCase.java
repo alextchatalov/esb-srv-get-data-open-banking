@@ -1,6 +1,7 @@
 package com.getdata.core.usecase;
 
 import com.getdata.core.model.ApiResource;
+import com.getdata.core.model.AuthorisationServers;
 import com.getdata.core.model.Participant;
 import com.getdata.core.model.ParticipantStatus;
 import com.google.gson.JsonArray;
@@ -12,9 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Component
 @Slf4j
@@ -37,16 +36,21 @@ public class ProcessJsonUserCase {
             final String statusParticipant = openOrgDomainClaims(participantJsonObject);
             final String organisationName = String.valueOf(participantJsonObject.get("OrganisationName").getAsString());
             final String organisationId = String.valueOf(participantJsonObject.get("OrganisationId").getAsString());
-            final Map<String, List<ApiResource>> customerAndApi = openCustomerFriendlyName(participantJsonObject);
-            final Participant participant = Participant.builder()
-                    .organisationId(organisationId)
-                    .status(ParticipantStatus.convert(statusParticipant))
-                    .organisationName(organisationName)
-                    .customerFriendlyName(customerAndApi.entrySet().stream().map(Map.Entry::getKey).findFirst().get())
-                    .apiResources(customerAndApi.entrySet().stream().map(Map.Entry::getValue).findFirst().get())
-                    .build();
+            final List<AuthorisationServers> authorisationServers = openAuthorisationServers(participantJsonObject);
 
-            participants.add(participant);
+            authorisationServers.forEach(authorisationServer -> {
+
+                final Participant participant = Participant.builder()
+                        .organisationId(organisationId)
+                        .status(ParticipantStatus.convert(statusParticipant))
+                        .organisationName(organisationName)
+                        .customerFriendlyName(authorisationServer.getCustomerFriendlyName())
+                        .customerFriendlyLogoUri(authorisationServer.getCustomerFriendlyLogoUri())
+                        .apiResources(authorisationServer.getApiResources())
+                        .build();
+
+                participants.add(participant);
+            });
 
         }
         return participants;
@@ -61,15 +65,24 @@ public class ProcessJsonUserCase {
         return endPoints;
     }
 
-    private Map<String, List<ApiResource>> openCustomerFriendlyName(final JsonObject participantJsonObject) {
-        final JsonArray authorisationServers = participantJsonObject.getAsJsonArray("AuthorisationServers");
-        final Map<String, List<ApiResource>> participantNameAndApis = new HashMap<>();
-        for (int i = 0; i < authorisationServers.size(); i++) {
-            final List<ApiResource> apiResources = getApiResources(authorisationServers.get(i));
-            final String customerFriendlyName = authorisationServers.get(i).getAsJsonObject().get("CustomerFriendlyName").getAsString();
-            participantNameAndApis.put(customerFriendlyName, apiResources);
+    private List<AuthorisationServers> openAuthorisationServers(final JsonObject participantJsonObject) {
+        final List<AuthorisationServers> authorisationServersList = new ArrayList<>();
+        final JsonArray authorization = participantJsonObject.getAsJsonArray("AuthorisationServers");
+
+        for (int i = 0; i < authorization.size(); i++) {
+            final List<ApiResource> apiResources = getApiResources(authorization.get(i));
+            final String customerFriendlyName = authorization.get(i).getAsJsonObject().get("CustomerFriendlyName").getAsString();
+            final String customerFriendlyLogoUri = authorization.get(i).getAsJsonObject().get("CustomerFriendlyLogoUri").getAsString();
+
+            final AuthorisationServers authorisationServers = AuthorisationServers.builder()
+                    .customerFriendlyName(customerFriendlyName)
+                    .customerFriendlyLogoUri(customerFriendlyLogoUri)
+                    .apiResources(apiResources)
+                    .build();
+
+            authorisationServersList.add(authorisationServers);
         }
-        return participantNameAndApis;
+        return authorisationServersList;
     }
 
     private List<ApiResource> getApiResources(final JsonElement authorisationServers) {

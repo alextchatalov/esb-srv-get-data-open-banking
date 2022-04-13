@@ -50,7 +50,10 @@ public class ServiceBundleToServiceBundleEntityMapper {
     }
 
     private static List<ServiceFromServiceBundleEntity> convertListOfServicesToListOfServicesEntity(final List<ServiceFromServiceBundle> serviceFromServicePersonalAccounts, final ServiceBundleEntity serviceBundleEntity) {
-        return serviceFromServicePersonalAccounts.stream().map(service -> ServiceFromServiceBundleToServiceFromServiceBundleEntityMapper.convert(service, serviceBundleEntity)).collect(Collectors.toList());
+        if (serviceFromServicePersonalAccounts != null && !serviceFromServicePersonalAccounts.isEmpty()) {
+            return serviceFromServicePersonalAccounts.stream().map(service -> ServiceFromServiceBundleToServiceFromServiceBundleEntityMapper.convert(service, serviceBundleEntity)).collect(Collectors.toList());
+        }
+        return null;
     }
 
 }

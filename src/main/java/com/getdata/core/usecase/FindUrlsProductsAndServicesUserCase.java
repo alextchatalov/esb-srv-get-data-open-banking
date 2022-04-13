@@ -9,7 +9,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,25 +22,25 @@ public class FindUrlsProductsAndServicesUserCase {
     FindProductsAndServicesActiveUserCase findProductsAndServicesActiveUserCase;
 
     public List<Request> execute() {
-        List<Request> apis = new ArrayList<>();
-        Map<Participant, List<String>> apisProductAndServices = findProductsAndServicesActiveUserCase.execute();
-        for (Map.Entry<Participant, List<String>> participantMap : apisProductAndServices.entrySet()) {
-            for (String api : participantMap.getValue()) {
+        final List<Request> apis = new ArrayList<>();
+        final Map<Participant, List<String>> apisProductAndServices = findProductsAndServicesActiveUserCase.execute();
+        for (final Map.Entry<Participant, List<String>> participantMap : apisProductAndServices.entrySet()) {
+            for (final String api : participantMap.getValue()) {
                 try {
 
-                    String version = getVersion(api);
-                    Category category = Category.getCategoryFromUrl(api);
+                    final String version = getVersion(api);
+                    final Category category = Category.getCategoryFromUrl(api);
 
-                    Request request = Request.builder()
-                            .participant(participantMap.getKey())
-                            .category(category)
-                            .version(version)
-                            .url(api)
-                            .lastRequest(LocalDateTime.now())
-                            .build();
-
-                    apis.add(request);
-                } catch (Exception e) {
+//                    Request request = Request.builder()
+//                            .participant(participantMap.getKey())
+//                            .category(category)
+//                            .version(version)
+//                            .url(api)
+//                            .lastRequest(LocalDateTime.now())
+//                            .build();
+//
+//                    apis.add(request);
+                } catch (final Exception e) {
                     log.error("Error to create Request: " + e);
                 }
             }
@@ -51,14 +50,14 @@ public class FindUrlsProductsAndServicesUserCase {
         return apis;
     }
 
-    private String getVersion(String api) {
+    private String getVersion(final String api) {
 
         try {
-            int indexVersionStart = StringUtils.ordinalIndexOf(api, "/", 5);
-            int indexVersionEnd = StringUtils.ordinalIndexOf(api, "/", 6);
-            String version = api.substring(indexVersionStart + 1, indexVersionEnd);
+            final int indexVersionStart = StringUtils.ordinalIndexOf(api, "/", 5);
+            final int indexVersionEnd = StringUtils.ordinalIndexOf(api, "/", 6);
+            final String version = api.substring(indexVersionStart + 1, indexVersionEnd);
             return version;
-        } catch (Exception e) {
+        } catch (final Exception e) {
             log.warn("Can not find version from api");
             return null;
         }

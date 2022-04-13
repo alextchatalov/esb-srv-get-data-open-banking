@@ -30,10 +30,13 @@ public class Response {
         final ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
         try {
-            return objectMapper.readValue(this.response, Root.class);
+            final Root rootConverted = objectMapper.readValue(this.response, Root.class);
+            rootConverted.getData().getBrand().setParticipant(this.getParticipant());
+            return rootConverted;
         } catch (final JsonProcessingException e) {
             System.out.println(this.response);
             log.error("Error to map json response to object: " + e.getMessage());
+            log.error("Response: " + this.response);
             return null;
         }
     }

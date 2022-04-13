@@ -29,7 +29,7 @@
         PayloadSigningCertLocationUri: "https://www.bradesco.com.br/naoseaplica",
         ParentAuthorisationServerId: null,
         OpenIDDiscoveryDocument: "https://www.bradesco.com.br/naoseaplica",
-        CustomerFriendlyName: "Banco Digital next",
+        CustomerFriendlyName: "test",
         CustomerFriendlyDescription: "",
         TermsOfServiceUri: "https://www.bradesco.com.br/naoseaplica",
         ApiResources: [
@@ -40,7 +40,7 @@
             ApiDiscoveryEndpoints: [
               {
                 ApiDiscoveryId: "0131eb1a-3672-4fe0-b453-15a0cbdd098b",
-                ApiEndpoint: "https://api.bradesco.com/Next/open-banking/products-services/v1"
+                ApiEndpoint: "123"
               }
             ]
           },
@@ -68,7 +68,7 @@
           }
         ],
         AutoRegistrationSupported: false,
-        CustomerFriendlyLogoUri: "https://www.bradesco.com.br/naoseaplica",
+        CustomerFriendlyLogoUri: "test",
         DeveloperPortalUri: "https://www.bradesco.com.br/naoseaplica",
         AuthorisationServerId: "ba185564-2e26-420e-b6bb-af5bc7102480"
       },

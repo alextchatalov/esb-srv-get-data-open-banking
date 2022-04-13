@@ -3,6 +3,7 @@ package com.getdata.dataprovider.gateway;
 import br.com.six2six.fixturefactory.Fixture;
 import com.getdata.core.model.Data;
 import com.getdata.dataprovider.entity.DataEntity;
+import com.getdata.dataprovider.entity.ParticipantEntity;
 import com.getdata.dataprovider.mapper.DataToDataEntityMapper;
 import com.getdata.dataprovider.repository.DataRepository;
 import com.getdata.fixtures.FixtureLoader;
@@ -43,7 +44,7 @@ class SaveResponseGatewayTest {
         final DataEntity dataEntityMock = Fixture.from(DataEntity.class).gimme(DataEntityFixture.VALID);
         final Data dataMock = Fixture.from(Data.class).gimme(DataFixture.VALID);
 
-        when(dataToDataEntityMapper.convert(any(Data.class))).thenReturn(dataEntityMock);
+        when(dataToDataEntityMapper.convert(any(Data.class), any(ParticipantEntity.class))).thenReturn(dataEntityMock);
         when(repository.save(any(DataEntity.class))).thenReturn(dataEntityMock);
 
         saveResponseGateway.execute(dataMock);

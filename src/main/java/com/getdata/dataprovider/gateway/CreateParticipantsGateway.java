@@ -14,12 +14,11 @@ import org.springframework.stereotype.Component;
 public class CreateParticipantsGateway implements CreateParticipantsBoundary {
 
     private final ParticipantRepository repository;
-    private final ParticipantToParticipantEntityMapper participantToParticipantEntityMapper;
     private final ParticipantEntityToParticipantMapper participantEntityToParticipantMapper;
 
     @Override
     public Participant save(final Participant participant) {
-        final ParticipantEntity participantEntity = participantToParticipantEntityMapper.convert(participant);
+        final ParticipantEntity participantEntity = ParticipantToParticipantEntityMapper.convert(participant);
         final ParticipantEntity participantSaved = repository.save(participantEntity);
         return participantEntityToParticipantMapper.convert(participantSaved);
     }

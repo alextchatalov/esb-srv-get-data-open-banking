@@ -10,7 +10,6 @@ import com.getdata.core.usecase.SaveResponseUseCase;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -30,7 +29,7 @@ public class ProductsAndServicesJob {
 
     private final List<Category> acceptedCategories = Arrays.asList(Category.PERSONAL_ACCOUNTS, Category.BUSINESS_ACCOUNTS, Category.PERSONAL_LOANS, Category.BUSINESS_LOANS);
 
-    @Scheduled(fixedDelay = 50000000)
+    //@Scheduled(fixedDelay = 50000000)
     void run() {
         final long start = System.currentTimeMillis();
         log.info("ProductsAndServicesJob started - " + start);

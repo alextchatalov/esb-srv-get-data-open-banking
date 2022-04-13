@@ -12,14 +12,12 @@ import java.util.List;
 @AllArgsConstructor
 public class SaveResponseUseCase {
 
-    SaveResponseBoundary saveResponseBoundary;
+    private final SaveResponseBoundary saveResponseBoundary;
 
     public void execute(final List<Root> responses) {
         for (final Root response : responses) {
             if (response != null) {
                 saveResponseBoundary.execute(response.getData());
-            } else {
-                log.info("Response is null");
             }
         }
     }

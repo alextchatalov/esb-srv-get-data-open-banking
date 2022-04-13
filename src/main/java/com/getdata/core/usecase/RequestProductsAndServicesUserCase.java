@@ -3,6 +3,7 @@ package com.getdata.core.usecase;
 import com.getdata.core.model.Request;
 import com.getdata.core.model.Response;
 import com.google.common.collect.Lists;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,33 @@ import java.util.stream.Collectors;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
+//TODO MELHORAR A CLASSE QUANDO TIVER MAIS TEMPO
 public class RequestProductsAndServicesUserCase {
+
+    private final RequestProductsAndServicesBoundary requestProductsAndServicesBoundary;
+
+    public List<Response> newExecute(final List<Request> apis) {
+        final List<Response> responseProductsAndServices = new ArrayList<>();
+
+        apis.forEach(request -> {
+            final String productsAndServicesResponse = requestProductsAndServicesBoundary.execute(request.getUrl());
+            if (productsAndServicesResponse != null) {
+                final Response response = Response.builder()
+                        .participant(request.getParticipant())
+                        .lastRequest(request.getLastRequest())
+                        .category(request.getCategory())
+                        .url(request.getUrl())
+                        .version(request.getVersion())
+                        .response(productsAndServicesResponse)
+                        .build();
+
+                responseProductsAndServices.add(response);
+            }
+        });
+
+        return responseProductsAndServices;
+    }
 
     public List<Response> execute(final List<Request> apis) {
         log.info("Requesting Products and Services...");
