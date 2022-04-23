@@ -11,6 +11,8 @@ import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,7 +36,8 @@ public class PriceEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String interval;
+    @Enumerated(EnumType.STRING)
+    private Interval interval;
     private String value;
     private String currency;
     @OneToOne(mappedBy = "price", cascade = CascadeType.ALL, orphanRemoval = true)

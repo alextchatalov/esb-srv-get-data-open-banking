@@ -11,6 +11,8 @@ import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,7 +38,8 @@ public class BusinessAccountEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private TypeAccount type;
 
     @OneToOne(mappedBy = "businessAccount", cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter

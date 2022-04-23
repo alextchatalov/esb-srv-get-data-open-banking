@@ -6,6 +6,7 @@ import com.getdata.dataprovider.entity.ApplicationEntity;
 import com.getdata.dataprovider.entity.BusinessLoanEntity;
 import com.getdata.dataprovider.entity.InterestRateEntity;
 import com.getdata.dataprovider.entity.PersonalLoanEntity;
+import com.getdata.dataprovider.entity.ReferentialRateIndexer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.NonNull;
@@ -33,7 +34,7 @@ public class InterestRateToInterestRateEntityMapper {
 
     private static InterestRateEntity convert(final InterestRateEntity.InterestRateEntityBuilder businessLoanEntity, final InterestRate interestRate) {
         final InterestRateEntity interestRateEntity = businessLoanEntity
-                .referentialRateIndexer(interestRate.getReferentialRateIndexer())
+                .referentialRateIndexer(ReferentialRateIndexer.get(interestRate.getReferentialRateIndexer()))
                 .rate(interestRate.getRate())
                 .minimumRate(interestRate.getMinimumRate())
                 .maximumRate(interestRate.getMaximumRate())

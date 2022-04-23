@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Bean;
 
 @EnableFeignClients
 @SpringBootApplication
-public class Application {
+public class GetDataApplication {
 
 	public static void main(final String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(GetDataApplication.class, args);
 	}
 
 	@Bean

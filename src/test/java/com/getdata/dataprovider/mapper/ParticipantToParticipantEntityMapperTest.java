@@ -35,7 +35,7 @@ public class ParticipantToParticipantEntityMapperTest {
         final ParticipantEntity participantEntityMock = Fixture.from(ParticipantEntity.class).gimme(ParticipantEntityFixture.VALID);
         final BrandEntity brandEntityMock = Fixture.from(BrandEntity.class).gimme(BrandEntityFixture.VALID);
 
-        final ParticipantEntity participantEntity = mapper.convert(participantMock, Arrays.asList(brandEntityMock));
+        final ParticipantEntity participantEntity = mapper.convert(participantMock);
 
         assertThat(participantEntity.getOrganisationId()).isEqualTo(participantEntityMock.getOrganisationId());
         assertThat(participantEntity.getStatus()).isEqualTo(participantEntityMock.getStatus());

@@ -51,7 +51,7 @@ public class BrandFixture implements TemplateLoader {
     private PersonalAccount createPersonalAccount() {
 
         return PersonalAccount.builder()
-                .type("test")
+                .type("CONTA_DEPOSITO_A_VISTA")
                 .fees(createFees())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
                 .openingClosingChannels(Collections.singletonList("test"))

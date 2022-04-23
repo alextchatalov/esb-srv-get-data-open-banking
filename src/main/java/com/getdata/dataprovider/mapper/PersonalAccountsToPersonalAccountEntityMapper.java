@@ -3,6 +3,7 @@ package com.getdata.dataprovider.mapper;
 import com.getdata.core.model.IncomeRate;
 import com.getdata.core.model.PersonalAccount;
 import com.getdata.core.model.ServiceBundle;
+import com.getdata.dataprovider.entity.TypeAccount;
 import com.getdata.dataprovider.entity.CompanyEntity;
 import com.getdata.dataprovider.entity.IncomeRateEntity;
 import com.getdata.dataprovider.entity.OpeningClosingChannelsEntity;
@@ -28,7 +29,7 @@ public class PersonalAccountsToPersonalAccountEntityMapper {
                 personalAccount.getAdditionalInfo();
 
         final PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
-                .type(personalAccount.getType())
+                .type(TypeAccount.valueOf(personalAccount.getType()))
                 .additionalInfo(additionalInfo)
                 .company(company)
                 .build();

@@ -9,10 +9,13 @@ import com.getdata.dataprovider.entity.CustomersEntity;
 import com.getdata.dataprovider.entity.FeesLoanEntity;
 import com.getdata.dataprovider.entity.IndexerEntity;
 import com.getdata.dataprovider.entity.InterestRateEntity;
+import com.getdata.dataprovider.entity.Interval;
 import com.getdata.dataprovider.entity.MaximumEntity;
 import com.getdata.dataprovider.entity.MinimumEntity;
 import com.getdata.dataprovider.entity.PriceEntity;
 import com.getdata.dataprovider.entity.PriorityServiceEntity;
+import com.getdata.dataprovider.entity.ReferentialRateIndexer;
+import com.getdata.dataprovider.entity.RequiredWarranties;
 import com.getdata.dataprovider.entity.RequiredWarrantiesEntity;
 
 import java.util.Arrays;
@@ -39,13 +42,13 @@ public class BusinessLoanEntityFixture implements TemplateLoader {
 
     private RequiredWarrantiesEntity createRequiredWarranties() {
         return RequiredWarrantiesEntity.builder()
-                .warranties("test")
+                .warranties(RequiredWarranties.ACORDOS_COMPENSACAO)
                 .build();
     }
 
     private InterestRateEntity createInterestRate() {
         return InterestRateEntity.builder()
-                .referentialRateIndexer("test")
+                .referentialRateIndexer(ReferentialRateIndexer.CREDITO_RURAL_TCR_POS)
                 .rate("1")
                 .applications(Arrays.asList(createApplication()))
                 .minimumRate("1")
@@ -55,7 +58,7 @@ public class BusinessLoanEntityFixture implements TemplateLoader {
 
     private ApplicationEntity createApplication() {
         return ApplicationEntity.builder()
-                .interval("1")
+                .interval(Interval.FAIXA_1)
                 .indexer(createIndexer())
                 .customers(createCustomers())
                 .build();
@@ -75,8 +78,8 @@ public class BusinessLoanEntityFixture implements TemplateLoader {
 
     private PriorityServiceEntity createServicePersonalLoans() {
         return PriorityServiceEntity.builder()
-                .name("test")
-                .code("test")
+                .name("ANUIDADE_CARTAO_BASICO_NACIONAL")
+                .code("EXTRATO_MES_E")
                 .chargingTriggerInfo("test")
                 .prices(Arrays.asList(createPrice()))
                 .minimum(createMinimum())
@@ -102,7 +105,7 @@ public class BusinessLoanEntityFixture implements TemplateLoader {
 
     private PriceEntity createPrice() {
         return PriceEntity.builder()
-                .interval("123")
+                .interval(Interval.FAIXA_1)
                 .value("123")
                 .currency("123")
                 .customers(createCustomers())

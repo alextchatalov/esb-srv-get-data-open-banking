@@ -9,6 +9,8 @@ import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,7 +33,8 @@ public class OpeningClosingChannelsEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String channel;
+    @Enumerated(EnumType.STRING)
+    private OpeningClosingChannel channel;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude

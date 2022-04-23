@@ -48,7 +48,7 @@ public class CreateParticipantsGatewayTest {
         final Participant participantMock = Fixture.from(Participant.class).gimme(ParticipantFixture.VALID);
         final ParticipantEntity participantEntityMock = Fixture.from(ParticipantEntity.class).gimme(ParticipantEntityFixture.VALID);
 
-        when(participantToParticipantEntityMapper.convert(any(Participant.class), new ArrayList<>())).thenReturn(participantEntityMock);
+        when(participantToParticipantEntityMapper.convert(any(Participant.class))).thenReturn(participantEntityMock);
         when(participantEntityToParticipantMapper.convert(any(ParticipantEntity.class))).thenReturn(participantMock);
         when(repository.save(any(ParticipantEntity.class))).thenReturn(participantEntityMock);
 

@@ -10,6 +10,7 @@ import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -37,6 +38,7 @@ public class CompanyEntity {
 
     private String name;
     private String cnpjNumber;
+    @Column(length = 1024)
     private String urlComplementaryList;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -54,15 +54,11 @@ public class FeesLoanToFeesLoanEntityMapper {
 
         for (final ServiceLoans service : services) {
 
-            final String chargingTriggerInfo = service.getChargingTriggerInfo() != null && service.getChargingTriggerInfo().length() >= 255 ?
-                    service.getChargingTriggerInfo().substring(0, 254) :
-                    service.getChargingTriggerInfo();
-
             final PriorityServiceEntity priorityServiceEntity = PriorityServiceEntity.builder()
                     .feesLoan(feesLoanEntity)
                     .name(service.getName())
                     .code(service.getCode())
-                    .chargingTriggerInfo(chargingTriggerInfo)
+                    .chargingTriggerInfo(service.getChargingTriggerInfo())
                     .build();
 
             priorityServiceEntity.setPrices(convertListOfPricesToListOfPricesEntity(service.getPrices(), priorityServiceEntity));

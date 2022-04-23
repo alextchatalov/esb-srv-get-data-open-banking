@@ -14,14 +14,10 @@ public class ServiceFromServiceBundleToServiceFromServiceBundleEntityMapper {
     @NonNull
     public static ServiceFromServiceBundleEntity convert(final ServiceFromServiceBundle services, final ServiceBundleEntity serviceBundleEntity) {
 
-        final String chargingTriggerInfo = services.getChargingTriggerInfo() != null && services.getChargingTriggerInfo().length() >= 255 ?
-                services.getChargingTriggerInfo().substring(0, 254) :
-                services.getChargingTriggerInfo();
-
         return ServiceFromServiceBundleEntity.builder()
                 .code(services.getCode())
                 .serviceBundle(serviceBundleEntity)
-                .chargingTriggerInfo(chargingTriggerInfo)
+                .chargingTriggerInfo(services.getChargingTriggerInfo())
                 .eventLimitQuantity(services.getEventLimitQuantity())
                 .freeEventQuantity(services.getFreeEventQuantity())
                 .build();

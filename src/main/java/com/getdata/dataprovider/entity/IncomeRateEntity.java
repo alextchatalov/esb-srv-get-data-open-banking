@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,7 +32,9 @@ public class IncomeRateEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(length = 2000)
     private String savingAccount;
+    @Column(length = 2000)
     private String prepaidPaymentAccount;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,5 +1,6 @@
 package com.getdata.dataprovider.mapper;
 
+import com.getdata.dataprovider.entity.OpeningClosingChannel;
 import com.getdata.dataprovider.entity.BusinessAccountEntity;
 import com.getdata.dataprovider.entity.OpeningClosingChannelsEntity;
 import com.getdata.dataprovider.entity.PersonalAccountEntity;
@@ -26,7 +27,7 @@ public class OpeningClosingChannelsToOpeningClosingChannelsEntity {
 
         channels.stream().forEach(channel -> {
             final OpeningClosingChannelsEntity openingClosingChannelsEntity = OpeningClosingChannelsEntity.builder()
-                    .channel(channel)
+                    .channel(OpeningClosingChannel.getByDescription(channel))
                     .personalAccount(personalAccount)
                     .businessAccount(businessAccount)
                     .build();

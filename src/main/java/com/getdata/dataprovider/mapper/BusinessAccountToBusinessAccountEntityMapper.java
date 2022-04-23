@@ -2,6 +2,7 @@ package com.getdata.dataprovider.mapper;
 
 import com.getdata.core.model.BusinessAccount;
 import com.getdata.core.model.ServiceBundle;
+import com.getdata.dataprovider.entity.TypeAccount;
 import com.getdata.dataprovider.entity.BusinessAccountEntity;
 import com.getdata.dataprovider.entity.CompanyEntity;
 import com.getdata.dataprovider.entity.OpeningClosingChannelsEntity;
@@ -23,7 +24,7 @@ public class BusinessAccountToBusinessAccountEntityMapper {
 
         final BusinessAccountEntity businessAccountEntity = BusinessAccountEntity.builder()
                 .company(companyEntity)
-                .type(businessAccount.getType())
+                .type(TypeAccount.valueOf(businessAccount.getType()))
                 .additionalInfo(businessAccount.getAdditionalInfo())
                 .build();
 

@@ -34,7 +34,7 @@ public class ApplicationEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String interval;
+    private Interval interval;
     @OneToOne(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter
     private IndexerEntity indexer;

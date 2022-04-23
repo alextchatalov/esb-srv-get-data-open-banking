@@ -3,6 +3,13 @@ package com.getdata.fixtures.resource;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
+import com.getdata.dataprovider.entity.Interval;
+import com.getdata.dataprovider.entity.OpeningClosingChannel;
+import com.getdata.dataprovider.entity.ReferentialRateIndexer;
+import com.getdata.dataprovider.entity.RequiredWarranties;
+import com.getdata.dataprovider.entity.TransactionMethod;
+import com.getdata.dataprovider.entity.TypeAccount;
+import com.getdata.dataprovider.entity.TypeLoan;
 import com.getdata.dataprovider.entity.ApplicationEntity;
 import com.getdata.dataprovider.entity.BusinessAccountEntity;
 import com.getdata.dataprovider.entity.BusinessLoanEntity;
@@ -57,7 +64,7 @@ public class CompanyEntityFixture implements TemplateLoader {
 
     private BusinessLoanEntity createBusinessLoans() {
         return BusinessLoanEntity.builder()
-                .type("test")
+                .type(TypeLoan.EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_ATE_365_DIAS)
                 .fees(createFeesLoan())
                 .interestRates(Arrays.asList(createInterestRate()))
                 .requiredWarranties(Arrays.asList(createWarranties()))
@@ -67,7 +74,7 @@ public class CompanyEntityFixture implements TemplateLoader {
 
     private PersonalLoanEntity createPersonalLoan() {
         return PersonalLoanEntity.builder()
-                .type("test")
+                .type(TypeLoan.EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_ATE_365_DIAS)
                 .fees(createFeesLoan())
                 .interestRates(Arrays.asList(createInterestRate()))
                 .requiredWarranties(Arrays.asList(createWarranties()))
@@ -77,13 +84,13 @@ public class CompanyEntityFixture implements TemplateLoader {
 
     private RequiredWarrantiesEntity createWarranties() {
         return RequiredWarrantiesEntity.builder()
-                .warranties("test")
+                .warranties(RequiredWarranties.ACORDOS_COMPENSACAO)
                 .build();
     }
 
     private InterestRateEntity createInterestRate() {
         return InterestRateEntity.builder()
-                .referentialRateIndexer("test")
+                .referentialRateIndexer(ReferentialRateIndexer.CREDITO_RURAL_TCR_POS)
                 .rate("1")
                 .applications(Arrays.asList(createApplication()))
                 .minimumRate("1")
@@ -93,7 +100,7 @@ public class CompanyEntityFixture implements TemplateLoader {
 
     private ApplicationEntity createApplication() {
         return ApplicationEntity.builder()
-                .interval("1")
+                .interval(Interval.FAIXA_1)
                 .indexer(createIndexer())
                 .customers(createCustomers())
                 .build();
@@ -113,8 +120,8 @@ public class CompanyEntityFixture implements TemplateLoader {
 
     private PriorityServiceEntity createServicePersonalLoans() {
         return PriorityServiceEntity.builder()
-                .name("test")
-                .code("test")
+                .name("ANUIDADE_CARTAO_BASICO_NACIONAL")
+                .code("EXTRATO_MES_E")
                 .chargingTriggerInfo("test")
                 .prices(Arrays.asList(createPrice()))
                 .minimum(createMinimum())
@@ -124,7 +131,7 @@ public class CompanyEntityFixture implements TemplateLoader {
 
     private BusinessAccountEntity createBusinessAccount() {
         final BusinessAccountEntity businessAccountEntity = BusinessAccountEntity.builder()
-                .type("test")
+                .type(TypeAccount.CONTA_DEPOSITO_A_VISTA)
                 .fees(createFeesBusiness())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
                 .additionalInfo("test")
@@ -142,7 +149,7 @@ public class CompanyEntityFixture implements TemplateLoader {
     private PersonalAccountEntity createPersonalAccount() {
 
         final PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
-                .type("test")
+                .type(TypeAccount.CONTA_DEPOSITO_A_VISTA)
                 .fees(createFees())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
                 .additionalInfo("test")
@@ -159,7 +166,7 @@ public class CompanyEntityFixture implements TemplateLoader {
     private List<OpeningClosingChannelsEntity> createOpeningClosingChannels(final PersonalAccountEntity personalAccount, final BusinessAccountEntity businessAccountEntity) {
 
         return Arrays.asList(OpeningClosingChannelsEntity.builder()
-                .channel("test")
+                .channel(OpeningClosingChannel.CHAT)
                 .personalAccount(personalAccount)
                 .businessAccount(businessAccountEntity)
                 .build());
@@ -168,7 +175,7 @@ public class CompanyEntityFixture implements TemplateLoader {
     private List<TransactionMethodsEntity> createTransactionMethods(final PersonalAccountEntity personalAccount, final BusinessAccountEntity businessAccountEntity) {
 
         return Arrays.asList(TransactionMethodsEntity.builder()
-                .method("test")
+                .method(TransactionMethod.MOVIMENTACAO_CARTAO)
                 .personalAccount(personalAccount)
                 .businessAccount(businessAccountEntity)
                 .build());
@@ -262,8 +269,8 @@ public class CompanyEntityFixture implements TemplateLoader {
 
     private PriorityServiceEntity createPriorityService() {
         return PriorityServiceEntity.builder()
-                .name("test")
-                .code("test")
+                .name("ANUIDADE_CARTAO_BASICO_NACIONAL")
+                .code("EXTRATO_MES_E")
                 .chargingTriggerInfo("test")
                 .prices(Collections.singletonList(createPrice()))
                 .minimum(createMinimum())
@@ -289,7 +296,7 @@ public class CompanyEntityFixture implements TemplateLoader {
 
     private PriceEntity createPrice() {
         return PriceEntity.builder()
-                .interval("123")
+                .interval(Interval.FAIXA_1)
                 .value("123")
                 .currency("123")
                 .customers(createCustomers())

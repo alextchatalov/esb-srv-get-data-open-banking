@@ -9,6 +9,8 @@ import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,8 +32,9 @@ public class TransactionMethodsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    private String method;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionMethod method;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude

@@ -2,6 +2,7 @@ package com.getdata.fixtures.resource;
 
 import com.getdata.dataprovider.entity.CustomersEntity;
 import com.getdata.dataprovider.entity.FeesBusinessAccountsEntity;
+import com.getdata.dataprovider.entity.Interval;
 import com.getdata.dataprovider.entity.MaximumEntity;
 import com.getdata.dataprovider.entity.MinimumEntity;
 import com.getdata.dataprovider.entity.PriceEntity;
@@ -61,7 +62,7 @@ public class FeesBusinessAccountsEntityFixture implements TemplateLoader {
 
     private PriceEntity createPrice() {
         return PriceEntity.builder()
-                .interval("123")
+                .interval(Interval.FAIXA_1)
                 .value("123")
                 .currency("123")
                 .customers(createCustomers())

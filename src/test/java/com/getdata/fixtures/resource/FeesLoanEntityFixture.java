@@ -5,6 +5,7 @@ import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.getdata.dataprovider.entity.CustomersEntity;
 import com.getdata.dataprovider.entity.FeesLoanEntity;
+import com.getdata.dataprovider.entity.Interval;
 import com.getdata.dataprovider.entity.MaximumEntity;
 import com.getdata.dataprovider.entity.MinimumEntity;
 import com.getdata.dataprovider.entity.PriceEntity;
@@ -30,8 +31,8 @@ public class FeesLoanEntityFixture implements TemplateLoader {
 
     private PriorityServiceEntity createServicePersonalLoans() {
         return PriorityServiceEntity.builder()
-                .name("test")
-                .code("test")
+                .name("ANUIDADE_CARTAO_BASICO_NACIONAL")
+                .code("EXTRATO_MES_E")
                 .chargingTriggerInfo("test")
                 .prices(Arrays.asList(createPrice()))
                 .minimum(createMinimum())
@@ -41,7 +42,7 @@ public class FeesLoanEntityFixture implements TemplateLoader {
 
     private PriceEntity createPrice() {
         return PriceEntity.builder()
-                .interval("123")
+                .interval(Interval.FAIXA_1)
                 .value("123")
                 .currency("123")
                 .customers(createCustomers())

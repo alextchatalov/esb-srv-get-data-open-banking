@@ -10,6 +10,7 @@ import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,6 +39,7 @@ public class ServiceBusinessAccountsEntity {
 
     public String name;
     public String code;
+    @Column(length = 2000)
     public String chargingTriggerInfo;
 
     @OneToMany(mappedBy = "serviceBusinessAccounts", cascade = CascadeType.ALL, orphanRemoval = true)

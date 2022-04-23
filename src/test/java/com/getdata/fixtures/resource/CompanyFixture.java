@@ -54,7 +54,7 @@ public class CompanyFixture implements TemplateLoader {
 
     private BusinessLoan createBusinessLoans() {
         return BusinessLoan.builder()
-                .type("test")
+                .type("EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_ATE_365_DIAS")
                 .fees(createFeesLoan())
                 .interestRates(Arrays.asList(createInterestRate()))
                 .requiredWarranties(Arrays.asList("test"))
@@ -64,7 +64,7 @@ public class CompanyFixture implements TemplateLoader {
 
     private PersonalLoan createPersonalLoan() {
         return PersonalLoan.builder()
-                .type("test")
+                .type("EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_ATE_365_DIAS")
                 .fees(createFeesLoan())
                 .interestRates(Arrays.asList(createInterestRate()))
                 .requiredWarranties(Arrays.asList("test"))
@@ -115,7 +115,7 @@ public class CompanyFixture implements TemplateLoader {
 
     private BusinessAccount createBusinessAccount() {
         return BusinessAccount.builder()
-                .type("test")
+                .type("CONTA_DEPOSITO_A_VISTA")
                 .fees(createFeesBusiness())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
                 .openingClosingChannels(Collections.singletonList("test"))
@@ -150,7 +150,7 @@ public class CompanyFixture implements TemplateLoader {
     private PersonalAccount createPersonalAccount() {
 
         return PersonalAccount.builder()
-                .type("test")
+                .type("CONTA_DEPOSITO_A_VISTA")
                 .fees(createFees())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
                 .openingClosingChannels(Collections.singletonList("test"))

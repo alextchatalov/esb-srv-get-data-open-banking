@@ -19,15 +19,11 @@ public class OtherServiceToOtherServiceEntityMapper {
     @NonNull
     public static OtherServiceEntity convert(final OtherService otherService, final FeesPersonalAccountsEntity feesPersonalAccountsEntity) {
 
-        final String chargingTriggerInfo = otherService.getChargingTriggerInfo() != null && otherService.getChargingTriggerInfo().length() >= 255 ?
-                otherService.getChargingTriggerInfo().substring(0, 254) :
-                otherService.getChargingTriggerInfo();
-
         final OtherServiceEntity otherServiceEntity = OtherServiceEntity.builder()
                 .feesPersonalAccounts(feesPersonalAccountsEntity)
                 .name(otherService.getName())
                 .code(otherService.getCode())
-                .chargingTriggerInfo(chargingTriggerInfo)
+                .chargingTriggerInfo(otherService.getChargingTriggerInfo())
                 .build();
 
         otherServiceEntity.setPrices(convertListOfPricesToListOfPricesEntity(otherService.getPrices(), otherServiceEntity));

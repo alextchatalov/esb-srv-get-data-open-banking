@@ -26,19 +26,11 @@ public class TermsConditionsToTermsConditionsEntityMapper {
 
     private static TermsConditionsEntity convert(final TermsConditions termsConditions, final PersonalAccountEntity personalAccountEntity, final BusinessAccountEntity businessAccountEntity) {
 
-        String elegibilityCriteriaInfo = termsConditions.getElegibilityCriteriaInfo() != null && termsConditions.getElegibilityCriteriaInfo().length() >= 255 ?
-                termsConditions.getElegibilityCriteriaInfo().substring(0, 254) :
-                termsConditions.getElegibilityCriteriaInfo();
-
-        String closingProcessInfo = termsConditions.getClosingProcessInfo() != null && termsConditions.getClosingProcessInfo().length() >= 255 ?
-                termsConditions.getClosingProcessInfo().substring(0, 254) :
-                termsConditions.getClosingProcessInfo();
-
         TermsConditionsEntity termsConditionsEntity = TermsConditionsEntity.builder()
                 .personalAccount(personalAccountEntity)
                 .businessAccount(businessAccountEntity)
-                .elegibilityCriteriaInfo(elegibilityCriteriaInfo)
-                .closingProcessInfo(closingProcessInfo)
+                .elegibilityCriteriaInfo(termsConditions.getElegibilityCriteriaInfo())
+                .closingProcessInfo(termsConditions.getClosingProcessInfo())
                 .build();
 
         termsConditionsEntity.setMinimumBalance(MinimumBalanceToMinimumBalanceEntityMapper.convert(termsConditions.getMinimumBalance(), termsConditionsEntity));

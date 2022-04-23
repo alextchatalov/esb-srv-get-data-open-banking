@@ -11,6 +11,8 @@ import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,7 +41,8 @@ public class InterestRateEntity {
     @Setter
     private List<ApplicationEntity> applications;
 
-    public String referentialRateIndexer;
+    @Enumerated(EnumType.STRING)
+    public ReferentialRateIndexer referentialRateIndexer;
     public String rate;
     public String minimumRate;
     public String maximumRate;

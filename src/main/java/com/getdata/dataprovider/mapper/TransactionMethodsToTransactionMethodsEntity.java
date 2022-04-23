@@ -2,6 +2,7 @@ package com.getdata.dataprovider.mapper;
 
 import com.getdata.dataprovider.entity.BusinessAccountEntity;
 import com.getdata.dataprovider.entity.PersonalAccountEntity;
+import com.getdata.dataprovider.entity.TransactionMethod;
 import com.getdata.dataprovider.entity.TransactionMethodsEntity;
 import org.springframework.lang.NonNull;
 
@@ -32,7 +33,7 @@ public class TransactionMethodsToTransactionMethodsEntity {
 
         methods.stream().forEach(method -> {
             final TransactionMethodsEntity openingClosingChannelsEntity = TransactionMethodsEntity.builder()
-                    .method(method)
+                    .method(TransactionMethod.valueOf(method))
                     .personalAccount(personalAccount)
                     .businessAccount(businessAccount)
                     .build();

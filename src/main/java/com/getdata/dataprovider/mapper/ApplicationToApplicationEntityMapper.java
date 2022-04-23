@@ -4,6 +4,7 @@ import com.getdata.core.model.Application;
 import com.getdata.dataprovider.entity.ApplicationEntity;
 import com.getdata.dataprovider.entity.IndexerEntity;
 import com.getdata.dataprovider.entity.InterestRateEntity;
+import com.getdata.dataprovider.entity.Interval;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.NonNull;
@@ -17,7 +18,7 @@ public class ApplicationToApplicationEntityMapper {
 
         final ApplicationEntity applicationEntity = ApplicationEntity.builder()
                 .interestRate(interestRateEntity)
-                .interval(application.getInterval())
+                .interval(Interval.getByOriginal(application.getInterval()))
                 .build();
 
         final IndexerEntity indexerEntity = createIndexer(application, applicationEntity);

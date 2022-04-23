@@ -3,6 +3,10 @@ package com.getdata.fixtures.resource;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
+import com.getdata.dataprovider.entity.Interval;
+import com.getdata.dataprovider.entity.OpeningClosingChannel;
+import com.getdata.dataprovider.entity.TransactionMethod;
+import com.getdata.dataprovider.entity.TypeAccount;
 import com.getdata.dataprovider.entity.BrandEntity;
 import com.getdata.dataprovider.entity.BusinessAccountEntity;
 import com.getdata.dataprovider.entity.CompanyEntity;
@@ -67,7 +71,7 @@ public class DataEntityFixture implements TemplateLoader {
 
     private BusinessAccountEntity createBusinessAccount() {
         BusinessAccountEntity businessAccountEntity = BusinessAccountEntity.builder()
-                .type("test")
+                .type(TypeAccount.CONTA_DEPOSITO_A_VISTA)
                 .fees(createFeesBusiness())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
                 .additionalInfo("test")
@@ -105,7 +109,7 @@ public class DataEntityFixture implements TemplateLoader {
     private PersonalAccountEntity createPersonalAccount() {
 
         PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
-                .type("test")
+                .type(TypeAccount.CONTA_DEPOSITO_A_VISTA)
                 .fees(createFees())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
                 .additionalInfo("test")
@@ -122,7 +126,7 @@ public class DataEntityFixture implements TemplateLoader {
     private List<OpeningClosingChannelsEntity> createOpeningClosingChannels(final PersonalAccountEntity personalAccount, final BusinessAccountEntity businessAccountEntity) {
 
         return Arrays.asList(OpeningClosingChannelsEntity.builder()
-                .channel("test")
+                .channel(OpeningClosingChannel.CHAT)
                 .personalAccount(personalAccount)
                 .businessAccount(businessAccountEntity)
                 .build());
@@ -131,7 +135,7 @@ public class DataEntityFixture implements TemplateLoader {
     private List<TransactionMethodsEntity> createTransactionMethods(final PersonalAccountEntity personalAccount, final BusinessAccountEntity businessAccountEntity) {
 
         return Arrays.asList(TransactionMethodsEntity.builder()
-                .method("test")
+                .method(TransactionMethod.MOVIMENTACAO_CARTAO)
                 .personalAccount(personalAccount)
                 .businessAccount(businessAccountEntity)
                 .build());
@@ -198,8 +202,8 @@ public class DataEntityFixture implements TemplateLoader {
 
     private PriorityServiceEntity createPriorityService() {
         return PriorityServiceEntity.builder()
-                .name("test")
-                .code("test")
+                .name("ANUIDADE_CARTAO_BASICO_NACIONAL")
+                .code("EXTRATO_MES_E")
                 .chargingTriggerInfo("test")
                 .prices(Collections.singletonList(createPrice()))
                 .minimum(createMinimum())
@@ -225,7 +229,7 @@ public class DataEntityFixture implements TemplateLoader {
 
     private PriceEntity createPrice() {
         return PriceEntity.builder()
-                .interval("123")
+                .interval(Interval.FAIXA_1)
                 .value("123")
                 .currency("123")
                 .customers(createCustomers())

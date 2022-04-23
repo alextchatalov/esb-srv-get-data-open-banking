@@ -19,15 +19,11 @@ public class PriorityServiceToPriorityServiceEntityMapper {
     @NonNull
     public static PriorityServiceEntity convert(final PriorityService priorityService, final FeesPersonalAccountsEntity feesPersonalAccountsEntity) {
 
-        final String chargingTriggerInfo = priorityService.getChargingTriggerInfo() != null && priorityService.getChargingTriggerInfo().length() >= 255 ?
-                priorityService.getChargingTriggerInfo().substring(0, 254) :
-                priorityService.getChargingTriggerInfo();
-
         final PriorityServiceEntity priorityServiceEntity = PriorityServiceEntity.builder()
                 .feesPersonalAccounts(feesPersonalAccountsEntity)
                 .name(priorityService.getName())
                 .code(priorityService.getCode())
-                .chargingTriggerInfo(chargingTriggerInfo)
+                .chargingTriggerInfo(priorityService.getChargingTriggerInfo())
                 .build();
 
         priorityServiceEntity.setPrices(convertListOfPricesToListOfPricesEntity(priorityService.getPrices(), priorityServiceEntity));

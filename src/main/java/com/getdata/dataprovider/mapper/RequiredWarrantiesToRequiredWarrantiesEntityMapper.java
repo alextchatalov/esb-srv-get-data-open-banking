@@ -2,6 +2,7 @@ package com.getdata.dataprovider.mapper;
 
 import com.getdata.dataprovider.entity.BusinessLoanEntity;
 import com.getdata.dataprovider.entity.PersonalLoanEntity;
+import com.getdata.dataprovider.entity.RequiredWarranties;
 import com.getdata.dataprovider.entity.RequiredWarrantiesEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -27,7 +28,7 @@ public class RequiredWarrantiesToRequiredWarrantiesEntityMapper {
 
     private static RequiredWarrantiesEntity convert(final RequiredWarrantiesEntity.RequiredWarrantiesEntityBuilder businessLoanEntity, final String requiredWarranties) {
         return businessLoanEntity
-                .warranties(requiredWarranties)
+                .warranties(RequiredWarranties.get(requiredWarranties))
                 .build();
     }
 }

@@ -10,6 +10,7 @@ import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -37,8 +38,9 @@ public class TermsConditionsEntity {
     @OneToOne(mappedBy = "termsConditions", cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter
     private MinimumBalanceEntity minimumBalance;
-
+    @Column(length = 2000)
     private String elegibilityCriteriaInfo;
+    @Column(length = 2000)
     private String closingProcessInfo;
 
     @OneToOne(fetch = FetchType.LAZY)

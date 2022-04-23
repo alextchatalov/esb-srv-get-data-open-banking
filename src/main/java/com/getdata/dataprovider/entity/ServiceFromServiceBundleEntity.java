@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -32,6 +33,7 @@ public class ServiceFromServiceBundleEntity {
     private Long id;
 
     private String code;
+    @Column(length = 2000)
     private String chargingTriggerInfo;
     private String eventLimitQuantity;
     private String freeEventQuantity;

@@ -17,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
-class ApplicationToApplicationEntityMapperTest {
+class ApplicationToGetDataApplicationEntityMapperTest {
 
     @InjectMocks
     private ApplicationToApplicationEntityMapper mapper;

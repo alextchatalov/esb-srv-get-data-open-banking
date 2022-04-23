@@ -19,15 +19,11 @@ public class ServiceBusinessAccountsToServiceBusinessAccountsEntityMapper {
     @NonNull
     public static ServiceBusinessAccountsEntity convert(final ServiceBusinessAccounts serviceBusinessAccounts, final FeesBusinessAccountsEntity feesBusinessAccountsEntity) {
 
-        final String chargingTriggerInfo = serviceBusinessAccounts.getChargingTriggerInfo() != null && serviceBusinessAccounts.getChargingTriggerInfo().length() >= 255 ?
-                serviceBusinessAccounts.getChargingTriggerInfo().substring(0, 254) :
-                serviceBusinessAccounts.getChargingTriggerInfo();
-
         final ServiceBusinessAccountsEntity serviceBusinessAccountsEntity = ServiceBusinessAccountsEntity.builder()
                 .feesBusinessAccounts(feesBusinessAccountsEntity)
                 .name(serviceBusinessAccounts.getName())
                 .code(serviceBusinessAccounts.getCode())
-                .chargingTriggerInfo(chargingTriggerInfo)
+                .chargingTriggerInfo(serviceBusinessAccounts.getChargingTriggerInfo())
                 .eventLimitQuantity(serviceBusinessAccounts.getEventLimitQuantity())
                 .freeEventQuantity(serviceBusinessAccounts.getFreeEventQuantity())
                 .build();

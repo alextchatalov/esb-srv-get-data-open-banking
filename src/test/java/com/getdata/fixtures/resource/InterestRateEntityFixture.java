@@ -7,6 +7,7 @@ import com.getdata.dataprovider.entity.ApplicationEntity;
 import com.getdata.dataprovider.entity.CustomersEntity;
 import com.getdata.dataprovider.entity.IndexerEntity;
 import com.getdata.dataprovider.entity.InterestRateEntity;
+import com.getdata.dataprovider.entity.Interval;
 
 import java.util.Arrays;
 
@@ -32,7 +33,7 @@ public class InterestRateEntityFixture implements TemplateLoader {
 
     private ApplicationEntity createApplication() {
         return ApplicationEntity.builder()
-                .interval("1")
+                .interval(Interval.FAIXA_1)
                 .indexer(createIndexer())
                 .customers(createCustomers())
                 .build();

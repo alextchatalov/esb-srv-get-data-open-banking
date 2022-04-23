@@ -1,6 +1,7 @@
 package com.getdata.dataprovider.mapper;
 
 import com.getdata.core.model.Price;
+import com.getdata.dataprovider.entity.Interval;
 import com.getdata.dataprovider.entity.OtherServiceEntity;
 import com.getdata.dataprovider.entity.PriceEntity;
 import com.getdata.dataprovider.entity.PriorityServiceEntity;
@@ -37,7 +38,7 @@ public class PriceToPriceEntityMapper {
     public static PriceEntity convert(final Price price, final PriorityServiceEntity priorityServiceEntity, final OtherServiceEntity otherServiceEntity, final ServiceBundleEntity serviceBundleEntity, final ServiceBusinessAccountsEntity serviceBusinessAccountsEntity) {
 
         final PriceEntity priceEntity = PriceEntity.builder()
-                .interval(price.getInterval())
+                .interval(Interval.getByOriginal(price.getInterval()))
                 .value(price.getValue())
                 .currency(price.getCurrency())
                 .monthlyFee(price.getMonthlyFee())

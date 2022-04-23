@@ -2,6 +2,7 @@ package com.getdata.dataprovider.mapper;
 
 import com.getdata.core.model.InterestRate;
 import com.getdata.core.model.PersonalLoan;
+import com.getdata.dataprovider.entity.TypeLoan;
 import com.getdata.dataprovider.entity.CompanyEntity;
 import com.getdata.dataprovider.entity.InterestRateEntity;
 import com.getdata.dataprovider.entity.PersonalLoanEntity;
@@ -26,7 +27,7 @@ public class PersonalLoanToPersonalLoanEntityMapper {
 
         final PersonalLoanEntity personalLoanEntity = PersonalLoanEntity.builder()
                 .company(companyEntity)
-                .type(personalLoan.getType())
+                .type(TypeLoan.get(personalLoan.getType()))
                 .termsConditions(termsConditions)
                 .build();
 

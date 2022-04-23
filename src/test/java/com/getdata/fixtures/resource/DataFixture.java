@@ -62,7 +62,7 @@ public class DataFixture implements TemplateLoader {
 
     private BusinessAccount createBusinessAccount() {
         return BusinessAccount.builder()
-                .type("test")
+                .type("CONTA_DEPOSITO_A_VISTA")
                 .fees(createFeesBusiness())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
                 .openingClosingChannels(Collections.singletonList("test"))
@@ -97,7 +97,7 @@ public class DataFixture implements TemplateLoader {
     private PersonalAccount createPersonalAccount() {
 
         return PersonalAccount.builder()
-                .type("test")
+                .type("CONTA_DEPOSITO_A_VISTA")
                 .fees(createFees())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
                 .openingClosingChannels(Collections.singletonList("test"))

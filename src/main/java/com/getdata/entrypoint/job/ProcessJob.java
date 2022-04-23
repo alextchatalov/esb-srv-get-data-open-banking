@@ -62,7 +62,7 @@ public class ProcessJob {
 
         final int maxPerList = (participants.size() - 1) / 4;
         final List<List<Participant>> partition = Lists.partition(participants, maxPerList);
-        final List<Participant> excessList = divideListOfParticipantsInFourList(participants, partition);
+        final List<Participant> excessList = divideListOfParticipantsInFourList(partition);
 
         final Callable<List<Root>> firstTask = createTask(excessList);
         final Callable<List<Root>> secondTask = createTask(partition.get(1));
@@ -80,8 +80,7 @@ public class ProcessJob {
     }
 
     private boolean filterByBankAndCategory(final Response r) {
-        final boolean filterCategory = acceptedCategories.contains(r.getCategory());
-        return filterCategory;
+        return acceptedCategories.contains(r.getCategory());
     }
 
     private Callable<List<Root>> createTask(final List<Participant> listOfParticipants) {
@@ -92,7 +91,7 @@ public class ProcessJob {
                 calculatePercentage(amountProcessed, listOfParticipants.size());
 
                 final List<Request> request = Request.createRequest(participant);
-                final List<Response> response = requestProductsAndServicesUserCase.newExecute(request);
+                final List<Response> response = requestProductsAndServicesUserCase.execute(request);
                 final List<Root> rootDataObjectFromJsonResponse = response.stream().filter(r -> filterByBankAndCategory(r)).map(Response::getObjectFromJsonResponse).collect(Collectors.toList());
 
                 amountProcessed++;
@@ -118,6 +117,7 @@ public class ProcessJob {
                 Thread.sleep(5000);
             } catch (final InterruptedException e) {
                 log.error("Thread not sleep: " + e);
+                Thread.currentThread().interrupt();
             }
 
             for (final Future<List<Root>> future : futures) {
@@ -125,6 +125,7 @@ public class ProcessJob {
                     data.addAll(future.get());
                 } catch (final Exception e) {
                     log.error("Can not process: " + e);
+                    Thread.currentThread().interrupt();
                 }
             }
 
@@ -134,10 +135,10 @@ public class ProcessJob {
 
     private boolean isAllFutureDone(final List<Future<List<Root>>> futures) {
         final List<Boolean> futureStates = futures.stream().map(Future::isDone).collect(Collectors.toList());
-        return futureStates.stream().allMatch(done -> done == true);
+        return futureStates.stream().allMatch(done -> done);
     }
 
-    private List<Participant> divideListOfParticipantsInFourList(final List<Participant> participants, final List<List<Participant>> partition) {
+    private List<Participant> divideListOfParticipantsInFourList(final List<List<Participant>> partition) {
 
         final List<Participant> excessList = partition.get(0);
         if (partition.size() > 4) {
