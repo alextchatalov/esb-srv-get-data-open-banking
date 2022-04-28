@@ -17,6 +17,7 @@ import com.getdata.dataprovider.entity.PriorityServiceEntity;
 import com.getdata.dataprovider.entity.ReferentialRateIndexer;
 import com.getdata.dataprovider.entity.RequiredWarranties;
 import com.getdata.dataprovider.entity.RequiredWarrantiesEntity;
+import com.getdata.dataprovider.entity.TypeLoan;
 
 import java.util.Arrays;
 
@@ -31,7 +32,7 @@ public class BusinessLoanEntityFixture implements TemplateLoader {
 
     private void loadData() {
         Fixture.of(BusinessLoanEntity.class).addTemplate(VALID, new Rule() {{
-            add(BusinessLoanEntity.Fields.type, "test");
+            add(BusinessLoanEntity.Fields.type, TypeLoan.EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_ATE_365_DIAS);
             add(BusinessLoanEntity.Fields.fees, createFeesLoan());
             add(BusinessLoanEntity.Fields.interestRates, Arrays.asList(createInterestRate()));
             add(BusinessLoanEntity.Fields.requiredWarranties, Arrays.asList(createRequiredWarranties()));

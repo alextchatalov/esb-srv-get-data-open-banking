@@ -3,13 +3,13 @@ package com.getdata.dataprovider.mapper;
 import com.getdata.core.model.IncomeRate;
 import com.getdata.core.model.PersonalAccount;
 import com.getdata.core.model.ServiceBundle;
-import com.getdata.dataprovider.entity.TypeAccount;
 import com.getdata.dataprovider.entity.CompanyEntity;
 import com.getdata.dataprovider.entity.IncomeRateEntity;
 import com.getdata.dataprovider.entity.OpeningClosingChannelsEntity;
 import com.getdata.dataprovider.entity.PersonalAccountEntity;
 import com.getdata.dataprovider.entity.ServiceBundleEntity;
 import com.getdata.dataprovider.entity.TransactionMethodsEntity;
+import com.getdata.dataprovider.entity.TypeAccount;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.lang.NonNull;
@@ -24,13 +24,9 @@ public class PersonalAccountsToPersonalAccountEntityMapper {
     @NonNull
     public static PersonalAccountEntity convert(final PersonalAccount personalAccount, final CompanyEntity company) {
 
-        final String additionalInfo = personalAccount.getAdditionalInfo() != null && personalAccount.getAdditionalInfo().length() >= 255 ?
-                personalAccount.getAdditionalInfo().substring(0, 254) :
-                personalAccount.getAdditionalInfo();
-
         final PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
                 .type(TypeAccount.valueOf(personalAccount.getType()))
-                .additionalInfo(additionalInfo)
+                .additionalInfo(personalAccount.getAdditionalInfo())
                 .company(company)
                 .build();
 

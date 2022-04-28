@@ -9,6 +9,7 @@ import com.getdata.core.model.Maximum;
 import com.getdata.core.model.Minimum;
 import com.getdata.core.model.Price;
 import com.getdata.core.model.ServiceLoans;
+import com.getdata.dataprovider.entity.Interval;
 
 import java.util.Arrays;
 
@@ -30,8 +31,8 @@ public class FeesLoanFixture implements TemplateLoader {
 
     private ServiceLoans createServicePersonalLoans() {
         return ServiceLoans.builder()
-                .name("test")
-                .code("test")
+                .name("ANUIDADE_CARTAO_BASICO_NACIONAL")
+                .code("EXTRATO_MES_E")
                 .chargingTriggerInfo("test")
                 .prices(Arrays.asList(createPrice()))
                 .minimum(createMinimum())
@@ -41,7 +42,7 @@ public class FeesLoanFixture implements TemplateLoader {
 
     private Price createPrice() {
         return Price.builder()
-                .interval("123")
+                .interval(Interval.FAIXA_1.getOriginal())
                 .value("123")
                 .currency("123")
                 .customers(createCustomers())

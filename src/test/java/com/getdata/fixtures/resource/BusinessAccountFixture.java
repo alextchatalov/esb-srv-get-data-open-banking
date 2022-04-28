@@ -1,5 +1,8 @@
 package com.getdata.fixtures.resource;
 
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.Rule;
+import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.getdata.core.model.BusinessAccount;
 import com.getdata.core.model.Customers;
 import com.getdata.core.model.FeesBusinessAccounts;
@@ -12,9 +15,8 @@ import com.getdata.core.model.ServiceBundle;
 import com.getdata.core.model.ServiceBusinessAccounts;
 import com.getdata.core.model.ServiceFromServiceBundle;
 import com.getdata.core.model.TermsConditions;
-import br.com.six2six.fixturefactory.Fixture;
-import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
+import com.getdata.dataprovider.entity.Interval;
+import com.getdata.dataprovider.entity.TypeAccount;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,7 +32,7 @@ public class BusinessAccountFixture implements TemplateLoader {
 
     private void loadData() {
         Fixture.of(BusinessAccount.class).addTemplate(VALID, new Rule() {{
-            add(BusinessAccount.Fields.type, "test");
+            add(BusinessAccount.Fields.type, TypeAccount.CONTA_DEPOSITO_A_VISTA.name());
             add(BusinessAccount.Fields.fees, createFees());
             add(BusinessAccount.Fields.serviceBundles, Arrays.asList(createServiceBundles()));
             add(BusinessAccount.Fields.openingClosingChannels, Arrays.asList("test"));
@@ -119,7 +121,7 @@ public class BusinessAccountFixture implements TemplateLoader {
 
     private Price createPrice() {
         return Price.builder()
-                .interval("123")
+                .interval(Interval.FAIXA_1.getOriginal())
                 .value("123")
                 .currency("123")
                 .customers(createCustomers())

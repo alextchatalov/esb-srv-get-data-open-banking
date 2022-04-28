@@ -1,14 +1,15 @@
 package com.getdata.fixtures.resource;
 
+import br.com.six2six.fixturefactory.Fixture;
+import br.com.six2six.fixturefactory.Rule;
+import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.getdata.core.model.Customers;
 import com.getdata.core.model.FeesBusinessAccounts;
 import com.getdata.core.model.Maximum;
 import com.getdata.core.model.Minimum;
 import com.getdata.core.model.Price;
 import com.getdata.core.model.ServiceBusinessAccounts;
-import br.com.six2six.fixturefactory.Fixture;
-import br.com.six2six.fixturefactory.Rule;
-import br.com.six2six.fixturefactory.loader.TemplateLoader;
+import com.getdata.dataprovider.entity.Interval;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -61,7 +62,7 @@ public class FeesBusinessAccountsFixture implements TemplateLoader {
 
     private Price createPrice() {
         return Price.builder()
-                .interval("123")
+                .interval(Interval.FAIXA_1.getOriginal())
                 .value("123")
                 .currency("123")
                 .customers(createCustomers())

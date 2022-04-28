@@ -3,17 +3,15 @@ package com.getdata.fixtures.resource;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
-import com.getdata.dataprovider.entity.Interval;
-import com.getdata.dataprovider.entity.OpeningClosingChannel;
-import com.getdata.dataprovider.entity.TransactionMethod;
-import com.getdata.dataprovider.entity.TypeAccount;
 import com.getdata.dataprovider.entity.BusinessAccountEntity;
 import com.getdata.dataprovider.entity.CustomersEntity;
 import com.getdata.dataprovider.entity.FeesBusinessAccountsEntity;
 import com.getdata.dataprovider.entity.IncomeRateEntity;
+import com.getdata.dataprovider.entity.Interval;
 import com.getdata.dataprovider.entity.MaximumEntity;
 import com.getdata.dataprovider.entity.MinimumBalanceEntity;
 import com.getdata.dataprovider.entity.MinimumEntity;
+import com.getdata.dataprovider.entity.OpeningClosingChannel;
 import com.getdata.dataprovider.entity.OpeningClosingChannelsEntity;
 import com.getdata.dataprovider.entity.OtherServiceEntity;
 import com.getdata.dataprovider.entity.PriceEntity;
@@ -22,7 +20,9 @@ import com.getdata.dataprovider.entity.ServiceBundleEntity;
 import com.getdata.dataprovider.entity.ServiceBusinessAccountsEntity;
 import com.getdata.dataprovider.entity.ServiceFromServiceBundleEntity;
 import com.getdata.dataprovider.entity.TermsConditionsEntity;
+import com.getdata.dataprovider.entity.TransactionMethod;
 import com.getdata.dataprovider.entity.TransactionMethodsEntity;
+import com.getdata.dataprovider.entity.TypeAccount;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,7 +38,7 @@ public class BusinessAccountEntityFixture implements TemplateLoader {
     }
 
     private void loadData() {
-        BusinessAccountEntity businessAccountEntity = createBusinessAccountEntityBuilder().build();
+        final BusinessAccountEntity businessAccountEntity = createBusinessAccountEntityBuilder().build();
 
         Fixture.of(BusinessAccountEntity.class).addTemplate(VALID, new Rule() {{
             add(BusinessAccountEntity.Fields.type, businessAccountEntity.getType());
@@ -55,7 +55,7 @@ public class BusinessAccountEntityFixture implements TemplateLoader {
 
     private BusinessAccountEntity.BusinessAccountEntityBuilder createBusinessAccountEntityBuilder() {
 
-        BusinessAccountEntity.BusinessAccountEntityBuilder businessAccountEntityBuilder = BusinessAccountEntity.builder()
+        final BusinessAccountEntity.BusinessAccountEntityBuilder businessAccountEntityBuilder = BusinessAccountEntity.builder()
                 .type(TypeAccount.CONTA_DEPOSITO_A_VISTA)
                 .fees(createFees())
                 .serviceBundles(Arrays.asList(createServiceBundles()))
@@ -81,7 +81,7 @@ public class BusinessAccountEntityFixture implements TemplateLoader {
     private List<TransactionMethodsEntity> createTransactionMethods(final BusinessAccountEntity businessAccountEntity) {
 
         return Arrays.asList(TransactionMethodsEntity.builder()
-                .method(TransactionMethod.MOVIMENTACAO_CARTAO)
+                .method(TransactionMethod.MOVIMENTACAO_ELETRONICA)
                 .personalAccount(null)
                 .businessAccount(businessAccountEntity)
                 .build());
@@ -150,8 +150,8 @@ public class BusinessAccountEntityFixture implements TemplateLoader {
     private OtherServiceEntity createOtherService() {
 
         return OtherServiceEntity.builder()
-                .name("test")
-                .code("test")
+                .name("ANUIDADE_CARTAO_BASICO_NACIONAL")
+                .code("EXTRATO_MES_E")
                 .chargingTriggerInfo("test")
                 .prices(Collections.singletonList(createPrice()))
                 .minimum(createMinimum())

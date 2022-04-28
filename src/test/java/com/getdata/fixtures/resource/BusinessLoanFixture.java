@@ -13,6 +13,9 @@ import com.getdata.core.model.Maximum;
 import com.getdata.core.model.Minimum;
 import com.getdata.core.model.Price;
 import com.getdata.core.model.ServiceLoans;
+import com.getdata.dataprovider.entity.Interval;
+import com.getdata.dataprovider.entity.ReferentialRateIndexer;
+import com.getdata.dataprovider.entity.RequiredWarranties;
 
 import java.util.Arrays;
 
@@ -27,10 +30,10 @@ public class BusinessLoanFixture implements TemplateLoader {
 
     private void loadData() {
         Fixture.of(BusinessLoan.class).addTemplate(VALID, new Rule() {{
-            add(BusinessLoan.Fields.type, "test");
+            add(BusinessLoan.Fields.type, "EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_ATE_365_DIAS");
             add(BusinessLoan.Fields.fees, createFeesLoan());
             add(BusinessLoan.Fields.interestRates, Arrays.asList(createInterestRate()));
-            add(BusinessLoan.Fields.requiredWarranties, Arrays.asList("test"));
+            add(BusinessLoan.Fields.requiredWarranties, Arrays.asList(RequiredWarranties.ACORDOS_COMPENSACAO.name()));
             add(BusinessLoan.Fields.termsConditions, "test");
 
         }});
@@ -38,7 +41,7 @@ public class BusinessLoanFixture implements TemplateLoader {
 
     private InterestRate createInterestRate() {
         return InterestRate.builder()
-                .referentialRateIndexer("test")
+                .referentialRateIndexer(ReferentialRateIndexer.CREDITO_RURAL_TCR_POS.name())
                 .rate("1")
                 .applications(Arrays.asList(createApplication()))
                 .minimumRate("1")
@@ -48,7 +51,7 @@ public class BusinessLoanFixture implements TemplateLoader {
 
     private Application createApplication() {
         return Application.builder()
-                .interval("1")
+                .interval(Interval.FAIXA_1.getOriginal())
                 .indexer(createIndexer())
                 .customers(createCustomers())
                 .build();
@@ -68,8 +71,8 @@ public class BusinessLoanFixture implements TemplateLoader {
 
     private ServiceLoans createServicePersonalLoans() {
         return ServiceLoans.builder()
-                .name("test")
-                .code("test")
+                .name("ANUIDADE_CARTAO_BASICO_NACIONAL")
+                .code("EXTRATO_MES_E")
                 .chargingTriggerInfo("test")
                 .prices(Arrays.asList(createPrice()))
                 .minimum(createMinimum())
@@ -95,7 +98,7 @@ public class BusinessLoanFixture implements TemplateLoader {
 
     private Price createPrice() {
         return Price.builder()
-                .interval("123")
+                .interval(Interval.FAIXA_1.getOriginal())
                 .value("123")
                 .currency("123")
                 .customers(createCustomers())

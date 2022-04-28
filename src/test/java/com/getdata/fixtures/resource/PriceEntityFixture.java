@@ -1,10 +1,11 @@
 package com.getdata.fixtures.resource;
 
-import com.getdata.dataprovider.entity.CustomersEntity;
-import com.getdata.dataprovider.entity.PriceEntity;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
+import com.getdata.dataprovider.entity.CustomersEntity;
+import com.getdata.dataprovider.entity.Interval;
+import com.getdata.dataprovider.entity.PriceEntity;
 
 public class PriceEntityFixture implements TemplateLoader {
 
@@ -17,7 +18,7 @@ public class PriceEntityFixture implements TemplateLoader {
 
     private void loadData() {
         Fixture.of(PriceEntity.class).addTemplate(VALID, new Rule() {{
-            add(PriceEntity.Fields.interval, "123");
+            add(PriceEntity.Fields.interval, Interval.FAIXA_1);
             add(PriceEntity.Fields.value, "123");
             add(PriceEntity.Fields.currency, "123");
             add(PriceEntity.Fields.customers, createCustomers());

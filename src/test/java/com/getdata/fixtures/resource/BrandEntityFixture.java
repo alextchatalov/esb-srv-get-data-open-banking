@@ -85,7 +85,7 @@ public class BrandEntityFixture implements TemplateLoader {
     private List<TransactionMethodsEntity> createTransactionMethods(final PersonalAccountEntity personalAccount) {
 
         return Arrays.asList(TransactionMethodsEntity.builder()
-                .method(TransactionMethod.MOVIMENTACAO_CARTAO)
+                .method(TransactionMethod.MOVIMENTACAO_ELETRONICA)
                 .personalAccount(personalAccount)
                 .businessAccount(null)
                 .build());
@@ -148,8 +148,8 @@ public class BrandEntityFixture implements TemplateLoader {
     private OtherServiceEntity createOtherService() {
 
         return OtherServiceEntity.builder()
-                .name("test")
-                .code("test")
+                .name("ANUIDADE_CARTAO_BASICO_NACIONAL")
+                .code("EXTRATO_MES_E")
                 .chargingTriggerInfo("test")
                 .prices(Collections.singletonList(createPrice()))
                 .minimum(createMinimum())

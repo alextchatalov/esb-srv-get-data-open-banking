@@ -8,6 +8,7 @@ import com.getdata.dataprovider.entity.CustomersEntity;
 import com.getdata.dataprovider.entity.IndexerEntity;
 import com.getdata.dataprovider.entity.InterestRateEntity;
 import com.getdata.dataprovider.entity.Interval;
+import com.getdata.dataprovider.entity.ReferentialRateIndexer;
 
 import java.util.Arrays;
 
@@ -22,7 +23,7 @@ public class InterestRateEntityFixture implements TemplateLoader {
 
     private void loadData() {
         Fixture.of(InterestRateEntity.class).addTemplate(VALID, new Rule() {{
-            add(InterestRateEntity.Fields.referentialRateIndexer, "1");
+            add(InterestRateEntity.Fields.referentialRateIndexer, ReferentialRateIndexer.SEM_INDEXADOR_TAXA);
             add(InterestRateEntity.Fields.rate, "1");
             add(InterestRateEntity.Fields.applications, Arrays.asList(createApplication()));
             add(InterestRateEntity.Fields.minimumRate, "1");

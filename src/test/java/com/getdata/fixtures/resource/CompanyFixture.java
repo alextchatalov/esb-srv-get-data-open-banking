@@ -27,6 +27,8 @@ import com.getdata.core.model.ServiceBusinessAccounts;
 import com.getdata.core.model.ServiceFromServiceBundle;
 import com.getdata.core.model.ServiceLoans;
 import com.getdata.core.model.TermsConditions;
+import com.getdata.dataprovider.entity.Interval;
+import com.getdata.dataprovider.entity.TypeAccount;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -84,7 +86,7 @@ public class CompanyFixture implements TemplateLoader {
 
     private Application createApplication() {
         return Application.builder()
-                .interval("1")
+                .interval(Interval.FAIXA_1.getOriginal())
                 .indexer(createIndexer())
                 .customers(createCustomers())
                 .build();
@@ -104,8 +106,8 @@ public class CompanyFixture implements TemplateLoader {
 
     private ServiceLoans createServicePersonalLoans() {
         return ServiceLoans.builder()
-                .name("test")
-                .code("test")
+                .name("ANUIDADE_CARTAO_BASICO_NACIONAL")
+                .code("EXTRATO_MES_E")
                 .chargingTriggerInfo("test")
                 .prices(Arrays.asList(createPrice()))
                 .minimum(createMinimum())
@@ -115,12 +117,12 @@ public class CompanyFixture implements TemplateLoader {
 
     private BusinessAccount createBusinessAccount() {
         return BusinessAccount.builder()
-                .type("CONTA_DEPOSITO_A_VISTA")
+                .type(TypeAccount.CONTA_DEPOSITO_A_VISTA.name())
                 .fees(createFeesBusiness())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
                 .openingClosingChannels(Collections.singletonList("test"))
                 .additionalInfo("test")
-                .transactionMethods(Collections.singletonList("test"))
+                .transactionMethods(Collections.singletonList("MOVIMENTACAO_ELETRONICA"))
                 .termsConditions(createTermsConditions())
                 .incomeRate(createIncomeRate())
                 .build();
@@ -150,12 +152,12 @@ public class CompanyFixture implements TemplateLoader {
     private PersonalAccount createPersonalAccount() {
 
         return PersonalAccount.builder()
-                .type("CONTA_DEPOSITO_A_VISTA")
+                .type(TypeAccount.CONTA_DEPOSITO_A_VISTA.name())
                 .fees(createFees())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
                 .openingClosingChannels(Collections.singletonList("test"))
                 .additionalInfo("test")
-                .transactionMethods(Collections.singletonList("test"))
+                .transactionMethods(Collections.singletonList("MOVIMENTACAO_ELETRONICA"))
                 .termsConditions(createTermsConditions())
                 .incomeRate(Collections.singletonList(createIncomeRate()))
                 .build();
@@ -218,8 +220,8 @@ public class CompanyFixture implements TemplateLoader {
     private OtherService createOtherService() {
 
         return OtherService.builder()
-                .name("test")
-                .code("test")
+                .name("ANUIDADE_CARTAO_BASICO_NACIONAL")
+                .code("EXTRATO_MES_E")
                 .chargingTriggerInfo("test")
                 .prices(Collections.singletonList(createPrice()))
                 .minimum(createMinimum())
@@ -229,8 +231,8 @@ public class CompanyFixture implements TemplateLoader {
 
     private PriorityService createPriorityService() {
         return PriorityService.builder()
-                .name("test")
-                .code("test")
+                .name("ANUIDADE_CARTAO_BASICO_NACIONAL")
+                .code("EXTRATO_MES_E")
                 .chargingTriggerInfo("test")
                 .prices(Collections.singletonList(createPrice()))
                 .minimum(createMinimum())
@@ -256,7 +258,7 @@ public class CompanyFixture implements TemplateLoader {
 
     private Price createPrice() {
         return Price.builder()
-                .interval("123")
+                .interval(Interval.FAIXA_1.getOriginal())
                 .value("123")
                 .currency("123")
                 .customers(createCustomers())

@@ -6,6 +6,7 @@ import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.getdata.dataprovider.entity.ApplicationEntity;
 import com.getdata.dataprovider.entity.CustomersEntity;
 import com.getdata.dataprovider.entity.IndexerEntity;
+import com.getdata.dataprovider.entity.Interval;
 
 public class ApplicationEntityFixture implements TemplateLoader {
 
@@ -19,7 +20,7 @@ public class ApplicationEntityFixture implements TemplateLoader {
     private void loadData() {
 
         Fixture.of(ApplicationEntity.class).addTemplate(VALID, new Rule() {{
-            add(ApplicationEntity.Fields.interval, "1");
+            add(ApplicationEntity.Fields.interval, Interval.FAIXA_1);
             add(ApplicationEntity.Fields.indexer, createIndexer());
             add(ApplicationEntity.Fields.customers, createCustomers());
 
