@@ -28,6 +28,9 @@ import com.getdata.core.model.ServiceFromServiceBundle;
 import com.getdata.core.model.ServiceLoans;
 import com.getdata.core.model.TermsConditions;
 import com.getdata.dataprovider.entity.Interval;
+import com.getdata.dataprovider.entity.OpeningClosingChannel;
+import com.getdata.dataprovider.entity.ReferentialRateIndexer;
+import com.getdata.dataprovider.entity.RequiredWarranties;
 import com.getdata.dataprovider.entity.TypeAccount;
 
 import java.util.Arrays;
@@ -59,7 +62,7 @@ public class CompanyFixture implements TemplateLoader {
                 .type("EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_ATE_365_DIAS")
                 .fees(createFeesLoan())
                 .interestRates(Arrays.asList(createInterestRate()))
-                .requiredWarranties(Arrays.asList("test"))
+                .requiredWarranties(Arrays.asList(RequiredWarranties.ACORDOS_COMPENSACAO.name()))
                 .termsConditions("test")
                 .build();
     }
@@ -69,14 +72,14 @@ public class CompanyFixture implements TemplateLoader {
                 .type("EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_ATE_365_DIAS")
                 .fees(createFeesLoan())
                 .interestRates(Arrays.asList(createInterestRate()))
-                .requiredWarranties(Arrays.asList("test"))
+                .requiredWarranties(Arrays.asList(RequiredWarranties.ACORDOS_COMPENSACAO.name()))
                 .termsConditions("test")
                 .build();
     }
 
     private InterestRate createInterestRate() {
         return InterestRate.builder()
-                .referentialRateIndexer("test")
+                .referentialRateIndexer(ReferentialRateIndexer.CREDITO_RURAL_TCR_POS.name())
                 .rate("1")
                 .applications(Arrays.asList(createApplication()))
                 .minimumRate("1")
@@ -120,7 +123,7 @@ public class CompanyFixture implements TemplateLoader {
                 .type(TypeAccount.CONTA_DEPOSITO_A_VISTA.name())
                 .fees(createFeesBusiness())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
-                .openingClosingChannels(Collections.singletonList("test"))
+                .openingClosingChannels(Collections.singletonList(OpeningClosingChannel.CHAT.name()))
                 .additionalInfo("test")
                 .transactionMethods(Collections.singletonList("MOVIMENTACAO_ELETRONICA"))
                 .termsConditions(createTermsConditions())
@@ -155,7 +158,7 @@ public class CompanyFixture implements TemplateLoader {
                 .type(TypeAccount.CONTA_DEPOSITO_A_VISTA.name())
                 .fees(createFees())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
-                .openingClosingChannels(Collections.singletonList("test"))
+                .openingClosingChannels(Collections.singletonList(OpeningClosingChannel.CHAT.name()))
                 .additionalInfo("test")
                 .transactionMethods(Collections.singletonList("MOVIMENTACAO_ELETRONICA"))
                 .termsConditions(createTermsConditions())

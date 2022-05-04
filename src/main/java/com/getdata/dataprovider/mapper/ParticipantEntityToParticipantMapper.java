@@ -30,6 +30,7 @@ public class ParticipantEntityToParticipantMapper implements Converter<Participa
                 .status(participantEntity.getStatus())
                 .organisationName(participantEntity.getOrganisationName())
                 .customerFriendlyName(participantEntity.getCustomerFriendlyName())
+                .customerFriendlyLogoUri(participantEntity.getCustomerFriendlyLogoUri())
                 .build();
 
         participant.setApiResources(createListOfApiResource(participantEntity.getApiResources()));
@@ -53,7 +54,7 @@ public class ParticipantEntityToParticipantMapper implements Converter<Participa
         return apiResourceList;
     }
 
-    private List<String> createApiEndpoint(List<ApiEndPointEntity> apiEndpoint) {
+    private List<String> createApiEndpoint(final List<ApiEndPointEntity> apiEndpoint) {
         if (apiEndpoint == null || apiEndpoint.isEmpty()) {
             return new ArrayList<>();
         }

@@ -16,6 +16,8 @@ import com.getdata.core.model.ServiceBusinessAccounts;
 import com.getdata.core.model.ServiceFromServiceBundle;
 import com.getdata.core.model.TermsConditions;
 import com.getdata.dataprovider.entity.Interval;
+import com.getdata.dataprovider.entity.OpeningClosingChannel;
+import com.getdata.dataprovider.entity.TransactionMethod;
 import com.getdata.dataprovider.entity.TypeAccount;
 
 import java.util.Arrays;
@@ -35,9 +37,9 @@ public class BusinessAccountFixture implements TemplateLoader {
             add(BusinessAccount.Fields.type, TypeAccount.CONTA_DEPOSITO_A_VISTA.name());
             add(BusinessAccount.Fields.fees, createFees());
             add(BusinessAccount.Fields.serviceBundles, Arrays.asList(createServiceBundles()));
-            add(BusinessAccount.Fields.openingClosingChannels, Arrays.asList("test"));
+            add(BusinessAccount.Fields.openingClosingChannels, Arrays.asList(OpeningClosingChannel.CHAT.name()));
             add(BusinessAccount.Fields.additionalInfo, "test");
-            add(BusinessAccount.Fields.transactionMethods, Arrays.asList("test"));
+            add(BusinessAccount.Fields.transactionMethods, Arrays.asList(TransactionMethod.MOVIMENTACAO_ELETRONICA.name()));
             add(BusinessAccount.Fields.termsConditions, createTermsConditions());
             add(BusinessAccount.Fields.incomeRate, createIncomeRate());
 

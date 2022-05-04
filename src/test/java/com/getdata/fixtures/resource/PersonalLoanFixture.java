@@ -14,6 +14,9 @@ import com.getdata.core.model.PersonalLoan;
 import com.getdata.core.model.Price;
 import com.getdata.core.model.ServiceLoans;
 import com.getdata.dataprovider.entity.Interval;
+import com.getdata.dataprovider.entity.ReferentialRateIndexer;
+import com.getdata.dataprovider.entity.RequiredWarranties;
+import com.getdata.dataprovider.entity.TypeLoan;
 
 import java.util.Arrays;
 
@@ -28,10 +31,10 @@ public class PersonalLoanFixture implements TemplateLoader {
 
     private void loadData() {
         Fixture.of(PersonalLoan.class).addTemplate(VALID, new Rule() {{
-            add(PersonalLoan.Fields.type, "test");
+            add(PersonalLoan.Fields.type, TypeLoan.EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_ATE_365_DIAS.name());
             add(PersonalLoan.Fields.fees, createFeesLoan());
             add(PersonalLoan.Fields.interestRates, Arrays.asList(createInterestRate()));
-            add(PersonalLoan.Fields.requiredWarranties, Arrays.asList("test"));
+            add(PersonalLoan.Fields.requiredWarranties, Arrays.asList(RequiredWarranties.ACORDOS_COMPENSACAO.name()));
             add(PersonalLoan.Fields.termsConditions, "test");
 
         }});
@@ -39,7 +42,7 @@ public class PersonalLoanFixture implements TemplateLoader {
 
     private InterestRate createInterestRate() {
         return InterestRate.builder()
-                .referentialRateIndexer("test")
+                .referentialRateIndexer(ReferentialRateIndexer.CREDITO_RURAL_TCR_POS.name())
                 .rate("1")
                 .applications(Arrays.asList(createApplication()))
                 .minimumRate("1")

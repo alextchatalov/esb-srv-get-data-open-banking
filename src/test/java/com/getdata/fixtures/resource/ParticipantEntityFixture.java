@@ -26,6 +26,7 @@ public class ParticipantEntityFixture implements TemplateLoader {
                 .status(ParticipantStatus.ACTIVE)
                 .organisationName("test")
                 .customerFriendlyName("test")
+                .customerFriendlyLogoUri("test")
                 .build();
 
         Fixture.of(ParticipantEntity.class).addTemplate(VALID, new Rule() {{
@@ -33,6 +34,7 @@ public class ParticipantEntityFixture implements TemplateLoader {
             add(ParticipantEntity.Fields.status, participantMock.getStatus());
             add(ParticipantEntity.Fields.organisationName, participantMock.getOrganisationName());
             add(ParticipantEntity.Fields.customerFriendlyName, participantMock.getCustomerFriendlyName());
+            add(ParticipantEntity.Fields.customerFriendlyLogoUri, participantMock.getCustomerFriendlyLogoUri());
             add(ParticipantEntity.Fields.apiResources, Arrays.asList(createApiResources(participantMock)));
 
         }});

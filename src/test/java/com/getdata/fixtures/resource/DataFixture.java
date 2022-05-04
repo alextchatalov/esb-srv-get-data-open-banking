@@ -15,6 +15,8 @@ import com.getdata.core.model.Maximum;
 import com.getdata.core.model.Minimum;
 import com.getdata.core.model.MinimumBalance;
 import com.getdata.core.model.OtherService;
+import com.getdata.core.model.Participant;
+import com.getdata.core.model.ParticipantStatus;
 import com.getdata.core.model.PersonalAccount;
 import com.getdata.core.model.Price;
 import com.getdata.core.model.PriorityService;
@@ -23,6 +25,8 @@ import com.getdata.core.model.ServiceBusinessAccounts;
 import com.getdata.core.model.ServiceFromServiceBundle;
 import com.getdata.core.model.TermsConditions;
 import com.getdata.dataprovider.entity.Interval;
+import com.getdata.dataprovider.entity.OpeningClosingChannel;
+import com.getdata.dataprovider.entity.TransactionMethod;
 import com.getdata.dataprovider.entity.TypeAccount;
 
 import java.util.Collections;
@@ -48,6 +52,17 @@ public class DataFixture implements TemplateLoader {
         return Brand.builder()
                 .name("test")
                 .companies(Collections.singletonList(createCompany()))
+                .participant(createParticipant())
+                .build();
+    }
+
+    private Participant createParticipant() {
+        return Participant.builder()
+                .organisationId("123")
+                .status(ParticipantStatus.ACTIVE)
+                .organisationName("test")
+                .customerFriendlyName("test")
+                .customerFriendlyLogoUri("test")
                 .build();
     }
 
@@ -67,9 +82,9 @@ public class DataFixture implements TemplateLoader {
                 .type(TypeAccount.CONTA_DEPOSITO_A_VISTA.name())
                 .fees(createFeesBusiness())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
-                .openingClosingChannels(Collections.singletonList("test"))
+                .openingClosingChannels(Collections.singletonList(OpeningClosingChannel.CHAT.name()))
                 .additionalInfo("test")
-                .transactionMethods(Collections.singletonList("MOVIMENTACAO_ELETRONICA"))
+                .transactionMethods(Collections.singletonList(TransactionMethod.MOVIMENTACAO_ELETRONICA.name()))
                 .termsConditions(createTermsConditions())
                 .incomeRate(createIncomeRate())
                 .build();
@@ -102,9 +117,9 @@ public class DataFixture implements TemplateLoader {
                 .type(TypeAccount.CONTA_DEPOSITO_A_VISTA.name())
                 .fees(createFees())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
-                .openingClosingChannels(Collections.singletonList("test"))
+                .openingClosingChannels(Collections.singletonList(OpeningClosingChannel.CHAT.name()))
                 .additionalInfo("test")
-                .transactionMethods(Collections.singletonList("MOVIMENTACAO_ELETRONICA"))
+                .transactionMethods(Collections.singletonList(TransactionMethod.MOVIMENTACAO_ELETRONICA.name()))
                 .termsConditions(createTermsConditions())
                 .incomeRate(Collections.singletonList(createIncomeRate()))
                 .build();

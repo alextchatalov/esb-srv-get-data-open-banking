@@ -3,10 +3,9 @@ package com.getdata.fixtures.resource;
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
 import br.com.six2six.fixturefactory.loader.TemplateLoader;
-import com.getdata.dataprovider.entity.Interval;
-import com.getdata.dataprovider.entity.OpeningClosingChannel;
-import com.getdata.dataprovider.entity.TransactionMethod;
-import com.getdata.dataprovider.entity.TypeAccount;
+import com.getdata.core.model.ParticipantStatus;
+import com.getdata.dataprovider.entity.ApiEndPointEntity;
+import com.getdata.dataprovider.entity.ApiResourceEntity;
 import com.getdata.dataprovider.entity.BrandEntity;
 import com.getdata.dataprovider.entity.BusinessAccountEntity;
 import com.getdata.dataprovider.entity.CompanyEntity;
@@ -15,11 +14,14 @@ import com.getdata.dataprovider.entity.DataEntity;
 import com.getdata.dataprovider.entity.FeesBusinessAccountsEntity;
 import com.getdata.dataprovider.entity.FeesPersonalAccountsEntity;
 import com.getdata.dataprovider.entity.IncomeRateEntity;
+import com.getdata.dataprovider.entity.Interval;
 import com.getdata.dataprovider.entity.MaximumEntity;
 import com.getdata.dataprovider.entity.MinimumBalanceEntity;
 import com.getdata.dataprovider.entity.MinimumEntity;
+import com.getdata.dataprovider.entity.OpeningClosingChannel;
 import com.getdata.dataprovider.entity.OpeningClosingChannelsEntity;
 import com.getdata.dataprovider.entity.OtherServiceEntity;
+import com.getdata.dataprovider.entity.ParticipantEntity;
 import com.getdata.dataprovider.entity.PersonalAccountEntity;
 import com.getdata.dataprovider.entity.PriceEntity;
 import com.getdata.dataprovider.entity.PriorityServiceEntity;
@@ -27,7 +29,9 @@ import com.getdata.dataprovider.entity.ServiceBundleEntity;
 import com.getdata.dataprovider.entity.ServiceBusinessAccountsEntity;
 import com.getdata.dataprovider.entity.ServiceFromServiceBundleEntity;
 import com.getdata.dataprovider.entity.TermsConditionsEntity;
+import com.getdata.dataprovider.entity.TransactionMethod;
 import com.getdata.dataprovider.entity.TransactionMethodsEntity;
+import com.getdata.dataprovider.entity.TypeAccount;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -46,7 +50,6 @@ public class DataEntityFixture implements TemplateLoader {
         Fixture.of(DataEntity.class).addTemplate(VALID, new Rule() {{
             add(DataEntity.Fields.id, "123");
             add(DataEntity.Fields.brand, createBrand());
-
         }});
     }
 
@@ -55,7 +58,45 @@ public class DataEntityFixture implements TemplateLoader {
         return BrandEntity.builder()
                 .name("test")
                 .companies(Collections.singletonList(createCompany()))
+                .participant(createParticipant())
                 .build();
+    }
+
+    private ParticipantEntity createParticipant() {
+
+        final ParticipantEntity participantEntity = ParticipantEntity.builder()
+                .organisationId("123")
+                .status(ParticipantStatus.ACTIVE)
+                .organisationName("test")
+                .customerFriendlyName("test")
+                .customerFriendlyLogoUri("test")
+                .build();
+
+        participantEntity.setApiResources(Arrays.asList(createApiResources(participantEntity)));
+        
+        return participantEntity;
+    }
+
+    private ApiResourceEntity createApiResources(final ParticipantEntity participantMock) {
+
+        final ApiResourceEntity apiResourceEntityMock = ApiResourceEntity.builder()
+                .apiFamilyType("test")
+                .apiVersion("1")
+                .participant(participantMock)
+                .build();
+
+        final List<ApiEndPointEntity> apiEndPointEntity = createApiEndPointEntity(apiResourceEntityMock);
+        apiResourceEntityMock.setApiEndpoint(apiEndPointEntity);
+        return apiResourceEntityMock;
+    }
+
+    private List<ApiEndPointEntity> createApiEndPointEntity(final ApiResourceEntity apiResourceEntityMock) {
+
+        return Arrays.asList(ApiEndPointEntity.builder()
+                .id(1L)
+                .endpoint("123")
+                .apiResource(apiResourceEntityMock)
+                .build());
     }
 
     private CompanyEntity createCompany() {
@@ -70,7 +111,7 @@ public class DataEntityFixture implements TemplateLoader {
     }
 
     private BusinessAccountEntity createBusinessAccount() {
-        BusinessAccountEntity businessAccountEntity = BusinessAccountEntity.builder()
+        final BusinessAccountEntity businessAccountEntity = BusinessAccountEntity.builder()
                 .type(TypeAccount.CONTA_DEPOSITO_A_VISTA)
                 .fees(createFeesBusiness())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))
@@ -108,7 +149,7 @@ public class DataEntityFixture implements TemplateLoader {
 
     private PersonalAccountEntity createPersonalAccount() {
 
-        PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
+        final PersonalAccountEntity personalAccountEntity = PersonalAccountEntity.builder()
                 .type(TypeAccount.CONTA_DEPOSITO_A_VISTA)
                 .fees(createFees())
                 .serviceBundles(Collections.singletonList(createServiceBundles()))

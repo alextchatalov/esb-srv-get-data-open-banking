@@ -3,9 +3,9 @@ package com.getdata.dataprovider.gateway;
 import br.com.six2six.fixturefactory.Fixture;
 import com.getdata.core.model.Data;
 import com.getdata.dataprovider.entity.DataEntity;
-import com.getdata.dataprovider.entity.ParticipantEntity;
 import com.getdata.dataprovider.mapper.DataToDataEntityMapper;
 import com.getdata.dataprovider.repository.DataRepository;
+import com.getdata.dataprovider.repository.ParticipantRepository;
 import com.getdata.fixtures.FixtureLoader;
 import com.getdata.fixtures.resource.DataEntityFixture;
 import com.getdata.fixtures.resource.DataFixture;
@@ -16,7 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -25,13 +28,16 @@ import static org.mockito.Mockito.when;
 class SaveResponseGatewayTest {
 
     @InjectMocks
-    SaveResponseGateway saveResponseGateway;
+    private SaveResponseGateway saveResponseGateway;
 
     @Mock
-    DataRepository repository;
+    private DataRepository repository;
 
     @Mock
-    DataToDataEntityMapper dataToDataEntityMapper;
+    private DataToDataEntityMapper dataToDataEntityMapper;
+
+    @Mock
+    private ParticipantRepository participantRepository;
 
     @BeforeAll
     public static void setup() {
@@ -44,8 +50,8 @@ class SaveResponseGatewayTest {
         final DataEntity dataEntityMock = Fixture.from(DataEntity.class).gimme(DataEntityFixture.VALID);
         final Data dataMock = Fixture.from(Data.class).gimme(DataFixture.VALID);
 
-        when(dataToDataEntityMapper.convert(any(Data.class), any(ParticipantEntity.class))).thenReturn(dataEntityMock);
         when(repository.save(any(DataEntity.class))).thenReturn(dataEntityMock);
+        when(participantRepository.findById(anyString())).thenReturn(Optional.ofNullable(dataEntityMock.getBrand().getParticipant()));
 
         saveResponseGateway.execute(dataMock);
         verify(repository, times(1)).save(any(DataEntity.class));

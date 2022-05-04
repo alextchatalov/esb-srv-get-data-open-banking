@@ -17,6 +17,9 @@ import com.getdata.core.model.ServiceBundle;
 import com.getdata.core.model.ServiceFromServiceBundle;
 import com.getdata.core.model.TermsConditions;
 import com.getdata.dataprovider.entity.Interval;
+import com.getdata.dataprovider.entity.OpeningClosingChannel;
+import com.getdata.dataprovider.entity.TransactionMethod;
+import com.getdata.dataprovider.entity.TypeAccount;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,13 +35,13 @@ public class PersonalAccountFixture implements TemplateLoader {
 
     private void loadData() {
         Fixture.of(PersonalAccount.class).addTemplate(VALID, new Rule() {{
-            add(PersonalAccount.Fields.type, "CONTA_DEPOSITO_A_VISTA");
-            add("fees", createFees());
+            add(PersonalAccount.Fields.type, TypeAccount.CONTA_DEPOSITO_A_VISTA.name());
+            add(PersonalAccount.Fields.fees, createFees());
             add(PersonalAccount.Fields.serviceBundles, Arrays.asList(createServiceBundles()));
-            add(PersonalAccount.Fields.openingClosingChannels, Arrays.asList("test"));
+            add(PersonalAccount.Fields.openingClosingChannels, Arrays.asList(OpeningClosingChannel.CHAT.name()));
             add(PersonalAccount.Fields.additionalInfo, "test");
-            add(PersonalAccount.Fields.transactionMethods, Arrays.asList("test"));
-            add("termsConditions", createTermsConditions());
+            add(PersonalAccount.Fields.transactionMethods, Arrays.asList(TransactionMethod.MOVIMENTACAO_ELETRONICA.name()));
+            add(PersonalAccount.Fields.termsConditions, createTermsConditions());
             add(PersonalAccount.Fields.incomeRate, Arrays.asList(createIncomeRate()));
 
         }});

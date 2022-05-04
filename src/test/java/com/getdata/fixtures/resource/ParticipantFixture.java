@@ -25,6 +25,7 @@ public class ParticipantFixture implements TemplateLoader {
             add(Participant.Fields.status, ParticipantStatus.ACTIVE);
             add(Participant.Fields.organisationName, "test");
             add(Participant.Fields.customerFriendlyName, "test");
+            add(Participant.Fields.customerFriendlyLogoUri, "test");
             add(Participant.Fields.apiResources, Arrays.asList(createApiResources()));
 
         }});
