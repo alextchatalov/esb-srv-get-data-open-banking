@@ -40,14 +40,14 @@ public class PersonalLoanToPersonalLoanEntityMapper {
 
     private static List<InterestRateEntity> convertInterestRateListToInterestRateEntityList(final List<InterestRate> interestRates, final PersonalLoanEntity personalLoanEntity) {
         if (interestRates != null && !interestRates.isEmpty()) {
-            return interestRates.stream().map(interestRate -> InterestRateToInterestRateEntityMapper.convertWithPersonal(interestRate, personalLoanEntity)).collect(Collectors.toList());
+            return interestRates.stream().map(interestRate -> InterestRateToInterestRateEntityMapper.convert(interestRate, personalLoanEntity)).collect(Collectors.toList());
         }
         return null;
     }
 
     private static List<RequiredWarrantiesEntity> convertRequiredWarrantiesListToRequiredWarrantiesEntityList(final List<String> requiredWarranties, final PersonalLoanEntity personalLoanEntity) {
         if (requiredWarranties != null && !requiredWarranties.isEmpty()) {
-            return requiredWarranties.stream().map(warranties -> RequiredWarrantiesToRequiredWarrantiesEntityMapper.convertPersonal(warranties, personalLoanEntity)).collect(Collectors.toList());
+            return requiredWarranties.stream().map(warranties -> RequiredWarrantiesToRequiredWarrantiesEntityMapper.convert(warranties, personalLoanEntity)).collect(Collectors.toList());
         }
         return null;
     }

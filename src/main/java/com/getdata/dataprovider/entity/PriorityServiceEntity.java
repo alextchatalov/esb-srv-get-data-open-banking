@@ -60,4 +60,9 @@ public class PriorityServiceEntity {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private FeesLoanEntity feesLoan;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private FeesPersonalFinancingsEntity feesPersonalFinancings;
 }

@@ -5,6 +5,7 @@ import com.getdata.core.model.InterestRate;
 import com.getdata.dataprovider.entity.ApplicationEntity;
 import com.getdata.dataprovider.entity.BusinessLoanEntity;
 import com.getdata.dataprovider.entity.InterestRateEntity;
+import com.getdata.dataprovider.entity.PersonalFinancingsEntity;
 import com.getdata.dataprovider.entity.PersonalLoanEntity;
 import com.getdata.dataprovider.entity.ReferentialRateIndexer;
 import lombok.extern.slf4j.Slf4j;
@@ -19,21 +20,28 @@ import java.util.stream.Collectors;
 public class InterestRateToInterestRateEntityMapper {
 
     @NonNull
-    public static InterestRateEntity convertWithPersonal(final InterestRate interestRate, final PersonalLoanEntity personalLoanEntity) {
+    public static InterestRateEntity convert(final InterestRate interestRate, final PersonalLoanEntity personalLoanEntity) {
 
-        return convert(InterestRateEntity.builder()
+        return convertData(InterestRateEntity.builder()
                 .personalLoan(personalLoanEntity), interestRate);
     }
 
     @NonNull
-    public static InterestRateEntity convertWithBusiness(final InterestRate interestRate, final BusinessLoanEntity businessLoanEntity) {
+    public static InterestRateEntity convert(final InterestRate interestRate, final BusinessLoanEntity businessLoanEntity) {
 
-        return convert(InterestRateEntity.builder()
+        return convertData(InterestRateEntity.builder()
                 .businessLoan(businessLoanEntity), interestRate);
     }
 
-    private static InterestRateEntity convert(final InterestRateEntity.InterestRateEntityBuilder businessLoanEntity, final InterestRate interestRate) {
-        final InterestRateEntity interestRateEntity = businessLoanEntity
+    @NonNull
+    public static InterestRateEntity convert(final InterestRate interestRate, final PersonalFinancingsEntity personalFinancingsEntity) {
+
+        return convertData(InterestRateEntity.builder()
+                .personalFinancings(personalFinancingsEntity), interestRate);
+    }
+
+    private static InterestRateEntity convertData(final InterestRateEntity.InterestRateEntityBuilder interestRateEntityBuilder, final InterestRate interestRate) {
+        final InterestRateEntity interestRateEntity = interestRateEntityBuilder
                 .referentialRateIndexer(ReferentialRateIndexer.get(interestRate.getReferentialRateIndexer()))
                 .rate(interestRate.getRate())
                 .minimumRate(interestRate.getMinimumRate())

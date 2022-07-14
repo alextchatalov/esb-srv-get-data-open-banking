@@ -18,7 +18,7 @@ public enum RequiredWarranties {
     GARANTIAS_INTERNACIONAIS("declarar se a garantia é mitigadora ou não, observados os critérios definidos pela Circular 3.644, de 4 de março de 2013"),
     OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES("declarar as garantias prestadas pelas entidades descritas no item 3. Informações de Garantias (i) do documento 3040 - Bacen"),
     ACORDOS_COMPENSACAO("operações que sejam abrangidas por acordos para a compensação e liquidação de obrigações no âmbito do SFN, nos termos da Resolução 3.263, de 24 de fevereiro de 2005"),
-    NAO_APLICAVEL("não aplicável");
+    NAO_APLICAVEL("Não Aplicável");
     private String description;
 
     RequiredWarranties(String description) {

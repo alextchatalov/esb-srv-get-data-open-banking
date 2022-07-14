@@ -1,6 +1,7 @@
 package com.getdata.dataprovider.mapper;
 
 import com.getdata.dataprovider.entity.BusinessLoanEntity;
+import com.getdata.dataprovider.entity.PersonalFinancingsEntity;
 import com.getdata.dataprovider.entity.PersonalLoanEntity;
 import com.getdata.dataprovider.entity.RequiredWarranties;
 import com.getdata.dataprovider.entity.RequiredWarrantiesEntity;
@@ -13,21 +14,28 @@ import org.springframework.lang.NonNull;
 public class RequiredWarrantiesToRequiredWarrantiesEntityMapper {
 
     @NonNull
-    public static RequiredWarrantiesEntity convertPersonal(final String requiredWarranties, final PersonalLoanEntity personalLoanEntity) {
+    public static RequiredWarrantiesEntity convert(final String requiredWarranties, final PersonalLoanEntity personalLoanEntity) {
 
-        return convert(RequiredWarrantiesEntity.builder()
+        return convertData(RequiredWarrantiesEntity.builder()
                 .personalLoan(personalLoanEntity), requiredWarranties);
     }
 
     @NonNull
-    public static RequiredWarrantiesEntity convertBusiness(final String requiredWarranties, final BusinessLoanEntity businessLoanEntity) {
+    public static RequiredWarrantiesEntity convert(final String requiredWarranties, final BusinessLoanEntity businessLoanEntity) {
 
-        return convert(RequiredWarrantiesEntity.builder()
+        return convertData(RequiredWarrantiesEntity.builder()
                 .businessLoan(businessLoanEntity), requiredWarranties);
     }
 
-    private static RequiredWarrantiesEntity convert(final RequiredWarrantiesEntity.RequiredWarrantiesEntityBuilder businessLoanEntity, final String requiredWarranties) {
-        return businessLoanEntity
+    @NonNull
+    public static RequiredWarrantiesEntity convert(final String requiredWarranties, final PersonalFinancingsEntity personalFinancings) {
+
+        return convertData(RequiredWarrantiesEntity.builder()
+                .personalFinancings(personalFinancings), requiredWarranties);
+    }
+
+    private static RequiredWarrantiesEntity convertData(final RequiredWarrantiesEntity.RequiredWarrantiesEntityBuilder requiredWarrantiesEntityBuilder, final String requiredWarranties) {
+        return requiredWarrantiesEntityBuilder
                 .warranties(RequiredWarranties.get(requiredWarranties))
                 .build();
     }

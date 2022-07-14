@@ -34,7 +34,7 @@ class InterestRateToInterestRateEntityMapperTest {
         final PersonalLoanEntity personalLoanEntityMock = Fixture.from(PersonalLoanEntity.class).gimme(PersonalLoanEntityFixture.VALID);
         final InterestRateEntity interestRateEntityMock = Fixture.from(InterestRateEntity.class).gimme(InterestRateEntityFixture.VALID);
 
-        final InterestRateEntity interestRateEntity = mapper.convertWithPersonal(interestRateMock, personalLoanEntityMock);
+        final InterestRateEntity interestRateEntity = mapper.convert(interestRateMock, personalLoanEntityMock);
 
         assertThat(interestRateEntity).isEqualTo(interestRateEntityMock);
     }

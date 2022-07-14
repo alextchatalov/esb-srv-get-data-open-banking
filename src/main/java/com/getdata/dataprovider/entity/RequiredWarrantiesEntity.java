@@ -45,4 +45,9 @@ public class RequiredWarrantiesEntity {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private BusinessLoanEntity businessLoan;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private PersonalFinancingsEntity personalFinancings;
 }

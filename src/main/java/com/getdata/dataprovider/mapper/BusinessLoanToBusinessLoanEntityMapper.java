@@ -19,35 +19,35 @@ import java.util.stream.Collectors;
 public class BusinessLoanToBusinessLoanEntityMapper {
 
     @NonNull
-    public static BusinessLoanEntity convert(final BusinessLoan personalLoan, final CompanyEntity companyEntity) {
+    public static BusinessLoanEntity convert(final BusinessLoan businessLoan, final CompanyEntity companyEntity) {
 
-        final String termsConditions = personalLoan.getTermsConditions() != null && personalLoan.getTermsConditions().length() >= 255 ?
-                personalLoan.getTermsConditions().substring(0, 254) :
-                personalLoan.getTermsConditions();
+        final String termsConditions = businessLoan.getTermsConditions() != null && businessLoan.getTermsConditions().length() >= 255 ?
+                businessLoan.getTermsConditions().substring(0, 254) :
+                businessLoan.getTermsConditions();
 
         final BusinessLoanEntity businessLoanEntity = BusinessLoanEntity.builder()
                 .company(companyEntity)
-                .type(TypeLoan.valueOf(personalLoan.getType()))
+                .type(TypeLoan.valueOf(businessLoan.getType()))
                 .termsConditions(termsConditions)
                 .build();
 
-        businessLoanEntity.setFees(FeesLoanToFeesLoanEntityMapper.convert(personalLoan.getFees(), businessLoanEntity));
-        businessLoanEntity.setInterestRates(convertInterestRateListToInterestRateEntityList(personalLoan.getInterestRates(), businessLoanEntity));
-        businessLoanEntity.setRequiredWarranties(convertRequiredWarrantiesListToRequiredWarrantiesEntityList(personalLoan.getRequiredWarranties(), businessLoanEntity));
+        businessLoanEntity.setFees(FeesLoanToFeesLoanEntityMapper.convert(businessLoan.getFees(), businessLoanEntity));
+        businessLoanEntity.setInterestRates(convertInterestRateListToInterestRateEntityList(businessLoan.getInterestRates(), businessLoanEntity));
+        businessLoanEntity.setRequiredWarranties(convertRequiredWarrantiesListToRequiredWarrantiesEntityList(businessLoan.getRequiredWarranties(), businessLoanEntity));
 
         return businessLoanEntity;
     }
 
     private static List<InterestRateEntity> convertInterestRateListToInterestRateEntityList(final List<InterestRate> interestRates, final BusinessLoanEntity businessLoanEntity) {
         if (interestRates != null && !interestRates.isEmpty()) {
-            return interestRates.stream().map(interestRate -> InterestRateToInterestRateEntityMapper.convertWithBusiness(interestRate, businessLoanEntity)).collect(Collectors.toList());
+            return interestRates.stream().map(interestRate -> InterestRateToInterestRateEntityMapper.convert(interestRate, businessLoanEntity)).collect(Collectors.toList());
         }
         return null;
     }
 
     private static List<RequiredWarrantiesEntity> convertRequiredWarrantiesListToRequiredWarrantiesEntityList(final List<String> requiredWarranties, final BusinessLoanEntity businessLoanEntity) {
         if (requiredWarranties != null && !requiredWarranties.isEmpty()) {
-            return requiredWarranties.stream().map(warranties -> RequiredWarrantiesToRequiredWarrantiesEntityMapper.convertBusiness(warranties, businessLoanEntity)).collect(Collectors.toList());
+            return requiredWarranties.stream().map(warranties -> RequiredWarrantiesToRequiredWarrantiesEntityMapper.convert(warranties, businessLoanEntity)).collect(Collectors.toList());
         }
         return null;
     }

@@ -34,7 +34,7 @@ public class ProcessJob {
 
     private final RequestParticipantsBoundary requestParticipantsBoundary;
     private final RequestProductsAndServicesUserCase requestProductsAndServicesUserCase;
-    private final List<Category> acceptedCategories = Arrays.asList(Category.PERSONAL_ACCOUNTS, Category.BUSINESS_ACCOUNTS, Category.PERSONAL_LOANS, Category.BUSINESS_LOANS);
+    private final List<Category> acceptedCategories = Arrays.asList(Category.PERSONAL_ACCOUNTS, Category.BUSINESS_ACCOUNTS, Category.PERSONAL_LOANS, Category.BUSINESS_LOANS, Category.PERSONAL_FINANCINGS);
     private final SaveResponseUseCase saveResponseUseCase;
     private final CreateParticipantsUserCase createParticipantsUserCase;
     final ExecutorService executor = Executors.newFixedThreadPool(4);
